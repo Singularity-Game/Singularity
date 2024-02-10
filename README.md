@@ -22,10 +22,17 @@
 - 🚀 The Game can be installed as a Progressive Web App
 - 🚀 User Management 
 
-## How to Install
+## Usage
+### Install
 1. Install [Docker](https://www.docker.com/)
 2. Run the command `docker-compose up`
 3. Open your Browser on [localhost](http://localhost)
+4. Login with Username `admin` and Password `admin`
+
+### Upload Songs
+Recommended Song Databases:
+- [https://usdb.animux.de/](https://usdb.animux.de/)
+- [https://ultrastar-es.org/](https://ultrastar-es.org/en)
 
 ## Credits
 - This project is heavily inspired by Performous! [https://github.com/performous/performous](https://github.com/performous/performous)
