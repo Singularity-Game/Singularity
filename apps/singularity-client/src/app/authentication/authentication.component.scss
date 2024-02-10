@@ -1,0 +1,45 @@
+.overflow-hidden {
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+
+.background-image {
+  width: 50%;
+  position: relative;
+  background-image: url(/assets/login/login-image.jpg);
+  background-size: cover;
+  text-align: center;
+}
+
+svg {
+  float: right;
+}
+
+.wave-path {
+  fill: var(--tui-primary)
+}
+
+.background-path {
+  fill: var(--tui-base-01)
+}
+
+.wrapper {
+  flex: 1;
+  height: 100vh;
+  max-width: 50%;
+  padding: 150px 10% 0 10%;
+}
+
+.copyright-text {
+  position: relative;
+  top: calc(100% - 25px);
+
+  a {
+    color: white;
+  }
+}
+
+.no-gap {
+  gap: 0;
+}

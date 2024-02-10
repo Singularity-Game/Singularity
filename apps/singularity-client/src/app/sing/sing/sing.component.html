@@ -1,0 +1,28 @@
+<ng-container *ngIf="song else loading">
+  <div class="score-list" *ngIf="singerScores$ | async; let singerScores">
+    <ng-container *ngFor="let singer of singers; let i = index">
+      <p class="score" [style.color]="singer.color">
+        <tui-svg
+          src="tuiIconMicLarge"
+        ></tui-svg>
+        {{singerScores[i] | number: '5.0-0' | noComma}}
+      </p>
+    </ng-container>
+  </div>
+
+  <singularity-vocal-grid *ngIf="song && singers" [song]="song" [singers]="singers"></singularity-vocal-grid>
+  <singularity-lyrics *ngIf="song" [currentBeat]="currentBeat$ | async" [song]="song"></singularity-lyrics>
+</ng-container>
+<video #videoElement></video>
+
+<ng-template #loading>
+  <div class="loading-content">
+    <h1>{{ 'sing.sing.loadingSong' | transloco }}</h1>
+    <tui-notification class="tui-space_top-5">
+      <h3>{{ 'sing.sing.hint' | transloco }}</h3>
+      {{ 'sing.sing.downloadSongsHint' | transloco }}
+    </tui-notification>
+    <progress tuiProgressBar max="100" [value]="loadingProgress" class="tui-space_top-5"></progress>
+  </div>
+</ng-template>
+

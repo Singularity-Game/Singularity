@@ -1,0 +1,23 @@
+<div class="song-cover-wrapper" (click)="startSinging()">
+  <tui-avatar
+    size="m"
+    class="song-cover"
+    [avatarUrl]="cover$ | async"
+  ></tui-avatar>
+  <div class="song-cover-content">
+    <p>
+      <tui-svg
+        src="tuiIconPlayLarge"
+      ></tui-svg>
+    </p>
+  </div>
+</div>
+<p class="song-name">
+  <a (click)="startSinging()">{{song?.name}}</a>
+  <tui-svg src="tuiIconDownload" *ngIf="isDownloaded$ | async" class="downloaded" [tuiHint]="downloadedHint" [tuiHintShowDelay]="100"></tui-svg>
+</p>
+<p class="song-artist">{{song?.artist}}</p>
+
+<ng-template #downloadedHint>
+  {{ 'play.downloadedHint' | transloco }}
+</ng-template>

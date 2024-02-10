@@ -1,0 +1,24 @@
+$header-height: 200px;
+
+.header {
+  height: $header-height;
+  margin-top: -32px;
+  margin-left: -32px;
+  margin-right: -32px;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+
+  font-size: 25px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+canvas {
+  position: absolute;
+  width: 100%;
+  height: $header-height;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}

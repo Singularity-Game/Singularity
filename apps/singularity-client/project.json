@@ -1,0 +1,114 @@
+{
+  "name": "singularity-client",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "/apps/singularity-client/src",
+  "prefix": "singularity",
+  "targets": {
+    "build": {
+      "executor": "@angular-builders/custom-webpack:browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/singularity-client",
+        "index": "apps/singularity-client/src/index.html",
+        "main": "apps/singularity-client/src/main.ts",
+        "polyfills": "apps/singularity-client/src/polyfills.ts",
+        "tsConfig": "apps/singularity-client/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/singularity-client/src/favicon.ico",
+          "apps/singularity-client/src/assets",
+          "apps/singularity-client/src/worklets",
+          {
+            "glob": "**/*",
+            "input": "node_modules/@taiga-ui/icons/src",
+            "output": "assets/taiga-ui/icons"
+          },
+          {
+            "glob": "*.wasm",
+            "input": "libs/wasm/pkg",
+            "output": "wasm"
+          }
+        ],
+        "styles": [
+          "apps/singularity-client/src/styles.scss",
+          "apps/singularity-client/src/styles.less",
+          "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
+          "node_modules/@taiga-ui/core/styles/taiga-ui-fonts.less"
+        ],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/singularity-client/src/environments/environment.ts",
+              "with": "apps/singularity-client/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all",
+          "serviceWorker": true,
+          "ngswConfigPath": "apps/singularity-client/ngsw-config.json"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true,
+          "serviceWorker": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-builders/custom-webpack:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "singularity-client:build:production"
+        },
+        "development": {
+          "browserTarget": "singularity-client:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "proxyConfig": "apps/singularity-client/proxy.conf.json"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/singularity-client/src/**/*.ts",
+          "apps/singularity-client/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/apps/singularity-client"
+      ],
+      "options": {
+        "jestConfig": "apps/singularity-client/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

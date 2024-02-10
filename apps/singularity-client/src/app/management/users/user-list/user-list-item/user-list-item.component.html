@@ -1,0 +1,60 @@
+<td class="tui-table__td tui-table__td_first avatar-td">
+  <tui-avatar
+    new
+    size="m"
+    class="tui-space_vertical-1"
+    [text]="user?.username ?? ''"
+    [autoColor]="true"
+  ></tui-avatar>
+</td>
+<td class="tui-table__td">
+  <div class="flex icon-td">
+    <tui-svg src="tuiIconShield" [tuiHint]="adminHint" [tuiHintShowDelay]="100" *ngIf="user?.isAdmin"></tui-svg>
+    <tui-svg src="tuiIconUserCheck" [tuiHint]="activeHint" [tuiHintShowDelay]="100" *ngIf="user?.active"></tui-svg>
+    <tui-svg src="tuiIconUserX" [tuiHint]="inactiveHint" [tuiHintShowDelay]="100" *ngIf="!user?.active"></tui-svg>
+  </div>
+</td>
+<td class="tui-table__td">{{user?.username}}</td>
+<td class="tui-table__td">{{user?.email}}</td>
+<td class="tui-table__td tui-table__td_last">
+  <button
+    tuiIconButton
+    type="button"
+    appearance="icon"
+    size="xs"
+    icon="tuiIconEdit2"
+    [tuiHint]="editHint"
+    [tuiHintShowDelay]="100"
+    [routerLink]="['edit', user?.id]"
+  ></button>
+  <button
+    tuiIconButton
+    type="button"
+    appearance="icon"
+    size="xs"
+    icon="tuiIconTrash2"
+    (click)="deleteUser()"
+    [tuiHint]="deleteHint"
+    [tuiHintShowDelay]="100"
+  ></button>
+</td>
+
+<ng-template #adminHint>
+  {{ 'management.users.userListItem.adminHint' | transloco }}
+</ng-template>
+
+<ng-template #activeHint>
+  {{ 'management.users.userListItem.activeHint' | transloco }}
+</ng-template>
+
+<ng-template #inactiveHint>
+  {{ 'management.users.userListItem.inactiveHint' | transloco }}
+</ng-template>
+
+<ng-template #editHint>
+  {{ 'management.users.userListItem.editUserHint' | transloco }}
+</ng-template>
+
+<ng-template #deleteHint>
+  {{ 'management.users.userListItem.deleteUserHint' | transloco }}
+</ng-template>

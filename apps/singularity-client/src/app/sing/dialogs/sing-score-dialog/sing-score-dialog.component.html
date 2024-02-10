@@ -1,0 +1,12 @@
+<div class="header" [style.background-color]="bestSinger.color">
+  <canvas #confetti></canvas>
+  <h1>{{highestScore | scoreTitle}}</h1>
+</div>
+<h1>{{ 'sing.singScoreDialog.score' | transloco }}</h1>
+<div *ngFor="let singer of context.data.singers; let i = index" class="flex tui-space_top-5">
+    <tui-svg
+    src="tuiIconMicLarge"
+    [style.color]="singer.color"
+  ></tui-svg>
+  <progress tuiProgressBar min="0" max="10000" [value]="context.data.scores[i]" [color]="singer.color"></progress>
+</div>

@@ -1,0 +1,23 @@
+{
+  "name": "Singularity",
+  "short_name": "Singularity",
+  "theme_color": "#526ED3",
+  "background_color": "#222222",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}

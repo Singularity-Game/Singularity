@@ -1,0 +1,197 @@
+{
+  "general": {
+    "username": "Username",
+    "password": "Password",
+    "repeatPassword": "Repeat Password",
+    "email": "Email",
+    "back": "Back",
+    "error": "Error",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "yes": "Yes",
+    "no": "No",
+    "save": "Save"
+  },
+  "authentication": {
+    "login": {
+      "no-account-info-dialog": {
+        "header": "You don't have an account",
+        "firstParagraph": "Singularity is a privately operated online singing game. If you don't have an account for this server, you need to ask the server operator to create one for you. Since the server is private, you need to know the operator for this.",
+        "dontKnowOwner": "Don't know the server operator?",
+        "secondParagraph": "If you have the technical expertise, you can run your own Singularity server. Singularity is <b>free and open-source.</b> More information can be found on our <a href=\"https://github.com\">Github</a> page."
+      },
+      "header": "Login",
+      "forgotPassword": "Forgot Password?",
+      "login": "Login",
+      "noAccount": "Don't have an account?",
+      "wrongUsernameOrPassword": "Wrong username or password"
+    },
+    "resetPassword": {
+      "header": "Reset Password",
+      "resetPassword": "Reset Password",
+      "successMessage": "If a user with this email address exists, a password reset link has been sent.",
+      "successLabel": "Password Reset Requested!"
+    },
+    "setPassword": {
+      "header": "Set Password",
+      "setPassword": "Set Password",
+      "invalidLink": "The link you have accessed is invalid. Please try again.",
+      "successMessage": "The password has been successfully set!",
+      "successLabel": "Password Set!",
+      "errorMessage": "An unexpected error occurred!",
+      "errorLabel": "Error!"
+    }
+  },
+  "management": {
+    "settings": {
+      "header": "Settings",
+      "localSettings": {
+        "header": "Local Settings",
+        "descriptionHTML": "These settings will only be applied in this browser on this computer.<br>The settings are automatically saved.",
+        "theme": {
+          "header": "Theme:",
+          "light": "Light",
+          "dark": "Dark",
+          "description": "Choose between light and dark."
+        },
+        "microphoneLatency": {
+          "header": "Microphone Latency:",
+          "microphoneLatency": "Microphone Latency",
+          "description": "The microphone latency corresponds to the time from the recording of the singing by the microphone to the display of the data in the game. The latency can depend on the speed of the computer, as well as the microphone used. This value should be set so that no deviation is noticeable in the game. In general, the value should be chosen as small as possible and as large as necessary."
+        },
+        "offlineMode": {
+          "header": "Offline Mode",
+          "online": "Online",
+          "offline": "Offline",
+          "description": "In Offline Mode, only downloaded songs will be displayed in the game. This can be helpful in an environment with slow internet or with a metered internet connection."
+        },
+        "localStorage": {
+          "header": "Local Storage",
+          "used": "used.",
+          "calculating": "Calculating...",
+          "description": "Local storage contains all downloaded songs that are available offline without an internet connection. The amount of available storage depends on the browser."
+        },
+        "emptyLocalStorage": {
+          "header": "Empty Local Storage",
+          "button": "Empty Local Storage",
+          "description": "Removes all songs from local storage."
+        }
+      }
+    },
+    "songs": {
+      "createSong": {
+        "header": "New Song",
+        "txtFile": "TXT File",
+        "audioFile": "Audio File",
+        "videoFile": "Video File",
+        "coverFile": "Cover File",
+        "songAlreadyExistsError": "This song already exists.",
+        "songSaveError": "Error saving the song.",
+        "error": "An unknown error occurred."
+      },
+      "songListItem": {
+        "downloadedHint": "This song is downloaded and available locally without an internet connection.",
+        "playHint": "Play",
+        "deleteHint": "Delete Song",
+        "downloadButtonHint": "Download Song",
+        "removeDownloadButtonHint": "Remove Downloaded Song",
+        "downloadSongError": "Error downloading the song.",
+        "deletePrompt1": "Do you really want to delete the song",
+        "deletePrompt2": "?",
+        "deletePromptTitle": "Delete Song",
+        "deleteSongError": "Error deleting the song."
+      },
+      "songList": {
+        "header": "Songs",
+        "newSong": "New Song",
+        "title": "Title",
+        "author": "Author",
+        "year": "Year",
+        "actions": "Actions"
+      }
+    },
+    "users": {
+      "editUser": {
+        "editUserHeader": "Edit User",
+        "createUserHeader": "New User",
+        "newUser": "New User",
+        "resetPassword": "Reset Password",
+        "admin": "Administrator",
+        "active": "Active",
+        "resetPasswordPrompt": "Do you really want to reset the user's password? An email with further instructions will be sent to the user.",
+        "error": "An unexpected error occurred!",
+        "resetPasswordSuccessMessage": "Password successfully reset!",
+        "resetPasswordSuccessLabel": "Password Reset",
+        "editUserSuccessMessage": "User successfully edited",
+        "editUserSuccessLabel": "User Edited",
+        "createUserSuccessMessage": "User successfully created",
+        "createUserSuccessLabel": "User Created"
+      },
+      "userListItem": {
+        "adminHint": "Administrator",
+        "activeHint": "Active",
+        "inactiveHint": "Inactive",
+        "editUserHint": "Edit User",
+        "deleteUserHint": "Delete User",
+        "deleteUserPrompt1": "Do you really want to delete the user",
+        "deleteUserPrompt2": "?",
+        "deleteUserPromptLabel": "Delete User",
+        "error": "An unexpected error occurred!",
+        "deleteUserSuccessMessage": "User successfully deleted!",
+        "deleteUserSuccessLabel": "User Deleted"
+      },
+      "userList": {
+        "header": "Users",
+        "newUser": "New User",
+        "actions": "Actions"
+      }
+    }
+  },
+  "play": {
+    "downloadedHint": "This song is downloaded and available locally without an internet connection.",
+    "search": "Search",
+    "orderBy": "Sort by...",
+    "name": "Name",
+    "artist": "Artist",
+    "activeOfflineModeWarning": "Offline mode is active. Some songs may not be displayed.",
+    "turnOffOfflineMode": "Turn Off Offline Mode"
+  },
+  "shared": {
+    "adminFeatureIcon": {
+      "adminHint": "This section is visible only to administrators."
+    },
+    "navbar": {
+      "play": "Play",
+      "party": "Party",
+      "logout": "Logout"
+    }
+  },
+  "sing": {
+    "audioContextActivationDialog": {
+      "header": "Please activate the Audio Context",
+      "description": "Click on the following button",
+      "button": "Activate Audio Context!"
+    },
+    "microphoneSelectionDialog": {
+      "header": "Please select microphones!",
+      "player": "Player",
+      "submit": "Submit",
+      "noPlayer": "No Player"
+    },
+    "singScoreDialog": {
+      "score": "Score"
+    },
+    "scoreTitles": {
+      "hitsinger": "Hit Singer",
+      "leadsinger": "Lead Singer",
+      "risingStar": "Rising Star",
+      "amateur": "Amateur",
+      "toneDeaf": "Tone Deaf"
+    },
+    "sing": {
+      "loadingSong": "Loading Song...",
+      "hint": "Hint:",
+      "downloadSongsHint": "You can download songs in the settings so they don't have to be loaded at the start of the game."
+    }
+  }
+}

@@ -1,0 +1,197 @@
+{
+  "general": {
+    "username": "Benutzername",
+    "password": "Passwort",
+    "repeatPassword": "Passwort wiederholen",
+    "email": "Email",
+    "back": "Zurück",
+    "error": "Fehler",
+    "cancel": "Abbrechen",
+    "submit": "Abschicken",
+    "yes": "Ja",
+    "no": "Nein",
+    "save": "Speichern"
+  },
+  "authentication":{
+    "login": {
+      "no-account-info-dialog": {
+        "header": "Du besitzt kein Konto",
+        "firstParagraph": "Singularity ist ein privat betriebenes Online Gesangsspiel. Wenn du kein Konto für diesen Server besitzt, musst du den Betreiber des Servers fragen, ob er dir ein Konto anlegt. Da der Server privat ist, musst du den Betreiber dafür kennen.",
+        "dontKnowOwner": "Du kennst den Betreiber des Servers nicht?",
+        "secondParagraph": "Sofern du die technische Expertise besitzt, kannst du einen eigenen Singularity Server betreiben. Singularity ist <b>kostenlos und offen.</b> Weitere Infos dazu erhälst du auf unserer <a href=\"https://github.com\">Github</a> Seite."
+      },
+      "header": "Login",
+      "forgotPassword": "Passwort vergessen?",
+      "login": "Login",
+      "noAccount": "Du besitzt kein Konto?",
+      "wrongUsernameOrPassword": "Falscher Benutzername oder falsches Passwort"
+    },
+    "resetPassword": {
+      "header": "Passwort zurücksetzen",
+      "resetPassword": "Passwort zurücksetzen",
+      "successMessage": "Sofern ein Benutzer mit dieser Email Adresse existiert, wurde ein Link zum zurücksetzen des Passworts versendet.",
+      "successLabel": "Passwort Zurücksetzung angefragt!"
+    },
+    "setPassword": {
+      "header": "Passwort setzen",
+      "setPassword": "Passwort setzen",
+      "invalidLink": "Der aufgerufene Link ist ungültig. Bitte versuche es erneut.",
+      "sucessMessage": "Das Passwort wurde erfolgreich gesetzt!",
+      "successLabel": "Passwort gesetzt!",
+      "errorMessage": "Ein unerwarteter Fehler ist aufegetreten!",
+      "errorLabel": "Fehler!"
+    }
+  },
+  "management": {
+    "settings": {
+      "header": "Einstellungen",
+      "localSettings": {
+        "header": "Lokale Einstellungen",
+        "descriptionHTML": "Diese Einstellungen werden nur in diesem Browser auf diesem Computer übernommen.<br>Die Einstellungen werden automatisch gespeichert.",
+        "theme": {
+          "header": "Theme:",
+          "light": "Hell",
+          "dark": "Dunkel",
+          "description": "Wähle zwischen hell und dunkel."
+        },
+        "microphoneLatency": {
+          "header": "Mikrofon Latenz:",
+          "microphoneLatency": "Mikrofon Latenz",
+          "description": "Die Mikrofon Latenz entspricht der Zeit, von der Aufnahme des Gesangs durch das Mikrofon, bis zur Anzeige der Daten im Spiel. Die Latenz kann Abhängig sein von der Geschwindigkeit des Computers, sowie des verwendeten Mikrofons. Dieser Wert sollte so eingestellt werden, dass im Spiel keine Abweichung zu merken ist. Grundsätzlich sollte der Wert so klein wie möglich und so groß wie nötig gewählt werden."
+        },
+        "offlineMode": {
+          "header": "Offline Modus",
+          "online": "Online",
+          "offline": "Offline",
+          "description": "Im Offline Modus werden im Spiel nur heruntergeladene Songs angezeigt. Dies kann in einer Umgebung mit langsamen Internet oder mit einer getakteten Internetverbindung hilfreich sein."
+        },
+        "localStorage": {
+          "header": "Lokaler Speicher",
+          "used": "verbraucht.",
+          "calculating": "Berechne...",
+          "description": "Der Lokale Speicher enthält alle heruntergeladenen Songs, die offline ohne Internetverbindung verfügbar sind. Die Menge des verfügbaren Speichers ist vom Browser abhängig."
+        },
+        "emptyLocalStorage": {
+          "header": "Lokalen Speicher leeren",
+          "button": "Lokalen Speicher leeren",
+          "description": "Entfernt alle Songs aus dem lokalen Speicher."
+        }
+      }
+    },
+    "songs": {
+      "createSong": {
+        "header": "Neuer Song",
+        "txtFile": "TXT Datei",
+        "audioFile": "Audio Datei",
+        "videoFile": "Video Datei",
+        "coverFile": "Cover Datei",
+        "songAlreadyExistsError": "Dieser Song existiert bereits.",
+        "songSaveError": "Fehler beim Speicher des Songs.",
+        "error": "Ein unbekannter Fehler ist aufgetreten."
+      },
+      "songListItem": {
+        "downloadedHint": "Dieser Song ist heruntergeladen und ohne Internetverbindung Lokal verfügbar.",
+        "playHint": "Spielen",
+        "deleteHint": "Song löschen",
+        "downloadButtonHint": "Song herunterladen",
+        "removeDownloadButtonHint": "Heruntergeladenen Song entfernen",
+        "downloadSongError": "Fehler beim Herunterladen des Songs.",
+        "deletePrompt1": "Möchtest du den Song",
+        "deletePrompt2": "wirklich löschen?",
+        "deletePromptTitle": "Song löschen",
+        "deleteSongError": "Fehler beim Löschen des Songs."
+      },
+      "songList": {
+        "header": "Songs",
+        "newSong": "Neuer Song",
+        "title": "Titel",
+        "author": "Author",
+        "year": "Jahr",
+        "actions": "Aktionen"
+      }
+    },
+    "users": {
+      "editUser": {
+        "editUserHeader": "Benutzer bearbeiten",
+        "createUserHeader": "Neuer Benutzer",
+        "newUser": "Neuer Benutzer",
+        "resetPassword": "Passwort zurücksetzen",
+        "admin": "Administrator",
+        "active": "Aktiv",
+        "resetPasswordPrompt": "Möchtest du das Passwort des Nutzers wirklich zurücksetzen? Dem Nutzer wird eine Email mit weiteren Informationen geschickt.",
+        "error": "Ein unerwarteter Fehler ist aufgetreten!",
+        "resetPasswordSuccessMessage": "Passwort erfolgreich zurückgesetzt!",
+        "resetPasswordSuccessLabel": "Passwort zurückgesetzt",
+        "editUserSuccessMessage": "Benutzer erfolgreich bearbeitet",
+        "editUserSuccessLabel": "Benutzer bearbeitet",
+        "createUserSuccessMessage": "Benutzer erfolgreich angelegt",
+        "createUserSuccessLabel": "Benutzer angelegt"
+      },
+      "userListItem": {
+        "adminHint": "Administrator",
+        "activeHint": "Aktiv",
+        "inactiveHint": "Inaktiv",
+        "editUserHint": "Benutzer bearbeiten",
+        "deleteUserHint": "Benutzer löschen",
+        "deleteUserPrompt1": "Möchtest du den Nutzer",
+        "deleteUserPrompt2": "wirklich löschen?",
+        "deleteUserPromptLabel": "Nutzer löschen",
+        "error": "Ein unerwarteter Fehler ist aufgetreten!",
+        "deleteUserSuccessMessage": "Benutzer erfolgreich gelöscht!",
+        "deleteUserSuccessLabel": "Benutzer gelöscht"
+      },
+      "userList": {
+        "header": "Benutzer",
+        "newUser": "Neuer Benutzer",
+        "actions": "Aktionen"
+      }
+    }
+  },
+  "play": {
+    "downloadedHint": "Dieser Song ist heruntergeladen und ohne Internetverbindung Lokal verfügbar.",
+    "search": "Suche",
+    "orderBy": "Sortieren nach...",
+    "name": "Name",
+    "artist": "Künstler",
+    "activeOfflineModeWarning": "Der Offline Modus ist aktiv. Gegebenenfalls werden nicht alle Songs angezeigt.",
+    "turnOffOfflineMode": "Offline Modus ausschalten"
+  },
+  "shared": {
+    "adminFeatureIcon": {
+      "adminHint": "Dieser Bereich ist nur für Administratoren sichtbar."
+    },
+    "navbar": {
+      "play": "Spielen",
+      "party": "Party",
+      "logout": "Abmelden"
+    }
+  },
+  "sing": {
+    "audioContextActivationDialog": {
+      "header": "Bitte aktiviere den Audio Context",
+      "description": "Klicke auf den folgenden Button",
+      "button": "Audio Context aktivieren!"
+    },
+    "microphoneSelectionDialog": {
+      "header": "Bitte wähle Mikrofone aus!",
+      "player": "Spieler",
+      "submit": "Übernehmen",
+      "noPlayer": "Kein Spieler"
+    },
+    "singScoreDialog": {
+      "score": "Punktestand"
+    },
+    "scoreTitles": {
+      "hitsinger": "Hitsänger",
+      "leadsinger": "Leadsänger",
+      "risingStar": "Nachwuchskünstler",
+      "amateur": "Amateur",
+      "toneDeaf": "Taub"
+    },
+    "sing": {
+      "loadingSong": "Lade Song...",
+      "hint": "Tipp:",
+      "downloadSongsHint": "Du kannst Songs in den Einstellungen herunterladen, sodass sie nicht erst beim Spielstart geladen werden müssen."
+    }
+  }
+}

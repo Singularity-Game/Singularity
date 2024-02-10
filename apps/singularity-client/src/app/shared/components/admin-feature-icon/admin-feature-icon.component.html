@@ -1,0 +1,4 @@
+<tui-svg [src]="size === 'small' ? 'tuiIconShield' : 'tuiIconShieldLarge'" [tuiHint]="adminHint" [tuiHintShowDelay]="100"></tui-svg>
+<ng-template #adminHint>
+  {{ 'shared.adminFeatureIcon.adminHint' | transloco }}
+</ng-template>

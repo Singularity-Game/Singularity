@@ -1,0 +1,27 @@
+
+<audio #audioElement tuiMedia [(currentTime)]="currentTime"></audio>
+<div class="tui-player" *ngIf="playList">
+  <video #videoElement tuiMedia [currentTime]="currentTime" [class.hide]="!showVideo"></video>
+  <img [src]="cover$ | async" alt="cover" *ngIf="!showVideo" />
+  <div class="overflow-container">
+    <a (click)="startSinging()" [tuiHint]="currentSong?.artist + ' - ' + currentSong?.name" [tuiHintShowDelay]="100">{{currentSong?.artist}} - {{currentSong?.name}}</a>
+    <input
+      tuiSlider
+      type="range"
+      step="any"
+      class="slider"
+      [(ngModel)]="currentTime"
+      [max]="audioElement.duration"
+    />
+  </div>
+  <button
+    tuiIconButton
+    type="button"
+    shape="rounded"
+    appearance="icon"
+    size="m"
+    title="Play/Pause"
+    [icon]="audioElement.paused ? 'tuiIconPlay' : 'tuiIconPause'"
+    (click)="toggle()"
+  ></button>
+</div>

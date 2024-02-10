@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '@taiga-ui/core/styles/taiga-ui-local';
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: var(--tui-base-01);
+}
+
+.flex {
+  display: flex;
+  gap: 20px;
+}
+
+.flex-1 {
+  flex: 1;
+}

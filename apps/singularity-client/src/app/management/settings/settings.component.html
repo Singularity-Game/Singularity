@@ -1,0 +1,134 @@
+<h1>{{ 'management.settings.header' | transloco }}</h1>
+<tui-island>
+  <h3 class='tui-island__title'>{{ 'management.settings.localSettings.header' | transloco }}</h3>
+  <p class='tui-island__paragraph' [innerHTML]="'management.settings.localSettings.descriptionHTML' | transloco"></p>
+  <div class='flex tui-space_top-5 align-center'>
+    <p class='settings-title'>
+      {{ 'management.settings.localSettings.theme.header' | transloco }}
+    </p>
+    <div
+      class='flex-1'
+      tuiGroup
+      [collapsed]='true'
+    >
+      <tui-radio-block
+        contentAlign='right'
+        [(ngModel)]='darkMode'
+        [item]='false'
+        size='l'
+      >
+        {{ 'management.settings.localSettings.theme.light' | transloco }}
+      </tui-radio-block>
+      <tui-radio-block
+        contentAlign='right'
+        [(ngModel)]='darkMode'
+        [item]='true'
+        size='l'
+      >
+        {{ 'management.settings.localSettings.theme.dark' | transloco }}
+      </tui-radio-block>
+    </div>
+    <p class='flex-1'>
+      {{ 'management.settings.localSettings.theme.description' | transloco }}
+    </p>
+  </div>
+
+  <div class='flex tui-space_top-5 align-center'>
+    <p class='settings-title'>
+      {{ 'management.settings.localSettings.microphoneLatency.header' | transloco }}
+    </p>
+    <tui-input-count
+      class='flex-1'
+      [min]='0'
+      [step]='10'
+      [(ngModel)]='microphoneLatency'
+    >
+      {{ 'management.settings.localSettings.microphoneLatency.microphoneLatency' | transloco }}
+      <input
+        tuiTextfield
+        placeholder='90'
+      />
+    </tui-input-count>
+    <p class='flex-1'>
+      {{ 'management.settings.localSettings.microphoneLatency.description' | transloco }}
+    </p>
+  </div>
+
+  <div class='flex tui-space_top-5 align-center'>
+    <p class='settings-title'>
+      {{ 'management.settings.localSettings.offlineMode.header' | transloco }}
+    </p>
+    <div
+      class='flex-1'
+      tuiGroup
+      [collapsed]='true'
+    >
+      <tui-radio-block
+        contentAlign='right'
+        [(ngModel)]='offlineMode'
+        [item]='false'
+        size='l'
+      >
+        {{ 'management.settings.localSettings.offlineMode.online' | transloco }}
+      </tui-radio-block>
+      <tui-radio-block
+        contentAlign='right'
+        [(ngModel)]='offlineMode'
+        [item]='true'
+        size='l'
+      >
+        {{ 'management.settings.localSettings.offlineMode.offline' | transloco }}
+      </tui-radio-block>
+    </div>
+    <p class='flex-1'>
+      {{ 'management.settings.localSettings.offlineMode.description' | transloco }}
+    </p>
+  </div>
+
+  <hr>
+
+  <div class='flex tui-space_top-5 align-center'>
+    <p class='settings-title'>
+      {{ 'management.settings.localSettings.localStorage.header' | transloco }}
+    </p>
+    <div class='flex-1'>
+      <progress
+        *ngIf='storageSpaceProgress !== null'
+        tuiProgressBar
+        max='100'
+        size='s'
+        [value]='storageSpaceProgress'
+      ></progress>
+      <progress
+        *ngIf='storageSpaceProgress === null'
+        tuiProgressBar
+        max='100'
+        size='s'
+      ></progress>
+      <p *ngIf='totalStorageSpace !== null && usedStorageSpace !== null' class='storage-space-text'>
+        {{ usedStorageSpace / 1000000000 | number }} Gb / {{ totalStorageSpace / 1000000000 | number }}
+        Gb {{ 'management.settings.localSettings.localStorage.used' | transloco }}
+      </p>
+      <p *ngIf='totalStorageSpace === null || usedStorageSpace === null' class='storage-space-text'>
+        {{ 'management.settings.localSettings.localStorage.calculating' | transloco }}
+      </p>
+    </div>
+    <p class='flex-1'>
+      {{ 'management.settings.localSettings.localStorage.description' | transloco }}
+    </p>
+  </div>
+
+  <div class='flex tui-space_top-5 align-center'>
+    <p class='settings-title'>
+      {{ 'management.settings.localSettings.emptyLocalStorage.header' | transloco }}
+    </p>
+    <div class='flex-1'>
+      <button tuiButton appearance='outline' class='storage-clear-button' [showLoader]='isClearingSongs'
+              (click)='clearSongs()'>{{ 'management.settings.localSettings.emptyLocalStorage.button' | transloco }}
+      </button>
+    </div>
+    <p class='flex-1'>
+      {{ 'management.settings.localSettings.emptyLocalStorage.description' | transloco }}
+    </p>
+  </div>
+</tui-island>

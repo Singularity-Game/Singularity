@@ -1,0 +1,73 @@
+.song-cover {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 1;
+}
+
+.song-cover-wrapper {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  cursor: pointer;
+
+  .song-cover-content {
+    opacity: 0;
+  }
+
+  &:hover {
+    .song-cover-content {
+      opacity: 1;
+    }
+  }
+}
+
+$font-size: 75px;
+
+.song-cover-content {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  position: relative;
+  top: -100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: -100%;
+  transition: opacity 0.5s;
+  background-color: #0f0f0faa;
+  border-radius: var(--tui-radius-m);
+  text-align: center;
+  vertical-align: center;
+
+  p {
+    font-size: $font-size;
+
+    tui-svg {
+      width: $font-size;
+      height: $font-size;
+      font-size: $font-size / 2;
+    }
+  }
+}
+
+.song-name {
+  text-align: center;
+  font: var(--tui-font-text-m);
+  font-weight: bold;
+  margin-bottom: 0;
+
+  a {
+    color: var(--tui-text-01);
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.song-artist {
+  text-align: center;
+  margin-top: 0;
+}
+
+.downloaded {
+  color: var(--tui-positive)
+}

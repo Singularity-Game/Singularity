@@ -1,0 +1,27 @@
+.primary {
+  color: var(--tui-primary);
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.flex-item {
+  flex: 1
+}
+
+.align-center {
+  align-items: center;
+}
+
+
+a {
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

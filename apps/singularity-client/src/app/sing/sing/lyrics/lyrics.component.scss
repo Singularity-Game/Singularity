@@ -1,0 +1,89 @@
+$primary-font-size: 55px;
+$secondary-font-size: 25px;
+$animation-duration: 0.3s;
+
+:host {
+  height: 200px;
+  width: 100%;
+}
+
+.lyrics-main {
+  font-size: $primary-font-size;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  text-shadow:
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;
+
+  & > span {
+    animation: secondary-to-primary $animation-duration;
+    position: relative;
+  }
+}
+
+.lyrics-secondary {
+  font-size: $secondary-font-size;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  text-shadow:
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;
+
+  & > span {
+    animation: none-to-secondary $animation-duration;
+    position: relative;
+  }
+}
+
+.lyrics-highlighted {
+  animation: color-changer 1s;
+}
+
+@keyframes secondary-to-primary {
+  0% {
+    font-size: $secondary-font-size;
+    top: ($secondary-font-size + $primary-font-size);
+  }
+
+  25% {
+    font-size: $secondary-font-size;
+  }
+
+  100% {
+    top: 0;
+    font-size: $primary-font-size;
+  }
+}
+
+@keyframes none-to-secondary {
+  0% {
+    top: 30px;
+    opacity: 0;
+  }
+
+  25% {
+    top: 30px;
+    opacity: 0;
+  }
+
+  100% {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes color-changer {
+  0% {
+    color: var(--tui-primary);
+  }
+
+  100% {
+    color: white;
+  }
+}

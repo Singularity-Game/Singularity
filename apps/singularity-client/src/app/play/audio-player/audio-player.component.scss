@@ -1,0 +1,52 @@
+.tui-player {
+  display: flex;
+  width: 20rem;
+  max-height: 44px;
+  border-radius: 6.25rem;
+  background: var(--tui-secondary);
+  align-items: center;
+  gap: 10px;
+
+  --tui-primary: var(--tui-link);
+  --tui-primary-hover: var(--tui-link-hover);
+  --tui-primary-active: var(--tui-link-hover);
+}
+
+.hide {
+  display: none;
+}
+
+video, .video-background {
+  height: 44px;
+  aspect-ratio: 16 / 9;
+  background-color: black;
+  border-top-left-radius: 22px;
+  border-bottom-left-radius: 22px;
+}
+
+img {
+  height: 44px;
+  aspect-ratio: 1 / 1;
+  border-top-left-radius: 22px;
+  border-bottom-left-radius: 22px;
+}
+
+.overflow-container {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  flex: 1;
+  transition: width 0.5s ease-in-out;
+}
+
+a {
+  margin: 0;
+  text-overflow: ellipsis;
+  color: var(--tui-text-01);
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

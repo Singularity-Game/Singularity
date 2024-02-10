@@ -1,0 +1,63 @@
+video {
+  width: 100%;
+  height: 100%;
+}
+
+singularity-lyrics {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+singularity-vocal-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.score-list {
+  display: flex;
+  gap: 25px;
+  position: absolute;
+  top: 25px;
+  left: 10px;
+}
+
+$score-font-size: 50px;
+
+tui-svg {
+  font-size: $score-font-size / 2;
+  width: $score-font-size;
+  height: $score-font-size;
+  position: relative;
+  top: -3px;
+}
+
+.score {
+  margin: 0;
+  font-size: $score-font-size;
+  font-weight: bold;
+  text-align: center;
+  text-shadow:
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;
+}
+
+.loading-content {
+  position: absolute;
+  width: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+tui-notification {
+  text-align: left;
+}
+
+h3 {
+  margin: 0
+}

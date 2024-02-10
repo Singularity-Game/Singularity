@@ -1,0 +1,13 @@
+<p class="lyrics-main">
+  <span *ngFor="let note of currentLine">
+    <span
+      [class.lyrics-highlighted]="note === currentNote"
+      [style.animation-duration]="(note.lengthInBeats * (60 / (bpm ?? 1))) + 's'"
+    >{{ note.text }}</span>
+  </span>
+</p>
+<p class="lyrics-secondary">
+  <span
+    *ngFor="let note of nextLine"
+  >{{ note.text }}</span>
+</p>

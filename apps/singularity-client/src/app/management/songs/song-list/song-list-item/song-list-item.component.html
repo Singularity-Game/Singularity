@@ -1,0 +1,85 @@
+<td class="tui-table__td tui-table__td_first avatar-td">
+  <tui-avatar
+    new
+    size="m"
+    class="tui-space_vertical-1"
+    [avatarUrl]="cover$ | async"
+  ></tui-avatar>
+</td>
+<td class="tui-table__td">
+  <div class="flex download-icon-td" *ngIf="isDownloaded$ | async">
+    <tui-svg src="tuiIconDownload"  class="downloaded" [tuiHint]="downloadedHint" [tuiHintShowDelay]="100"></tui-svg>
+  </div>
+  <tui-loader size="s" [showLoader]="isDownloading || isCheckingDownload"></tui-loader>
+</td>
+<td class="tui-table__td">{{song?.name}}</td>
+<td class="tui-table__td">{{song?.artist}}</td>
+<td class="tui-table__td">{{song?.year}}</td>
+<td class="tui-table__td tui-table__td_last">
+  <button
+    tuiIconButton
+    type="button"
+    appearance="icon"
+    size="xs"
+    icon="tuiIconPlay"
+    (click)="start()"
+    [tuiHint]="playHint"
+    [tuiHintShowDelay]="100"
+  ></button>
+  <button
+    *ngIf="(isDownloaded$ | async) === false else notDownloaded"
+    tuiIconButton
+    type="button"
+    appearance="icon"
+    size="xs"
+    icon="tuiIconDownload"
+    (click)="download()"
+    [disabled]="isDownloading || isCheckingDownload"
+    [tuiHint]="downloadButtonHint"
+    [tuiHintShowDelay]="100"
+  ></button>
+  <button
+    *ngIf="isAdmin$ | async"
+    tuiIconButton
+    type="button"
+    appearance="icon"
+    size="xs"
+    icon="tuiIconTrash2"
+    (click)="delete()"
+    [tuiHint]="deleteHint"
+    [tuiHintShowDelay]="100"
+  ></button>
+  <ng-template #notDownloaded>
+    <button
+      tuiIconButton
+      type="button"
+      appearance="icon"
+      size="xs"
+      icon="tuiIconMinusCircle"
+      (click)="removeDownload()"
+      [disabled]="isCheckingDownload"
+      [tuiHint]="removeDownloadButtonHint"
+      [tuiHintShowDelay]="100"
+    ></button>
+  </ng-template>
+</td>
+
+<ng-template #downloadedHint>
+  {{ 'management.songs.songListItem.downloadedHint' | transloco }}
+</ng-template>
+
+<ng-template #playHint>
+  {{ 'management.songs.songListItem.playHint' | transloco }}
+</ng-template>
+
+<ng-template #deleteHint>
+  {{ 'management.songs.songListItem.deleteHint' | transloco }}
+</ng-template>
+
+<ng-template #downloadButtonHint>
+  {{ 'management.songs.songListItem.downloadButtonHint' | transloco }}
+</ng-template>
+
+<ng-template #removeDownloadButtonHint>
+  {{ 'management.songs.songListItem.removeDownloadButtonHint' | transloco }}
+</ng-template>

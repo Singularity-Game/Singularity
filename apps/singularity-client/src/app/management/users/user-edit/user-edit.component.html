@@ -1,0 +1,76 @@
+<h1>{{ isEditMode ? ('management.users.editUser.editUserHeader' | transloco) : ('management.users.editUser.createUserHeader' | transloco) }}
+  <singularity-admin-feature-icon size="large"></singularity-admin-feature-icon>
+  <button tuiButton appearance="accent" size="xs" icon="tuiIconArrowLeft" routerLink="/management/users"
+          class="tui-space_left-2">
+    {{ 'general.cancel' | transloco }}
+  </button>
+</h1>
+
+<form [formGroup]="userForm" (ngSubmit)="save()">
+  <tui-loader [showLoader]="isLoading">
+    <tui-island
+      size="l"
+      textAlign="center"
+    >
+      <div class="tui-island__content">
+        <figure class="tui-island__figure">
+          <tui-avatar
+            new
+            size="xxl"
+            class="tui-space_vertical-1"
+            [text]="userForm.controls.username.value || ('management.users.editUser.newUser' | transloco)"
+            [autoColor]="true"
+          ></tui-avatar>
+        </figure>
+        <div>
+          <h3 class="tui-island__title">{{ userForm.controls.username.value || ('management.users.editUser.newUser' | transloco) }}</h3>
+          <div class="tui-island__paragraph tui-space_top-5">
+            <tui-input formControlName="username">
+              {{ 'general.username' | transloco }}
+              <input
+                tuiTextfield
+                type="text"
+              />
+            </tui-input>
+
+            <tui-input class="tui-space_top-5" formControlName="email">
+              {{ 'general.email' | transloco }}
+              <input
+                tuiTextfield
+                type="email"
+              />
+            </tui-input>
+
+            <button tuiButton
+                    type="button"
+                    appearance="outline"
+                    class="tui-space_top-5"
+                    *ngIf="user"
+                    (click)="resetPassword()">{{ 'management.users.editUser.resetPassword' | transloco }}</button>
+
+            <tui-checkbox-labeled class="tui-space_top-5" formControlName="isAdmin">
+              {{ 'management.users.editUser.admin' | transloco }}
+            </tui-checkbox-labeled>
+
+            <tui-checkbox-labeled class="tui-space_top-5" formControlName="active">
+              {{ 'management.users.editUser.active' | transloco }}
+            </tui-checkbox-labeled>
+
+          </div>
+          <button
+            tuiButton
+            type="submit"
+            appearance="flat"
+            size="m"
+            class="tui-island__footer-button"
+            [disabled]="userForm.invalid"
+          >
+            {{ 'general.save' | transloco }}
+          </button>
+        </div>
+      </div>
+    </tui-island>
+  </tui-loader>
+</form>
+
+

@@ -1,0 +1,36 @@
+.song-grid {
+  padding: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+singularity-song-grid-item {
+  flex-basis: 250px;
+  width: 250px;
+}
+
+tui-notification {
+  margin: 25px;
+}
+
+a {
+  color: var(--tui-text-01);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.search-container {
+  margin: 25px;
+  display: flex;
+  gap: 25px;
+}
+
+.search-item {
+  flex-basis: 300px;
+}
+
+tui-scrollbar {
+  max-height: calc(100vh - 157px);
+}

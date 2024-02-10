@@ -1,0 +1,7 @@
+<div class="page">
+  <ng-container *ngIf="songId !== null">
+    <singularity-sing [songId]="songId" (stopped)="onStop()"></singularity-sing>
+  </ng-container>
+</div>
+
+

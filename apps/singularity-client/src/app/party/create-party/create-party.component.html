@@ -1,0 +1,23 @@
+<a routerLink="/">
+  <img src="assets/logo/singularity-logo.svg" alt="Singularity Logo">
+</a>
+
+<div class="center">
+  <tui-island class="shadow">
+    <h3 class="tui-island__title">Party erstellen</h3>
+    <form [formGroup]="form">
+      <tui-input formControlName="name">
+        Name
+        <input
+          tuiTextfield
+          type="text"
+        />
+      </tui-input>
+      <div class="flex tui-space_top-5 align-center">
+        <button tuiButton class="flex-item" type="submit" size="m" appearance="flat" routerLink="/">Zurück</button>
+        <button tuiButton class="flex-item" type="submit" size="m" [disabled]="form.invalid" [showLoader]="false">Erstellen</button>
+      </div>
+    </form>
+  </tui-island>
+
+</div>
