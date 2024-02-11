@@ -22,9 +22,9 @@ ENV OPENSSL_LIB_DIR=/usr/local/ssl/lib \
 
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 ENV PATH=/root/.cargo/bin:$PATH
-RUN rustup install nightly
-RUN rustup override set nightly
-RUN rustup target add wasm32-unknown-emscripten --toolchain nightly
+RUN rustup install stable
+RUN rustup override set stable
+RUN rustup target add wasm32-unknown-emscripten --toolchain stable
 RUN cargo install wasm-pack
 
 COPY . .
