@@ -84,7 +84,7 @@ Introducing Singularity: Your browser's karaoke stage! Gather your friends for a
    3. Replace the Placeholder `<APP-URL>` with the URL your app will be running on. For example `http://localhost`
    4. Replace the Placeholders `<SMTP-HOST>`, `<SMTP-USER>`, `<SMTP-PASSWORD>` and `<SMTP-FROM>` with the credentials from your SMTP Server. Without an SMTP Server, Singularity will be unable to send emails and you will be unable to create new users.
 3. Run the command `docker compose up`
-4. Singularity will now be running on `<APP-URL>:3000`. 
+4. Singularity will now be running on `<APP-URL>:3333`. 
 5. You can login to Singularity with the Username: `admin` and the Password: `admin`.
 
 ## Upload Songs
