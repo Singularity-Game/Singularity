@@ -1,15 +1,15 @@
 ![singularity-logo.svg](docs%2Fimages%2Fsingularity-logo.svg#gh-dark-mode-only)
 ![singularity-logo-dark.svg](docs%2Fimages%2Fsingularity-logo-dark.svg#gh-light-mode-only)
 
-<center>
-
-![Contributors](https://img.shields.io/github/contributors/Singularity-Game/Singularity?style=flat-square)
-![License](https://img.shields.io/github/license/Singularity-Game/Singularity?style=flat-square)
-![Build Passing](https://img.shields.io/github/actions/workflow/status/Singularity-Game/Singularity/docker-publish.yml?style=flat-square)
-
+<p align="center">
+  <img src="https://img.shields.io/github/contributors/Singularity-Game/Singularity?style=flat-square" />
+  <img src="https://img.shields.io/github/contributors/Singularity-Game/Singularity?style=flat-square)" />
+  <img src="https://img.shields.io/github/actions/workflow/status/Singularity-Game/Singularity/docker-publish.yml?style=flat-square" />
+</p>
+<p align="center">
 Introducing Singularity: Your browser's karaoke stage! Gather your friends for a local multiplayer singing experience. No downloads necessary, just pure musical fun in your browser.
+</p>
 
-</center>
 
 
 
