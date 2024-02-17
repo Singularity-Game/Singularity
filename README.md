@@ -3,7 +3,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/github/contributors/Singularity-Game/Singularity?style=flat-square" />
-  <img src="https://img.shields.io/github/contributors/Singularity-Game/Singularity?style=flat-square)" />
+  <img src="https://img.shields.io/github/license/Singularity-Game/Singularity?style=flat-square" />
   <img src="https://img.shields.io/github/actions/workflow/status/Singularity-Game/Singularity/docker-publish.yml?style=flat-square" />
 </p>
 <p align="center">
