@@ -11,3 +11,14 @@ if (environment.production) {
 platformBrowserDynamic()
   .bootstrapModule(AppModule)
   .catch((err) => console.error(err));
+
+
+// Remove all Service Workers to switch from safety-worker to ngsw-worker
+addEventListener('appinstalled', () => {
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
+    registrations.forEach(registration => registration.unregister());
+    navigator.serviceWorker.register('ngsw-worker.js').then(() => {
+      location.reload();
+    });
+  });
+});

@@ -1,9 +1,9 @@
 services:
-  singstar-db:
+  singularity-db:
     image: mariadb:latest
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed
     volumes:
-      - singstar-web-db:/var/lib/mysql
+      - singularity-db:/var/lib/mysql
     restart: unless-stopped
     environment:
       TZ: UTC+1
@@ -11,15 +11,15 @@ services:
       MYSQL_DATABASE: db
       MYSQL_USER: admin
       MYSQL_PASSWORD: EvenMoreSecurePassword!
-  singstar-web:
-    image: ghcr.io/singularity-game/singularity:master
+  singularity:
+    image: ghcr.io/singularity-game/singularity:main
     environment:
-      APP_URL: <app-url>
-      AUTHENTICATION_JWT_SECRET: <secret>
-      DB_HOST: "singstar-db"
+      APP_URL: http://localhost
+      AUTHENTICATION_JWT_SECRET: syfnhiasjfpkf0üpflüpaslfüpoaslfaüsfafasfd
+      DB_HOST: singularity-db
       DB_PORT: 3306
       DB_USERNAME: admin
-      DB_PASSWORD: SecurePassword!
+      DB_PASSWORD: EvenMoreSecurePassword!
       DB_DATABASE: db
       SMTP_SECURE: 'true'
       SMTP_HOST: <SMTP-HOST>
@@ -28,10 +28,10 @@ services:
       SMTP_FROM: <SMTP-FROM>
       SONG_DIRECTORY: songs
     volumes:
-      - singstar-web-songs:/usr/src/app/songs
+      - singularity-songs:/usr/src/app/songs
     ports:
-      - 3333:80
+      - 3333:3333
 
 volumes:
-  singstar-web-db:
-  singstar-web-songs:
+  singularity-db:
+  singularity-songs:
