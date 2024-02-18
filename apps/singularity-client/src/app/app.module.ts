@@ -18,6 +18,13 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { UnauthorizedInterceptor } from './interceptors/unauthorized.interceptor';
 import { TranslocoRootModule } from './transloco-root.module';
 
+
+const serviceWorkerScript =
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  (navigator['standalone'] || window.matchMedia('(display-mode: standalone)').matches) ?
+  'ngsw-worker.js' : 'safety-worker.js';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -40,7 +47,9 @@ import { TranslocoRootModule } from './transloco-root.module';
     TuiThemeNightModule,
     TuiModeModule,
     TuiAlertModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
+    ServiceWorkerModule.register(serviceWorkerScript, {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
@@ -51,7 +60,7 @@ import { TranslocoRootModule } from './transloco-root.module';
   providers: [
     {
       provide: TUI_LANGUAGE,
-      useValue: of(TUI_ENGLISH_LANGUAGE),
+      useValue: of(TUI_ENGLISH_LANGUAGE)
     },
     {
       provide: HTTP_INTERCEPTORS,
@@ -59,6 +68,7 @@ import { TranslocoRootModule } from './transloco-root.module';
       multi: true
     }
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}
