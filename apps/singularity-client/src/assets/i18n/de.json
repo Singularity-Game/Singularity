@@ -81,13 +81,17 @@
     "songs": {
       "createSong": {
         "header": "Neuer Song",
-        "txtFile": "TXT Datei",
         "audioFile": "Audio Datei",
         "videoFile": "Video Datei",
         "coverFile": "Cover Datei",
         "songAlreadyExistsError": "Dieser Song existiert bereits.",
         "songSaveError": "Fehler beim Speicher des Songs.",
-        "error": "Ein unbekannter Fehler ist aufgetreten."
+        "error": "Ein unbekannter Fehler ist aufgetreten.",
+        "createSongUploadTxtFile": {
+          "txtFileInfo": "Die TXT Datei muss im UTF-8 Format hochgeladen werden. Andernfalls kann es zu Encodierungsproblemen kommen.",
+          "txtFile": "TXT Datei",
+          "downloadable": "Dieser Song kann automatisch heruntergeladen werden!"
+        }
       },
       "songListItem": {
         "downloadedHint": "Dieser Song ist heruntergeladen und ohne Internetverbindung Lokal verfügbar.",

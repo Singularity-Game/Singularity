@@ -31,8 +31,7 @@ import { TranslocoService } from '@ngneat/transloco';
   templateUrl: './create-song.component.html',
   styleUrls: ['./create-song.component.scss']
 })
-export class CreateSongComponent implements OnInit, AfterViewInit, OnDestroy {
-  private wavesurfer?: WaveSurfer;
+export class CreateSongComponent implements OnInit, OnDestroy {
 
   public songForm = new FormGroup<CreateSongForm>({
     txtFile: new FormControl<TuiFileLike | null>(null),
@@ -42,10 +41,8 @@ export class CreateSongComponent implements OnInit, AfterViewInit, OnDestroy {
   });
 
   public coverFileBase64$?: Observable<string>;
-  public isPlayingSong = false;
 
   public destroySubject = new Subject<void>();
-  public songLoaded = false;
 
   public uploadProgress = 0;
   public isUploading = false;
@@ -60,33 +57,6 @@ export class CreateSongComponent implements OnInit, AfterViewInit, OnDestroy {
     this.coverFileBase64$ = this.getCoverFileBase64$();
   }
 
-  public ngAfterViewInit(): void {
-    this.wavesurfer = WaveSurfer.create({
-      container: '#waveform',
-      cursorWidth: 2,
-      interact: true,
-      plugins: [
-        RegionsPlugin.create({
-          dragSelection: true,
-          maxRegions: 1
-        })
-      ]
-    });
-
-    this.songForm.controls.audioFile.valueChanges
-      .pipe(takeUntil(this.destroySubject))
-      .subscribe((file: TuiFileLike | null) => {
-        if (file === null) {
-          this.songLoaded = false;
-          this.wavesurfer?.stop();
-          return;
-        }
-
-        this.songLoaded = true;
-        this.wavesurfer?.loadBlob(file as File);
-      });
-  }
-
   public ngOnDestroy(): void {
     this.destroySubject.next();
     this.destroySubject.complete();
@@ -98,11 +68,6 @@ export class CreateSongComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     const createSongRequest: CreateSongRequest = <CreateSongRequest>this.songForm.value;
-    const region = Object.values(this.wavesurfer?.regions.list ?? {})[0];
-    if (region) {
-      createSongRequest.start = region.start;
-      createSongRequest.end = region.end;
-    }
 
     this.isUploading = true;
 
@@ -124,22 +89,6 @@ export class CreateSongComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         error: () => this.isUploading = false
       });
-  }
-
-  public playPauseSong(): void {
-    const region = Object.values(this.wavesurfer?.regions.list ?? {})[0];
-
-    if (this.isPlayingSong) {
-      this.wavesurfer?.stop();
-    } else {
-      if (region) {
-        this.wavesurfer?.play(region.start, region.end);
-      } else {
-        this.wavesurfer?.play();
-      }
-    }
-
-    this.isPlayingSong = !this.isPlayingSong;
   }
 
   private getCoverFileBase64$(): Observable<string> {

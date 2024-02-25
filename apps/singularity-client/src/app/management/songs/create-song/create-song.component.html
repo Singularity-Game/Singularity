@@ -1,114 +1,42 @@
 <h1>{{ 'management.songs.createSong.header' | transloco }}
-  <button tuiButton appearance='accent' size='xs' icon='tuiIconArrowLeft' routerLink='..' [disabled]='isUploading'>
+  <button tuiButton appearance="accent" size="xs" icon="tuiIconArrowLeft" routerLink=".." [disabled]="isUploading">
     {{ 'general.cancel' | transloco }}
   </button>
 </h1>
 
-<tui-island>
-  <div class='flex'>
-    <tui-avatar
-      new
-      size='xxl'
-      [avatarUrl]='coverFileBase64$ | async'
-    ></tui-avatar>
-    <div id='waveform' class='flex-item'></div>
-    <button
-      tuiIconButton
-      type='button'
-      appearance='icon'
-      [icon]="isPlayingSong ? 'tuiIconStopLarge' : 'tuiIconPlayLarge'"
-      [disabled]='!songLoaded'
-      (click)='playPauseSong()'
-    ></button>
-  </div>
-</tui-island>
+<singularity-create-song-uplodad-txt-file-component></singularity-create-song-uplodad-txt-file-component>
 
-<form [formGroup]='songForm'>
-  <div class='tui-space_top-5'>
-    <h2>{{ 'management.songs.createSong.txtFile' | transloco }}</h2>
-    <tui-island>
-      <tui-input-files
-        *ngIf='!songForm.controls.txtFile.value'
-        accept='.txt'
-        formControlName='txtFile'
-      ></tui-input-files>
-      <tui-files class='tui-space_top-1'>
-        <tui-file
-          *ngIf='songForm.controls.txtFile.value'
-          [file]='songForm.controls.txtFile.value!'
-          [showDelete]='true'
-          (removed)='songForm.controls.txtFile.setValue(null)'
-        ></tui-file>
-      </tui-files>
-    </tui-island>
-  </div>
+<!--<form [formGroup]="songForm">-->
+<!--  <div class="tui-space_top-5">-->
+<!--    <h2>{{ 'management.songs.createSong.txtFile' | transloco }}</h2>-->
+<!--    <p>{{ 'management.songs.createSong.txtFileInfo' | transloco }}</p>-->
 
-  <div class='tui-space_top-5'>
-    <h2>{{ 'management.songs.createSong.audioFile' | transloco }}</h2>
-    <tui-island>
-      <tui-input-files
-        *ngIf='!songForm.controls.audioFile.value'
-        accept='audio/*'
-        formControlName='audioFile'
-      ></tui-input-files>
-      <tui-files class='tui-space_top-1'>
-        <tui-file
-          *ngIf='songForm.controls.audioFile.value'
-          [file]='songForm.controls.audioFile.value!'
-          [showDelete]='true'
-          (removed)='songForm.controls.audioFile.setValue(null)'
-        ></tui-file>
-      </tui-files>
-    </tui-island>
-  </div>
+<!--    <tui-input-files-->
+<!--      *ngIf="!songForm.controls.txtFile.value"-->
+<!--      accept=".txt"-->
+<!--      formControlName="txtFile"-->
+<!--    ></tui-input-files>-->
+<!--    <tui-files class="tui-space_top-1">-->
+<!--      <tui-file-->
+<!--        *ngIf="songForm.controls.txtFile.value"-->
+<!--        [file]="songForm.controls.txtFile.value!"-->
+<!--        [showDelete]="true"-->
+<!--        (removed)="songForm.controls.txtFile.setValue(null)"-->
+<!--      ></tui-file>-->
+<!--    </tui-files>-->
+<!--  </div>-->
 
-  <div class='tui-space_top-5'>
-    <h2>{{ 'management.songs.createSong.videoFile' | transloco }}</h2>
-    <tui-island>
-      <tui-input-files
-        *ngIf='!songForm.controls.videoFile.value'
-        [maxFileSize]='200 * 1000 * 1000'
-        accept='video/*'
-        formControlName='videoFile'
-      ></tui-input-files>
-      <tui-files class='tui-space_top-1'>
-        <tui-file
-          *ngIf='songForm.controls.videoFile.value'
-          [file]='songForm.controls.videoFile.value!'
-          [showDelete]='true'
-          (removed)='songForm.controls.videoFile.setValue(null)'
-        ></tui-file>
-      </tui-files>
-    </tui-island>
-  </div>
 
-  <div class='tui-space_top-5'>
-    <h2>{{ 'management.songs.createSong.coverFile' | transloco }}</h2>
-    <tui-island>
-      <tui-input-files
-        *ngIf='!songForm.controls.coverFile.value'
-        accept='image/*'
-        formControlName='coverFile'
-      ></tui-input-files>
-      <tui-files class='tui-space_top-1'>
-        <tui-file
-          *ngIf='songForm.controls.coverFile.value'
-          [file]='songForm.controls.coverFile.value!'
-          [showDelete]='true'
-          (removed)='songForm.controls.coverFile.setValue(null)'
-        ></tui-file>
-      </tui-files>
-    </tui-island>
-  </div>
-
-  <div class='flex'>
-    <button tuiButton class='tui-space_top-3' (click)='uploadSong()' [showLoader]='isUploading'>{{ 'general.submit' | transloco }}</button>
-    <progress
-      *ngIf='isUploading'
-      max='100'
-      tuiProgressBar
-      [value]='uploadProgress'
-    ></progress>
-  </div>
-</form>
+<!--  <div class="flex">-->
+<!--    <button tuiButton class="tui-space_top-3" (click)="uploadSong()"-->
+<!--            [showLoader]="isUploading">{{ 'general.submit' | transloco }}-->
+<!--    </button>-->
+<!--    <progress-->
+<!--      *ngIf="isUploading"-->
+<!--      max="100"-->
+<!--      tuiProgressBar-->
+<!--      [value]="uploadProgress"-->
+<!--    ></progress>-->
+<!--  </div>-->
+<!--</form>-->
 

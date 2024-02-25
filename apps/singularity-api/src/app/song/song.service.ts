@@ -4,16 +4,19 @@ import { SongNote } from './models/song-note.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Song } from './models/song.entity';
 import { Repository } from 'typeorm';
-import { SongNoteType } from '@singularity/api-interfaces';
+import { Nullable, SongNoteType } from '@singularity/api-interfaces';
 import { ConfigService } from '@nestjs/config';
 import { SongAlreadyExistsError } from './errors/song-already-exists-error';
 import { SongSaveError } from './errors/song-save-error';
+import { SongUploadInfo } from '@singularity/api-interfaces';
+import { YtService } from './yt.service';
 
 @Injectable()
 export class SongService {
 
   constructor(@InjectRepository(Song) private readonly songRepository: Repository<Song>,
-              private readonly configService: ConfigService) {
+              private readonly configService: ConfigService,
+              private readonly ytService: YtService) {
   }
 
   public async getAllSongs(withNotes = false): Promise<Song[]> {
@@ -83,6 +86,21 @@ export class SongService {
     return song;
   }
 
+  public async getUploadInfo(txtFile: Express.Multer.File): Promise<SongUploadInfo> {
+    const songText = txtFile.buffer.toString('utf8');
+    const videoMetaData = this.getSongMetadata(songText, '#VIDEO');
+    const songInfo = new SongUploadInfo();
+
+    const videoDownloadId = this.getVideoDownloadId(videoMetaData);
+
+    if (videoDownloadId !== '') {
+      songInfo.isVideoDownloadable = true;
+      songInfo.videoInfo = await this.ytService.getInfo(videoDownloadId);
+    }
+
+    return songInfo;
+  }
+
   public async createSong(txtFile: Express.Multer.File,
                           audioFile: Express.Multer.File,
                           videoFile: Express.Multer.File,
@@ -142,6 +160,11 @@ export class SongService {
     const metaDataLine = lines.find((line: string) => line.startsWith(metaDataKey));
     const metaDatas = metaDataLine?.split(':') ?? [];
     return metaDatas.slice(1).join(':').trim();
+  }
+
+  private getVideoDownloadId(videoMeta: string): string {
+    const metaDatas = videoMeta.split(',')
+    return metaDatas.find((metaData: string) => metaData.startsWith('v='))?.replace('v=', '') ?? '';
   }
 
   private getSongNotes(txt: string): SongNote[] {

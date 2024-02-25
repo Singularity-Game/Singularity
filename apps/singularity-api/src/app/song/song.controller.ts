@@ -21,6 +21,7 @@ import { CreateSongDto, SongDto, SongOverviewDto } from '@singularity/api-interf
 import { fromBuffer } from 'file-type';
 import { AdminGuard } from '../user-management/guards/admin-guard';
 import { AuthGuard } from '@nestjs/passport';
+import { SongUploadInfo } from '@singularity/api-interfaces';
 
 @Controller('song')
 export class SongController {
@@ -79,12 +80,27 @@ export class SongController {
   ], {
     storage: memoryStorage()
   }))
+  @UseInterceptors(MapInterceptor(Song, SongDto))
   public createSong(@UploadedFiles() files: {
     txtFile: Express.Multer.File[],
     audioFile: Express.Multer.File[],
     videoFile: Express.Multer.File[],
-    coverFile: Express.Multer.File[]}, @Body() createSongDto: CreateSongDto): Promise<Song> {
+    coverFile: Express.Multer.File[]
+  }, @Body() createSongDto: CreateSongDto): Promise<Song> {
     return this.songService.createSong(files.txtFile[0], files.audioFile[0], files.videoFile[0], files.coverFile[0], createSongDto.start, createSongDto.end);
+  }
+
+  @Post('upload-info')
+  @UseGuards(AdminGuard())
+  @UseInterceptors(FileFieldsInterceptor([
+    { name: 'txtFile', maxCount: 1 }
+  ], {
+    storage: memoryStorage()
+  }))
+  public async getSongUploadInfo(@UploadedFiles() files: {
+    txtFile: Express.Multer.File[]
+  }): Promise<SongUploadInfo> {
+    return this.songService.getUploadInfo(files.txtFile[0]);
   }
 
   @Delete(':id')
