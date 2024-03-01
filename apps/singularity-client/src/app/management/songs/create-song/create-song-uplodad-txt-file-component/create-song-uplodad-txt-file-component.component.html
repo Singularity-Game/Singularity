@@ -20,7 +20,7 @@
 </div>
 
 <ng-container *ngIf="songUploadInfo$ | async; let songUploadInfo">
-  <ng-container *ngIf="songUploadInfo.isVideoDownloadable">
+  <ng-container *ngIf="songUploadInfo.isVideoDownloadable && !isManualUpload">
     <h2>{{ 'management.songs.createSong.createSongUploadTxtFile.downloadable' | transloco }}</h2>
     <div class="flex">
       <tui-island class="flex-item video-thumbnail">
@@ -31,15 +31,24 @@
               <tui-avatar [avatarUrl]="songUploadInfo.videoInfo?.authorThumbnailUrl ?? ''"></tui-avatar>
             </figure>
           </div>
-          <div>
-            <p class="tui-island__category">{{songUploadInfo.videoInfo?.author}}</p>
-            <h3 class="tui-island__title">{{songUploadInfo.videoInfo?.title}}</h3>
+          <div class="video-title-container">
+            <p class="tui-island__category">{{ songUploadInfo.videoInfo?.author }}</p>
+            <h3 class="tui-island__title">
+              <a [href]="songUploadInfo.videoInfo?.url" target="_blank" rel="noopener noreferrer">
+                {{ songUploadInfo.videoInfo?.title }}
+              </a>
+            </h3>
           </div>
         </div>
       </tui-island>
-      <div class="flex-item">
-        <h1>test</h1>
-      </div>
+    </div>
+    <div class="container">
+      <button tuiButton appearance="primary" (click)="this.triggerAutomaticUpload()">
+        {{ 'management.songs.createSong.createSongUploadTxtFile.downloadButtonText' | transloco }}
+      </button>
+      <button tuiButton appearance="accent" class="tui-space_left-5" (click)="this.triggerManualUpload()">
+        {{ 'management.songs.createSong.createSongUploadTxtFile.manualText' | transloco }}
+      </button>
     </div>
   </ng-container>
 </ng-container>

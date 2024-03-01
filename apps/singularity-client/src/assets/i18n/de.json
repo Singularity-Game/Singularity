@@ -90,7 +90,9 @@
         "createSongUploadTxtFile": {
           "txtFileInfo": "Die TXT Datei muss im UTF-8 Format hochgeladen werden. Andernfalls kann es zu Encodierungsproblemen kommen.",
           "txtFile": "TXT Datei",
-          "downloadable": "Dieser Song kann automatisch heruntergeladen werden!"
+          "downloadable": "Die Audio und Video Dateien für diesen Song können automatisch heruntergeladen werden!",
+          "downloadButtonText": "Song erstellen und Dateien herunterladen",
+          "manualText": "Audio und Video manuell hochladen"
         }
       },
       "songListItem": {

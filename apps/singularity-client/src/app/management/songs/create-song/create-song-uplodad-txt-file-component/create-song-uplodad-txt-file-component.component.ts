@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Nullable, SongUploadInfo } from '@singularity/api-interfaces';
 import { TuiFileLike } from '@taiga-ui/kit';
 import { filter, Observable, Subject, switchMap, tap } from 'rxjs';
@@ -14,6 +14,10 @@ export class CreateSongUplodadTxtFileComponentComponent implements OnInit {
   public txtFileSubject = new Subject<Nullable<TuiFileLike>>();
   public songUploadInfo$?: Observable<SongUploadInfo>;
   public isLoading = false;
+  public isManualUpload = false;
+
+  @Output() file = new EventEmitter<File>();
+  @Output() manualUpload = new EventEmitter<boolean>();
 
   constructor(private readonly songManagementService: SongManagementService) {
   }
@@ -23,11 +27,36 @@ export class CreateSongUplodadTxtFileComponentComponent implements OnInit {
       filter((file: Nullable<TuiFileLike>) => file != null),
       tap(() => this.isLoading = true),
       switchMap((file: Nullable<TuiFileLike>) => this.songManagementService.getSongUploadInfo$(file as File)),
-      tap(() => this.isLoading = false)
+      tap(() => this.isLoading = false),
+      tap((info: SongUploadInfo) => {
+        if (!info.isVideoDownloadable) {
+          this.triggerManualUpload();
+        }
+      })
     )
   }
 
   public txtFileChanged(): void {
     this.txtFileSubject.next(this.txtFile);
+    this.file.emit(this.txtFile as File);
+  }
+
+  public triggerAutomaticUpload(): void {
+    if (!this.txtFile) {
+      return;
+    }
+
+    this.file.emit(this.txtFile as File);
+    this.manualUpload.emit(false);
+  }
+
+  public triggerManualUpload(): void {
+    if (!this.txtFile) {
+      return;
+    }
+
+    this.file.emit(this.txtFile as File);
+    this.manualUpload.emit(true);
+    this.isManualUpload = true;
   }
 }

@@ -1,11 +1,16 @@
 .flex {
     display: flex;
+    justify-content: center;
 }
 
 .flex-item {
     flex: 1;
-    flex-basis: 50%;
+    max-width: 50%;
     min-width: 250px;
+}
+
+.video-title-container {
+    margin-left: 1rem;
 }
 
 .video-thumbnail {
@@ -17,10 +22,15 @@
         border-radius: var(--tui-radius-xl) var(--tui-radius-xl) 0 0;
         max-width: 100%;
     }
+}
 
-    .container {
-        padding-left: 1rem;
-        padding-right: 1rem;
-        display: flex;
+.container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    display: flex;
+
+    a {
+        color: var(--tui-primary-text)
     }
 }

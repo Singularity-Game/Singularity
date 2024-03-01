@@ -1,26 +1,11 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CreateSongForm } from './create-song-form';
 import { TuiFileLike } from '@taiga-ui/kit';
-import {
-  catchError,
-  filter,
-  map,
-  Observable,
-  of,
-  startWith,
-  Subject,
-  switchMap,
-  takeUntil,
-  tap,
-  throwError
-} from 'rxjs';
+import { catchError, filter, map, Observable, Subject, takeUntil, tap, throwError } from 'rxjs';
 import { CreateSongRequest } from '../../models/create-song-request';
 import { SongManagementService } from '../song-management.service';
-import { fromPromise } from 'rxjs/internal/observable/innerFrom';
-import WaveSurfer from 'wavesurfer.js';
 import { Router } from '@angular/router';
-import RegionsPlugin from 'wavesurfer.js/src/plugin/regions';
 import { LoadProgress } from '../../../shared/types/load-progress';
 import { SongDto } from '@singularity/api-interfaces';
 import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
@@ -31,7 +16,7 @@ import { TranslocoService } from '@ngneat/transloco';
   templateUrl: './create-song.component.html',
   styleUrls: ['./create-song.component.scss']
 })
-export class CreateSongComponent implements OnInit, OnDestroy {
+export class CreateSongComponent implements OnDestroy {
 
   public songForm = new FormGroup<CreateSongForm>({
     txtFile: new FormControl<TuiFileLike | null>(null),
@@ -40,12 +25,11 @@ export class CreateSongComponent implements OnInit, OnDestroy {
     audioFile: new FormControl<TuiFileLike | null>(null)
   });
 
-  public coverFileBase64$?: Observable<string>;
-
   public destroySubject = new Subject<void>();
 
   public uploadProgress = 0;
   public isUploading = false;
+  public isManualUpload = false;
 
   constructor(private readonly songService: SongManagementService,
               private readonly router: Router,
@@ -53,13 +37,17 @@ export class CreateSongComponent implements OnInit, OnDestroy {
               private readonly transloco: TranslocoService) {
   }
 
-  public ngOnInit(): void {
-    this.coverFileBase64$ = this.getCoverFileBase64$();
-  }
-
   public ngOnDestroy(): void {
     this.destroySubject.next();
     this.destroySubject.complete();
+  }
+
+  public setManualUpload(manualUpload: boolean): void {
+    this.isManualUpload = manualUpload;
+  }
+
+  public setTxtFile(file: File): void {
+    this.songForm.controls.txtFile.setValue(file);
   }
 
   public uploadSong(): void {
@@ -89,27 +77,6 @@ export class CreateSongComponent implements OnInit, OnDestroy {
         },
         error: () => this.isUploading = false
       });
-  }
-
-  private getCoverFileBase64$(): Observable<string> {
-    return this.songForm.controls.coverFile.valueChanges
-      .pipe(
-        switchMap((value: TuiFileLike | null) => {
-          if (value === null || !(value instanceof File)) {
-            return of('');
-          }
-
-          return fromPromise(new Promise<string>((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(value as File);
-            reader.onload = () => resolve(reader.result as string);
-            reader.onerror = error => reject(error);
-          }));
-        }),
-        map((value: string) => value ? value : 'tuiIconPicture'),
-        startWith('tuiIconPicture'),
-        takeUntil(this.destroySubject)
-      );
   }
 
   private handleUploadError(message: string): void {

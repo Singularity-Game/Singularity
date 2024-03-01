@@ -1,14 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import * as fs from 'fs';
 import { SongNote } from './models/song-note.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Song } from './models/song.entity';
 import { Repository } from 'typeorm';
-import { Nullable, SongNoteType } from '@singularity/api-interfaces';
+import { SongNoteType, SongUploadInfo } from '@singularity/api-interfaces';
 import { ConfigService } from '@nestjs/config';
 import { SongAlreadyExistsError } from './errors/song-already-exists-error';
 import { SongSaveError } from './errors/song-save-error';
-import { SongUploadInfo } from '@singularity/api-interfaces';
 import { YtService } from './yt.service';
 
 @Injectable()
@@ -150,6 +149,7 @@ export class SongService {
 
       return this.songRepository.save(song);
     } catch (e) {
+      Logger.error(e);
       throw new SongSaveError();
     }
 
