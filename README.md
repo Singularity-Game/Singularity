@@ -4,7 +4,7 @@
 <p align="center">
   <img src="https://img.shields.io/github/contributors/Singularity-Game/Singularity?style=flat-square" />
   <img src="https://img.shields.io/github/license/Singularity-Game/Singularity?style=flat-square" />
-  <img src="https://img.shields.io/github/actions/workflow/status/Singularity-Game/Singularity/docker-publish.yml?style=flat-square" />
+  <img src="https://img.shields.io/github/actions/workflow/status/Singularity-Game/Singularity/build.yml?style=flat-square" />
 </p>
 <p align="center">
 Introducing Singularity: Your browser's karaoke stage! Gather your friends for a local multiplayer singing experience. No downloads necessary, just pure musical fun in your browser.

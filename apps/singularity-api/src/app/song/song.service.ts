@@ -89,6 +89,10 @@ export class SongService {
   }
 
   public async getUploadInfo(txtFile: SongFile): Promise<SongUploadInfo> {
+    if(this.configService.get('ENABLE_YOUTUBE') !== 'true') {
+      return new SongUploadInfo()
+    }
+
     const songText = txtFile.buffer.toString('utf8');
     const videoMetaData = this.getSongMetadata(songText, '#VIDEO');
     const songInfo = new SongUploadInfo();
@@ -105,6 +109,10 @@ export class SongService {
   }
 
   public async createSongFromYt(txtFile: SongFile): Promise<Song> {
+    if(this.configService.get('ENABLE_YOUTUBE') !== 'true') {
+      return new Song()
+    }
+
     const songText = txtFile.buffer.toString('utf8');
     const videoMetaData = this.getSongMetadata(songText, '#VIDEO');
     const videoDownloadId = this.getVideoDownloadId(videoMetaData);

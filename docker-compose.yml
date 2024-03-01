@@ -27,6 +27,7 @@ services:
       SMTP_PASSWORD: <SMTP-PASSWORD>
       SMTP_FROM: <SMTP-FROM>
       SONG_DIRECTORY: songs
+      ENABLE_YOUTUBE: false
     volumes:
       - singularity-songs:/usr/src/app/songs
     ports:
