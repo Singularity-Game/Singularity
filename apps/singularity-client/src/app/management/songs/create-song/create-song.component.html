@@ -8,6 +8,15 @@
   (manualUpload)="setManualUpload($event)"
   (file)="setTxtFile($event)">
 </singularity-create-song-uplodad-txt-file-component>
+<div *ngIf="isManualUpload === false && songForm.controls.txtFile.value">
+  <button tuiButton appearance="primary" (click)="this.uploadSongYt()" [disabled]="isUploading" [showLoader]="isUploading">
+    {{ 'management.songs.createSong.createSongUploadTxtFile.downloadButtonText' | transloco }}
+  </button>
+  <button tuiButton appearance="accent" class="tui-space_left-5" (click)="this.setManualUpload(true)" [disabled]="isUploading">
+    {{ 'management.songs.createSong.createSongUploadTxtFile.manualText' | transloco }}
+  </button>
+</div>
+
 
 <form [formGroup]="songForm" *ngIf="isManualUpload">
   <div class="tui-space_top-5">

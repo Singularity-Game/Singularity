@@ -37,6 +37,14 @@ export class SongManagementService extends SongService {
     }
   }
 
+  public createSongYt$(txtFile: File): Observable<SongDto>
+  {
+    const formData = new FormData();
+    formData.append('txtFile', txtFile);
+
+    return this.api.post$('api/song', formData, false);
+  }
+
   public getSongUploadInfo$(txtFile: File): Observable<SongUploadInfo> {
     const formData = new FormData();
     formData.append('txtFile', txtFile);

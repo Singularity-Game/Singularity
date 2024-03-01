@@ -9,6 +9,7 @@ import { ConfigService } from '@nestjs/config';
 import { SongAlreadyExistsError } from './errors/song-already-exists-error';
 import { SongSaveError } from './errors/song-save-error';
 import { YtService } from './yt.service';
+import { SongFile } from './interfaces/song-file';
 
 @Injectable()
 export class SongService {
@@ -85,7 +86,7 @@ export class SongService {
     return song;
   }
 
-  public async getUploadInfo(txtFile: Express.Multer.File): Promise<SongUploadInfo> {
+  public async getUploadInfo(txtFile: SongFile): Promise<SongUploadInfo> {
     const songText = txtFile.buffer.toString('utf8');
     const videoMetaData = this.getSongMetadata(songText, '#VIDEO');
     const songInfo = new SongUploadInfo();
@@ -100,10 +101,25 @@ export class SongService {
     return songInfo;
   }
 
-  public async createSong(txtFile: Express.Multer.File,
-                          audioFile: Express.Multer.File,
-                          videoFile: Express.Multer.File,
-                          coverFile: Express.Multer.File,
+  public async createSongFromYt(txtFile: SongFile): Promise<Song> {
+    const songText = txtFile.buffer.toString('utf8');
+    const videoMetaData = this.getSongMetadata(songText, '#VIDEO');
+    const videoDownloadId = this.getVideoDownloadId(videoMetaData);
+
+    const [video, audio]: [SongFile, SongFile] = await Promise.all([
+      this.ytService.downloadVideo(videoDownloadId),
+      this.ytService.downloadAudo(videoDownloadId)
+    ])
+
+    const coverFile = new SongFile(Buffer.of(), 'placerholder.png');
+
+    return this.createSong(txtFile, audio, video, coverFile);
+  }
+
+  public async createSong(txtFile: SongFile,
+                          audioFile: SongFile,
+                          videoFile: SongFile,
+                          coverFile: SongFile,
                           songStart?: number,
                           songEnd?: number): Promise<Song> {
     const songText = txtFile.buffer.toString('utf8');
@@ -222,8 +238,8 @@ export class SongService {
     stream.end();
   }
 
-  private getFileType(file: Express.Multer.File): string {
-    const array = file.originalname.split('.');
+  private getFileType(file: SongFile): string {
+    const array = file.originalName.split('.');
     return array[array.length - 1];
   }
 

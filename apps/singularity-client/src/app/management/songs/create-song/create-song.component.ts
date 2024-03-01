@@ -7,7 +7,7 @@ import { CreateSongRequest } from '../../models/create-song-request';
 import { SongManagementService } from '../song-management.service';
 import { Router } from '@angular/router';
 import { LoadProgress } from '../../../shared/types/load-progress';
-import { SongDto } from '@singularity/api-interfaces';
+import { Nullable, SongDto } from '@singularity/api-interfaces';
 import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { TranslocoService } from '@ngneat/transloco';
 
@@ -29,7 +29,7 @@ export class CreateSongComponent implements OnDestroy {
 
   public uploadProgress = 0;
   public isUploading = false;
-  public isManualUpload = false;
+  public isManualUpload: Nullable<boolean> = null;
 
   constructor(private readonly songService: SongManagementService,
               private readonly router: Router,
@@ -48,6 +48,29 @@ export class CreateSongComponent implements OnDestroy {
 
   public setTxtFile(file: File): void {
     this.songForm.controls.txtFile.setValue(file);
+  }
+
+  public uploadSongYt(): void {
+    if (this.songForm.controls.txtFile.invalid) {
+      return;
+    }
+
+    this.isUploading = true;
+
+    this.songService.createSongYt$(this.songForm.controls.txtFile.value as File)
+      .pipe(
+        catchError((error) => {
+          this.handleUploadError(error.error.message);
+          return throwError(() => 'error');
+        }),
+        takeUntil(this.destroySubject)
+      ).subscribe({
+      next: () => {
+        this.isUploading = false;
+        this.router.navigate(['/', 'management', 'songs']);
+      },
+      error: () => this.isUploading = false
+    });
   }
 
   public uploadSong(): void {

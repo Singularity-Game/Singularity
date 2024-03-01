@@ -31,6 +31,8 @@ export class CreateSongUplodadTxtFileComponentComponent implements OnInit {
       tap((info: SongUploadInfo) => {
         if (!info.isVideoDownloadable) {
           this.triggerManualUpload();
+        } else {
+          this.triggerAutomaticUpload();
         }
       })
     )
