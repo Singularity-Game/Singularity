@@ -1,8 +1,7 @@
-import { Nullable } from '@singularity/api-interfaces';
+import { Nullable } from '../shared/nullable';
 import { VideoInfo } from './video-info';
 
 export class SongUploadInfo {
   isVideoDownloadable = false;
-  isCoverDownloadable = false;
   videoInfo: Nullable<VideoInfo> = null;
 }

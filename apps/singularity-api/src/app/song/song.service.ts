@@ -10,13 +10,15 @@ import { SongAlreadyExistsError } from './errors/song-already-exists-error';
 import { SongSaveError } from './errors/song-save-error';
 import { YtService } from './yt.service';
 import { SongFile } from './interfaces/song-file';
+import { FanartService } from './fanart.service';
 
 @Injectable()
 export class SongService {
 
   constructor(@InjectRepository(Song) private readonly songRepository: Repository<Song>,
               private readonly configService: ConfigService,
-              private readonly ytService: YtService) {
+              private readonly ytService: YtService,
+              private readonly fanartService: FanartService) {
   }
 
   public async getAllSongs(withNotes = false): Promise<Song[]> {
@@ -92,8 +94,9 @@ export class SongService {
     const songInfo = new SongUploadInfo();
 
     const videoDownloadId = this.getVideoDownloadId(videoMetaData);
+    const coverDownloadId = this.getFanartIdOrUrl(videoMetaData);
 
-    if (videoDownloadId !== '') {
+    if (videoDownloadId !== '' && coverDownloadId !== '') {
       songInfo.isVideoDownloadable = true;
       songInfo.videoInfo = await this.ytService.getInfo(videoDownloadId);
     }
@@ -105,15 +108,15 @@ export class SongService {
     const songText = txtFile.buffer.toString('utf8');
     const videoMetaData = this.getSongMetadata(songText, '#VIDEO');
     const videoDownloadId = this.getVideoDownloadId(videoMetaData);
+    const fanartDownloadId = this.getFanartIdOrUrl(videoMetaData);
 
-    const [video, audio]: [SongFile, SongFile] = await Promise.all([
+    const [video, audio, cover]: [SongFile, SongFile, SongFile] = await Promise.all([
       this.ytService.downloadVideo(videoDownloadId),
-      this.ytService.downloadAudo(videoDownloadId)
+      this.ytService.downloadAudo(videoDownloadId),
+      this.fanartService.getFanartImage(fanartDownloadId)
     ])
 
-    const coverFile = new SongFile(Buffer.of(), 'placerholder.png');
-
-    return this.createSong(txtFile, audio, video, coverFile);
+    return this.createSong(txtFile, audio, video, cover);
   }
 
   public async createSong(txtFile: SongFile,
@@ -181,6 +184,11 @@ export class SongService {
   private getVideoDownloadId(videoMeta: string): string {
     const metaDatas = videoMeta.split(',')
     return metaDatas.find((metaData: string) => metaData.startsWith('v='))?.replace('v=', '') ?? '';
+  }
+
+  private getFanartIdOrUrl(videoMeta: string): string {
+    const metaDatas = videoMeta.split(',')
+    return metaDatas.find((metaData: string) => metaData.startsWith('co='))?.replace('co=', '') ?? '';
   }
 
   private getSongNotes(txt: string): SongNote[] {
