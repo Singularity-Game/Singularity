@@ -23,7 +23,8 @@ export class YtService {
         return currentThumbnail;
       }
     }).url;
-    videoInfo.authorThumbnailUrl = ytdlVideoInfo.videoDetails.author.avatar;
+
+    videoInfo.authorThumbnailUrl = ytdlVideoInfo.videoDetails.author.thumbnails[0].url;
 
     return videoInfo;
   }
