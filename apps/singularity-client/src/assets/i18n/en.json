@@ -113,7 +113,8 @@
         "title": "Title",
         "author": "Author",
         "year": "Year",
-        "actions": "Actions"
+        "actions": "Actions",
+        "serverDownloadsSongs": "The server is currently downloading songs. They will be available soon."
       }
     },
     "users": {

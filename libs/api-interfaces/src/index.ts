@@ -12,4 +12,5 @@ export { CreateInitialPasswordDto } from './lib/authentication/create-initial-pa
 export { ResetPasswordDto } from './lib/authentication/reset-password-dto';
 export { LoginRequest } from './lib/authentication/login-request';
 export { SongUploadInfo } from './lib/song/song-upload-info';
+export { SongDownloadInfo } from './lib/song/song-download-info';
 export { VideoInfo } from './lib/song/video-info';

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CreateSongRequest } from '../models/create-song-request';
 import { Observable, switchMap } from 'rxjs';
 import { ApiService } from '../../shared/api.service';
-import { SongDto, SongUploadInfo } from '@singularity/api-interfaces';
+import { SongDownloadInfo, SongDto, SongUploadInfo } from '@singularity/api-interfaces';
 import { SongService } from '../../shared/song.service';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { LoadProgress } from '../../shared/types/load-progress';
@@ -50,6 +50,10 @@ export class SongManagementService extends SongService {
     formData.append('txtFile', txtFile);
 
     return this.api.post$('api/song/upload-info', formData);
+  }
+
+  public getDownloadingSongs$(): Observable<SongDownloadInfo[]> {
+    return this.api.get$('api/song/downloading-songs');
   }
 
   public deleteSong$(id: number): Observable<SongDto> {

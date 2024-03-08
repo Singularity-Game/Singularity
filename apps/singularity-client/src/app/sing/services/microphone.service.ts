@@ -5,7 +5,7 @@ import { asyncScheduler, finalize, from, map, Observable, scheduled, switchMap, 
 export class MicrophoneService {
 
   private selectedMicrophones: string[] = [];
-  private audioContext = new AudioContext();
+  private audioContext = new AudioContext({ latencyHint: 0 });
 
   public isAnyMicrophoneSelected(): boolean {
     return this.selectedMicrophones.length > 0;

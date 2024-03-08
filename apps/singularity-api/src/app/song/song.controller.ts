@@ -18,17 +18,19 @@ import { memoryStorage } from 'multer';
 import { SongService } from './song.service';
 import { Song } from './models/song.entity';
 import { MapInterceptor } from '@automapper/nestjs';
-import { CreateSongDto, Nullable, SongDto, SongOverviewDto } from '@singularity/api-interfaces';
+import { CreateSongDto, Nullable, SongDownloadInfo, SongDto, SongOverviewDto } from '@singularity/api-interfaces';
 import { fromBuffer } from 'file-type';
 import { AdminGuard } from '../user-management/guards/admin-guard';
 import { AuthGuard } from '@nestjs/passport';
 import { SongUploadInfo } from '@singularity/api-interfaces';
 import { SongFile } from './interfaces/song-file';
+import { SongDownloadService } from './song-download.service';
 
 @Controller('song')
 export class SongController {
 
-  constructor(private readonly songService: SongService) {
+  constructor(private readonly songService: SongService,
+              private readonly songDownloadService: SongDownloadService) {
   }
 
   @Get()
@@ -37,6 +39,13 @@ export class SongController {
   public getAllSongs(): Promise<Song[]> {
     return this.songService.getAllSongs();
   }
+
+  @Get('downloading-songs')
+  @UseGuards(AdminGuard())
+  public getDownloadingSongs(): SongDownloadInfo[] {
+    return this.songDownloadService.getDownloadingSongs();
+  }
+
 
   @Get(':id')
   @UseGuards(AuthGuard('jwt'))
@@ -98,8 +107,8 @@ export class SongController {
         SongFile.fromMulterFile(files.coverFile[0]),
         createSongDto.start, createSongDto.end);
     } else if (files.txtFile[0]) {
-      return this.songService.createSongFromYt(SongFile.fromMulterFile(files.txtFile[0]));
-      // return null;
+      this.songDownloadService.createSongFromYt(SongFile.fromMulterFile(files.txtFile[0]));
+      return null;
     } else {
       throw new BadRequestException();
     }
@@ -115,7 +124,7 @@ export class SongController {
   public async getSongUploadInfo(@UploadedFiles() files: {
     txtFile: Express.Multer.File[]
   }): Promise<SongUploadInfo> {
-    return this.songService.getUploadInfo(SongFile.fromMulterFile(files.txtFile[0]));
+    return this.songDownloadService.getUploadInfo(SongFile.fromMulterFile(files.txtFile[0]));
   }
 
   @Delete(':id')

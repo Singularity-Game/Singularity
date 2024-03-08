@@ -1,6 +1,22 @@
 <h1>{{ 'management.songs.songList.header' | transloco }}
   <button tuiButton size="xs" icon="tuiIconPlus" routerLink="new" *ngIf="isAdmin$ | async">{{ 'management.songs.songList.newSong' | transloco }}</button>
 </h1>
+
+<ng-container *ngIf="isAdmin$ | async">
+  <ng-container *ngIf="downloadingSongs$ | async; let downloadingSongs">
+    <ng-container *ngIf="downloadingSongs.length > 0">
+      <p>{{ 'management.songs.songList.serverDownloadsSongs' | transloco }}</p>
+      <tui-files>
+        <tui-file *ngFor="let song of downloadingSongs"
+                  [state]="song.state === songListDownloadState.loading ? 'loading' : 'normal'"
+                  [file]="{ name: song.artist + ' - ' + song.title + '.' }">
+        </tui-file>
+      </tui-files>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+
 <table class="tui-table">
   <tbody>
   <tr class="tui-table__tr tui-table__tr_border_none">
