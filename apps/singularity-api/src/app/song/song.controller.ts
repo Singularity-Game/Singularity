@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -17,15 +18,19 @@ import { memoryStorage } from 'multer';
 import { SongService } from './song.service';
 import { Song } from './models/song.entity';
 import { MapInterceptor } from '@automapper/nestjs';
-import { CreateSongDto, SongDto, SongOverviewDto } from '@singularity/api-interfaces';
+import { CreateSongDto, Nullable, SongDownloadInfo, SongDto, SongOverviewDto } from '@singularity/api-interfaces';
 import { fromBuffer } from 'file-type';
 import { AdminGuard } from '../user-management/guards/admin-guard';
 import { AuthGuard } from '@nestjs/passport';
+import { SongUploadInfo } from '@singularity/api-interfaces';
+import { SongFile } from './interfaces/song-file';
+import { SongDownloadService } from './song-download.service';
 
 @Controller('song')
 export class SongController {
 
-  constructor(private readonly songService: SongService) {
+  constructor(private readonly songService: SongService,
+              private readonly songDownloadService: SongDownloadService) {
   }
 
   @Get()
@@ -34,6 +39,13 @@ export class SongController {
   public getAllSongs(): Promise<Song[]> {
     return this.songService.getAllSongs();
   }
+
+  @Get('downloading-songs')
+  @UseGuards(AdminGuard())
+  public getDownloadingSongs(): SongDownloadInfo[] {
+    return this.songDownloadService.getDownloadingSongs();
+  }
+
 
   @Get(':id')
   @UseGuards(AuthGuard('jwt'))
@@ -79,12 +91,40 @@ export class SongController {
   ], {
     storage: memoryStorage()
   }))
+  @UseInterceptors(MapInterceptor(Song, SongDto))
   public createSong(@UploadedFiles() files: {
     txtFile: Express.Multer.File[],
     audioFile: Express.Multer.File[],
     videoFile: Express.Multer.File[],
-    coverFile: Express.Multer.File[]}, @Body() createSongDto: CreateSongDto): Promise<Song> {
-    return this.songService.createSong(files.txtFile[0], files.audioFile[0], files.videoFile[0], files.coverFile[0], createSongDto.start, createSongDto.end);
+    coverFile: Express.Multer.File[]
+  }, @Body() createSongDto: CreateSongDto): Promise<Nullable<Song>> {
+
+    if(files.txtFile?.length > 0 && files.audioFile?.length > 0 && files.videoFile?.length > 0 && files.coverFile?.length > 0) {
+      return this.songService.createSong(
+        SongFile.fromMulterFile(files.txtFile[0]),
+        SongFile.fromMulterFile(files.audioFile[0]),
+        SongFile.fromMulterFile(files.videoFile[0]),
+        SongFile.fromMulterFile(files.coverFile[0]),
+        createSongDto.start, createSongDto.end);
+    } else if (files.txtFile[0]) {
+      this.songDownloadService.createSongFromYt(SongFile.fromMulterFile(files.txtFile[0]));
+      return null;
+    } else {
+      throw new BadRequestException();
+    }
+  }
+
+  @Post('upload-info')
+  @UseGuards(AdminGuard())
+  @UseInterceptors(FileFieldsInterceptor([
+    { name: 'txtFile', maxCount: 1 }
+  ], {
+    storage: memoryStorage()
+  }))
+  public async getSongUploadInfo(@UploadedFiles() files: {
+    txtFile: Express.Multer.File[]
+  }): Promise<SongUploadInfo> {
+    return this.songDownloadService.getUploadInfo(SongFile.fromMulterFile(files.txtFile[0]));
   }
 
   @Delete(':id')

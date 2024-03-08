@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import * as fs from 'fs';
 import { SongNote } from './models/song-note.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,6 +8,7 @@ import { SongNoteType } from '@singularity/api-interfaces';
 import { ConfigService } from '@nestjs/config';
 import { SongAlreadyExistsError } from './errors/song-already-exists-error';
 import { SongSaveError } from './errors/song-save-error';
+import { SongFile } from './interfaces/song-file';
 
 @Injectable()
 export class SongService {
@@ -83,10 +84,10 @@ export class SongService {
     return song;
   }
 
-  public async createSong(txtFile: Express.Multer.File,
-                          audioFile: Express.Multer.File,
-                          videoFile: Express.Multer.File,
-                          coverFile: Express.Multer.File,
+  public async createSong(txtFile: SongFile,
+                          audioFile: SongFile,
+                          videoFile: SongFile,
+                          coverFile: SongFile,
                           songStart?: number,
                           songEnd?: number): Promise<Song> {
     const songText = txtFile.buffer.toString('utf8');
@@ -132,6 +133,7 @@ export class SongService {
 
       return this.songRepository.save(song);
     } catch (e) {
+      Logger.error(e);
       throw new SongSaveError();
     }
 
@@ -199,8 +201,8 @@ export class SongService {
     stream.end();
   }
 
-  private getFileType(file: Express.Multer.File): string {
-    const array = file.originalname.split('.');
+  private getFileType(file: SongFile): string {
+    const array = file.originalName.split('.');
     return array[array.length - 1];
   }
 
