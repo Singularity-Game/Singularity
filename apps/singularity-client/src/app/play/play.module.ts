@@ -17,9 +17,10 @@ import { FormsModule } from '@angular/forms';
 import { AudioPlayerComponent } from './audio-player/audio-player.component';
 import { TuiMediaModule } from '@taiga-ui/cdk';
 import { TranslocoModule } from '@ngneat/transloco';
+import { SingularityUiModule } from '@singularity/ui';
 
 @NgModule({
   declarations: [PlayComponent, SongGridItemComponent, AudioPlayerComponent],
-  imports: [CommonModule, PlayRoutingModule, SharedModule, TuiAvatarModule, TuiSvgModule, TuiHintModule, TuiNotificationModule, TuiInputModule, TuiTextfieldControllerModule, FormsModule, TuiSelectModule, TuiDataListModule, TuiScrollbarModule, TuiMediaModule, TuiSliderModule, TuiButtonModule, TranslocoModule]
+  imports: [CommonModule, PlayRoutingModule, SharedModule, TuiAvatarModule, TuiSvgModule, TuiHintModule, TuiNotificationModule, TuiInputModule, TuiTextfieldControllerModule, FormsModule, TuiSelectModule, TuiDataListModule, TuiScrollbarModule, TuiMediaModule, TuiSliderModule, TuiButtonModule, TranslocoModule, SingularityUiModule]
 })
 export class PlayModule {}

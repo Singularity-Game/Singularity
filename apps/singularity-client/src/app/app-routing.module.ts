@@ -1,5 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
-import { NgModule } from '@angular/core';
+import { isDevMode, NgModule } from '@angular/core';
 import { AuthenticationGuard } from './shared/guards/authentication.guard';
 
 const routes: Routes = [
@@ -31,6 +31,13 @@ const routes: Routes = [
     data: { animation: 'authentication' }
   }
 ];
+
+if(isDevMode()) {
+  routes.push({
+    path: 'ui',
+    loadChildren: () => import('./ui/ui.module').then(m => m.UiModule)
+  })
+}
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

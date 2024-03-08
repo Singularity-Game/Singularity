@@ -1,0 +1,19 @@
+@import './colors';
+@import './defaults';
+
+
+// General
+.sui-single-line{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: inherit;
+}
+
+// Card
+.sui-card-3d-image {
+  max-width: calc(100% + var(--padding) * 2);
+  margin: -20px -20px 0 -20px;
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}

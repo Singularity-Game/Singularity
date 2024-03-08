@@ -1,0 +1,10 @@
+.container {
+  max-width: 480px;
+  margin-left: calc(50% - 240px);
+  margin-right: calc(50% - 240px);
+  margin-top: 50px;
+}
+
+:host {
+  background-color: black;
+}
