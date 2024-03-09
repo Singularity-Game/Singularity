@@ -7,9 +7,7 @@
   "targets": {
     "build": {
       "executor": "@angular-builders/custom-webpack:browser",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/singularity-client",
         "index": "apps/singularity-client/src/index.html",
@@ -92,22 +90,13 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "apps/singularity-client/src/**/*.ts",
-          "apps/singularity-client/src/**/*.html"
-        ]
-      }
+      "executor": "@nx/eslint:lint"
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/apps/singularity-client"
-      ],
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/singularity-client"],
       "options": {
-        "jestConfig": "apps/singularity-client/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "apps/singularity-client/jest.config.ts"
       }
     }
   }
