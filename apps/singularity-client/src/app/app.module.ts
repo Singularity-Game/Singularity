@@ -17,6 +17,7 @@ import {
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { UnauthorizedInterceptor } from './interceptors/unauthorized.interceptor';
 import { TranslocoRootModule } from './transloco-root.module';
+import { SingularityUiModule } from '@singularity/ui';
 
 
 const serviceWorkerScript =
@@ -55,7 +56,8 @@ const serviceWorkerScript =
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    TranslocoRootModule
+    TranslocoRootModule,
+    SingularityUiModule
   ],
   providers: [
     {

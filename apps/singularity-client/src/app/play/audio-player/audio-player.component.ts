@@ -1,8 +1,9 @@
 import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Nullable, SongOverviewDto } from '@singularity/api-interfaces';
 import { SongService } from '../../shared/song.service';
-import { asyncScheduler, combineLatest, Observable, scheduled, Subject, switchMap, takeUntil } from 'rxjs';
+import { asyncScheduler, combineLatest, Observable, scheduled, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { SuiGlobalColorService } from '../../../../../../libs/ui/src/lib/sui-global-color/sui-global-color.service';
 
 @Component({
   selector: 'singularity-audio-player',
@@ -23,7 +24,8 @@ export class AudioPlayerComponent implements OnInit, OnChanges, OnDestroy {
   private readonly destroySubject = new Subject<void>();
 
   constructor(private readonly songService: SongService,
-              private readonly router: Router) {
+              private readonly router: Router,
+              private readonly globalColorService: SuiGlobalColorService) {
   }
   public ngOnInit(): void {
     this.setup();
@@ -101,7 +103,10 @@ export class AudioPlayerComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     const nextSong = this.playList[this.currentSongIndex];
-    this.cover$ = this.songService.getSongCoverCached$(nextSong.id);
+    this.cover$ = this.songService.getSongCoverCached$(nextSong.id)
+      .pipe(tap((cover) => {
+        this.globalColorService.setColorsFromImage(cover);
+      }));
     const audio$ = this.songService.getSongAudioCached$(nextSong.id);
     const video$ = this.songService.isSongDownloaded$(nextSong.id)
       .pipe(

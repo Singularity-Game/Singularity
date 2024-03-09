@@ -16,10 +16,11 @@ import { SearchPipe } from './pipes/search/search.pipe';
 import { OrderByPipe } from './pipes/order-by/order-by.pipe';
 import { AdminFeatureIconComponent } from './components/admin-feature-icon/admin-feature-icon.component';
 import { TranslocoModule } from '@ngneat/transloco';
+import { SingularityUiModule } from '@singularity/ui';
 
 @NgModule({
   declarations: [NavbarComponent, SidebarComponent, NoCommaPipe, SearchPipe, OrderByPipe, AdminFeatureIconComponent],
-  imports: [CommonModule, TuiButtonModule, RouterLink, TuiHostedDropdownModule, TuiAvatarModule, TuiDataListModule, TuiSvgModule, TuiHintModule, TranslocoModule],
+  imports: [CommonModule, TuiButtonModule, RouterLink, TuiHostedDropdownModule, TuiAvatarModule, TuiDataListModule, TuiSvgModule, TuiHintModule, TranslocoModule, SingularityUiModule],
   providers: [],
   exports: [NavbarComponent, SidebarComponent, AdminFeatureIconComponent, NoCommaPipe, SearchPipe, OrderByPipe],
 })
