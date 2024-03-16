@@ -6,9 +6,28 @@
   justify-content: space-between;
 }
 
-singularity-song-grid-item {
+singularity-song-grid-item, {
   flex-basis: 250px;
   width: 250px;
+}
+
+.carousel-item {
+  flex-basis: 250px;
+  width: 250px;
+  padding: 10px;
+  transition: 200ms ease;
+}
+
+.video-container {
+  height: calc(100vh - 63px);
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  transition: 1000ms ease;
+
+  &.collapsed {
+    height: 0;
+  }
 }
 
 tui-notification {
@@ -22,7 +41,7 @@ a {
 }
 
 .search-container {
-  margin: 25px;
+  margin: 126px 25px 25px 25px;
   display: flex;
   gap: 25px;
 }

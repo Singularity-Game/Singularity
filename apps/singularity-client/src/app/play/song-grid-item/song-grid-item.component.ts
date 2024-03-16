@@ -20,6 +20,7 @@ export class SongGridItemComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    console.log('init!');
     if(!this.song) {
       return;
     }

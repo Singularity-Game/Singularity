@@ -1,4 +1,4 @@
-<sui-card3d (click)="startSinging()" class="song-card">
+<sui-card3d (click)="startSinging()" class="song-card" #card>
   <img class="sui-card-3d-image" [src]="cover$ | async" [alt]="song?.name">
   <p class="song-name sui-single-line">
     <a (click)="startSinging()">{{song?.name}}</a>
