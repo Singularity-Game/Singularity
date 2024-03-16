@@ -1,8 +1,19 @@
-import { Controller, Post, UseGuards, Request, Get, UseInterceptors, Body, Param, Put, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  UseGuards,
+  Get,
+  UseInterceptors,
+  Body,
+  Param,
+  Put,
+  Delete,
+  Res, Req
+} from '@nestjs/common';
+import { Request, Response } from 'express';
 import { AuthenticationService } from './authentication.service';
 import { AuthGuard } from '@nestjs/passport';
 import {
-  AccessToken,
   CreateInitialPasswordDto,
   CreateUserDto,
   ResetPasswordDto,
@@ -23,8 +34,14 @@ export class UserController {
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  public async login(@Request() request): Promise<AccessToken> {
-    return this.authenticationService.login(request.user);
+  public login(@Req() request, @Res({ passthrough: true }) response: Response): void {
+    const accessToken = this.authenticationService.login(request.user);
+    response.cookie('access_token', accessToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'lax',
+      expires: new Date(Date.now() + 7 * 24 * 60 * 1000)
+    }).send({ status: 'ok' })
   }
 
   @UseInterceptors(MapInterceptor(UserDto, User))
@@ -44,6 +61,13 @@ export class UserController {
   @Get()
   public async getAllUsers(): Promise<User[]> {
     return this.userManagementService.getAllUsers();
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @UseInterceptors(MapInterceptor(UserDto, User))
+  @Get('me')
+  public getMyUSer(@Req() request: Request): User {
+    return request.user as User;
   }
 
   @UseGuards(AdminGuard())
@@ -73,5 +97,19 @@ export class UserController {
   @Delete(':id')
   public async deleteUser(@Param('id') id: number): Promise<User> {
     return this.userManagementService.delete(id);
+  }
+
+  private parseJwt<T>(token: string): T | null {
+    try {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return `%${(`00${c.charCodeAt(0).toString(16)}`).slice(-2)}`;
+      }).join(''));
+
+      return JSON.parse(jsonPayload);
+    } catch {
+      return null;
+    }
   }
 }

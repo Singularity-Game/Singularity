@@ -5,7 +5,6 @@ export { SongNoteType } from './lib/song/song-note-type.enum';
 export { CreateSongDto } from './lib/song/create-song.dto';
 export { UUID } from './lib/shared/uuid';
 export { Nullable } from './lib/shared/nullable';
-export { AccessToken } from './lib/authentication/access-token';
 export { UserDto } from './lib/authentication/user-dto';
 export { CreateUserDto } from './lib/authentication/create-user-dto';
 export { CreateInitialPasswordDto } from './lib/authentication/create-initial-password-dto';
