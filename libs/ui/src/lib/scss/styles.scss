@@ -20,8 +20,11 @@
 
 // Card
 .sui-card-3d-image {
-  max-width: calc(100% + var(--padding) * 2);
+  width: calc(100% + var(--padding) * 2);
+  display: block;
+  aspect-ratio: 1;
   margin: -20px -20px 0 -20px;
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
+  overflow: hidden;
 }

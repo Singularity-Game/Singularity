@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SongOverviewDto } from '@singularity/api-interfaces';
-import { Observable, startWith, take } from 'rxjs';
+import { map, Observable, of, switchMap, take } from 'rxjs';
 import { SongService } from '../../shared/song.service';
 import { Router } from '@angular/router';
 
@@ -13,6 +13,7 @@ export class SongGridItemComponent implements OnInit {
   @Input() song?: SongOverviewDto;
 
   public cover$?: Observable<string>;
+  public blurryCover$?: Observable<string>;
   public isDownloaded$?: Observable<boolean>;
 
   constructor(private readonly songService: SongService,
@@ -20,15 +21,30 @@ export class SongGridItemComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    console.log('init!');
     if(!this.song) {
       return;
     }
 
-    this.cover$ = this.songService.getSongCoverCached$(this.song.id)
-      .pipe(startWith(''));
-
     this.isDownloaded$ = this.songService.isSongDownloaded$(this.song.id).pipe(take(1));
+    this.cover$ = this.isDownloaded$.pipe(
+      switchMap((downloaded: boolean) => {
+        if (downloaded) {
+          return this.songService.getSongCoverCached$(this.song?.id ?? 0);
+        } else {
+          return of(`/api/song/${this.song?.id}/cover`);
+        }
+      })
+    );
+
+    this.blurryCover$ = this.isDownloaded$.pipe(
+      map((downloaded: boolean) => {
+        if (downloaded) {
+          return '';
+        } else {
+          return `/api/song/${this.song?.id}/cover/small`;
+        }
+      })
+    )
   }
 
   public startSinging() {

@@ -1,0 +1,24 @@
+.blur-load {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-position: center;
+    object-fit: cover;
+    opacity: 0;
+    transition: 200ms ease;
+
+    &.visible {
+      opacity: 1;
+    }
+  }
+}
+
+.blurry {
+  filter: blur(10px);
+}

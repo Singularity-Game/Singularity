@@ -25,6 +25,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { SongUploadInfo } from '@singularity/api-interfaces';
 import { SongFile } from './interfaces/song-file';
 import { SongDownloadService } from './song-download.service';
+import * as sharp from 'sharp';
 
 @Controller('song')
 export class SongController {
@@ -61,6 +62,18 @@ export class SongController {
     const fileType = await fromBuffer(buffer);
     response.setHeader('Content-Type', fileType.mime);
     response.end(buffer);
+  }
+
+  @Get(':id/cover/small')
+  @UseGuards(AuthGuard('jwt'))
+  public async getSmallSongCoverById(@Param('id') id: string, @Res() response: Response): Promise<void> {
+    const buffer = await this.songService.getSongCoverFile(+id);
+    const fileType = await fromBuffer(buffer);
+    const downscaledBuffer = await sharp(buffer)
+      .resize(20, 20)
+      .toBuffer();
+    response.setHeader('Content-Type', fileType.mime);
+    response.end(downscaledBuffer);
   }
 
   @Get(':id/video')
