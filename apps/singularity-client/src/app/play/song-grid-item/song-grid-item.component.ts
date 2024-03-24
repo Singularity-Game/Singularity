@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { SongOverviewDto } from '@singularity/api-interfaces';
 import { map, Observable, of, switchMap, take } from 'rxjs';
 import { SongService } from '../../shared/song.service';
@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   selector: 'singularity-song-grid-item',
   templateUrl: './song-grid-item.component.html',
   styleUrls: ['./song-grid-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SongGridItemComponent implements OnInit {
   @Input() song?: SongOverviewDto;

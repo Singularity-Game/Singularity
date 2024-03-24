@@ -12,8 +12,7 @@
     <singularity-audio-player class="video" [songs]="songs" [index]="carouselIndex" [paused]="paused" (songFinished)="skip()"></singularity-audio-player>
     <drag-scroll [scrollbar-hidden]="true" (indexChanged)="onCarouselIndexChange($event, songs)" (dsInitialized)="onCarouselIndexChange(0, songs)" class="bottom">
       <div drag-scroll-item class="carousel-item" *ngFor="let song of songs; let i = index">
-        <singularity-song-grid-item [song]="song"
-                                    *ngIf="i >= carouselIndex - 1 && i <= carouselIndex + visibleCarouselItems"></singularity-song-grid-item>
+        <singularity-song-grid-item [song]="song"></singularity-song-grid-item>
       </div>
     </drag-scroll>
   </div>
