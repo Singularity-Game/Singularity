@@ -19,15 +19,24 @@ singularity-song-grid-item, {
 }
 
 .video-container {
-  height: calc(100vh - 63px);
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: end;
   transition: 1000ms ease;
+  overflow: hidden;
+  position: relative;
 
   &.collapsed {
     height: 0;
   }
+}
+
+.video {
+  position: absolute;
+  height: 100vh;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 tui-notification {

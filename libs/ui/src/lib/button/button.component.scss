@@ -1,0 +1,25 @@
+.button-wrapper {
+  min-height: 45px;
+  line-height: 43px;
+  border-radius: var(--border-radius);
+
+  &:hover {
+    .bottom-glow {
+      opacity: 1;
+    }
+  }
+}
+
+.text {
+  padding: 0 var(--padding) 0 var(--padding);
+}
+
+.bottom-glow {
+  display: block;
+  position: relative;
+  bottom: 0;
+  height: 2px;
+  transition: 200ms ease;
+  opacity: 0;
+  background-image: linear-gradient(to right, transparent, var(--primary), transparent)
+}

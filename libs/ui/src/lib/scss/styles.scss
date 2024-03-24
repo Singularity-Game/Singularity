@@ -18,6 +18,19 @@
   display: inherit;
 }
 
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family:  Manrope, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Segoe UI", "Helvetica Neue", sans-serif;
+  font-size: var(--font-size);
+  font-weight: var(--font-weight);
+}
+
+.icon {
+  vertical-align: middle;
+}
+
 // Card
 .sui-card-3d-image {
   width: calc(100% + var(--padding) * 2);

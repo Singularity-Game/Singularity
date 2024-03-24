@@ -14,14 +14,15 @@ import {
   TuiTextfieldControllerModule
 } from '@taiga-ui/core';
 import { FormsModule } from '@angular/forms';
-import { AudioPlayerComponent } from './audio-player/audio-player.component';
 import { TuiMediaModule } from '@taiga-ui/cdk';
 import { TranslocoModule } from '@ngneat/transloco';
 import { SingularityUiModule } from '@singularity/ui';
 import { DragScrollComponent, DragScrollItemDirective } from 'ngx-drag-scroll';
+import { AudioPlayerComponent } from './audio-player/audio-player.component';
 
 @NgModule({
   declarations: [PlayComponent, SongGridItemComponent, AudioPlayerComponent],
   imports: [CommonModule, PlayRoutingModule, SharedModule, TuiAvatarModule, TuiSvgModule, TuiHintModule, TuiNotificationModule, TuiInputModule, TuiTextfieldControllerModule, FormsModule, TuiSelectModule, TuiDataListModule, TuiScrollbarModule, TuiMediaModule, TuiSliderModule, TuiButtonModule, TranslocoModule, SingularityUiModule, DragScrollComponent, DragScrollItemDirective]
 })
-export class PlayModule {}
+export class PlayModule {
+}

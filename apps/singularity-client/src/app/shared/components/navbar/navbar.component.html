@@ -1,4 +1,4 @@
-<div class="navbar" [class.transparent]="transparent">
+<div class="navbar">
   <div class="flex">
     <div class="navbar-left">
       <a routerLink="/">
@@ -7,9 +7,9 @@
     </div>
   </div>
   <div class="navbar-buttons">
-    <button tuiButton size="m" routerLink="/play">{{ 'shared.navbar.play' | transloco }}</button>
-    <button tuiButton appearance="flat" size="m" routerLink="/party" *ngIf="partyEnabled">{{ 'shared.navbar.party' | transloco }}</button>
-    <button tuiButton appearance="flat" size="m" routerLink="/ui" *ngIf="devMode">Ui Components</button>
+    <button sui-button routerLink="/play">{{ 'shared.navbar.play' | transloco }}</button>
+    <button sui-button routerLink="/party" *ngIf="partyEnabled">{{ 'shared.navbar.party' | transloco }}</button>
+    <ng-content></ng-content>
   </div>
   <div class="navbar-right">
     <ng-container>

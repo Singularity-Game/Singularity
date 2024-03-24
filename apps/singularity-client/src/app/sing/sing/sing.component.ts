@@ -117,7 +117,7 @@ export class SingComponent implements AfterViewInit, OnDestroy {
     this.audioPlayer.onpause = () => this.stopSong(true);
   }
 
-  private stopSong(abort: boolean = false): void {
+  private stopSong(abort = false): void {
     this.audioPlayer?.pause();
     // this.videoElement?.nativeElement.pause();
     this.audioPlayer?.remove();

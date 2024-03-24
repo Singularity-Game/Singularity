@@ -1,14 +1,16 @@
-<singularity-navbar [transparent]="false"></singularity-navbar>
-<!--<tui-scrollbar>-->
-<!--  <div class="song-grid">-->
-<!--    <singularity-song-grid-item-->
-<!--      *ngFor="let song of (((songs$ | async) | search: 'name,artist' :searchTerm) | orderBy: orderBy.key :orderBy.ascending)"-->
-<!--      [song]="song"></singularity-song-grid-item>-->
-<!--  </div>-->
-<!--</tui-scrollbar>-->
+<singularity-navbar [transparent]="true">
+  <button sui-button (click)="previous()"><img class="icon" src="assets/icons/backwards.svg" width="20" alt="backwards"></button>
+  <button sui-button (click)="paused = !paused">
+    <img class="icon" src="assets/icons/play.svg" width="20" alt="play" *ngIf="paused">
+    <img class="icon" src="assets/icons/pause.svg" width="20" alt="pause" *ngIf="!paused">
+  </button>
+  <button sui-button (click)="skip()"><img class="icon" src="assets/icons/forwards.svg" width="20" alt="forwards"></button>
+</singularity-navbar>
+
 <ng-container *ngIf="songs$ | async; let songs">
   <div class="video-container" [class.collapsed]="isScrolled">
-    <drag-scroll [scrollbar-hidden]="true" (indexChanged)="carouselIndex = $event" class="bottom">
+    <singularity-audio-player class="video" [songs]="songs" [index]="carouselIndex" [paused]="paused" (songFinished)="skip()"></singularity-audio-player>
+    <drag-scroll [scrollbar-hidden]="true" (indexChanged)="onCarouselIndexChange($event, songs)" (dsInitialized)="onCarouselIndexChange(0, songs)" class="bottom">
       <div drag-scroll-item class="carousel-item" *ngFor="let song of songs; let i = index">
         <singularity-song-grid-item [song]="song"
                                     *ngIf="i >= carouselIndex - 1 && i <= carouselIndex + visibleCarouselItems"></singularity-song-grid-item>
@@ -62,7 +64,6 @@
         </button>
       </tui-data-list>
     </tui-select>
-    <singularity-audio-player [playList]="songs$ | async" [shuffle]="true"></singularity-audio-player>
     <ng-template #valueTemplate let-orderBy>
       <ng-container *ngIf="orderBy.key === 'artist'">{{ 'play.artist' | transloco }}</ng-container>
       <ng-container *ngIf="orderBy.key === 'name'">{{ 'play.name' | transloco }}</ng-container>

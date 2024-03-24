@@ -1,5 +1,4 @@
 .navbar {
-  box-shadow: 0 0.125rem 1rem rgb(0 0 0 / 8%);
   position: fixed;
   top: 0;
   left: 0;
@@ -8,14 +7,12 @@
   display: flex;
   height: 3.9375rem;
   align-items: center;
+  justify-content: space-between;
   padding: 0 0.25rem 0 1.25rem;
-  background: var(--tui-base-01);
-  border-bottom: 1px solid var(--tui-base-03);
-}
-
-.transparent {
-  background: transparent;
-  border-bottom: none
+  background: var(--glass-black-background);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 1);
 }
 
 .margin {
@@ -31,16 +28,9 @@
   width: 180px;
 }
 
-.navbar-right {
-  margin-left: auto;
-}
-
 .navbar-buttons {
-  margin-left: 1.25rem;
-
-  button {
-    margin-right: 1.25rem;
-  }
+  display: flex;
+  justify-content: center;
 }
 
 .logo {

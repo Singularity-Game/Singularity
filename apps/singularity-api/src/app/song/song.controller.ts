@@ -6,7 +6,7 @@ import {
   Get,
   Param,
   Post,
-  Res,
+  Res, StreamableFile,
   UploadedFiles,
   UseGuards,
   UseInterceptors
@@ -85,6 +85,16 @@ export class SongController {
     response.end(buffer);
   }
 
+  @Get(':id/video/stream')
+  @UseGuards(AuthGuard('jwt'))
+  public async getSongVideoStreamById(@Param('id') id: string, @Res() response: Response): Promise<void> {
+    const buffer = await this.songService.getSongVideoFile(+id);
+    const fileType = await fromBuffer(buffer);
+    response.setHeader('Content-Type', fileType.mime);
+    response.setHeader('Content-Disposition', 'inline');
+    response.send(buffer);
+  }
+
   @Get(':id/audio')
   @UseGuards(AuthGuard('jwt'))
   public async getSongAudioById(@Param('id') id: string, @Res() response: Response): Promise<void> {
@@ -92,6 +102,16 @@ export class SongController {
     const fileType = await fromBuffer(buffer);
     response.setHeader('Content-Type', fileType.mime ?? '');
     response.end(buffer);
+  }
+
+  @Get(':id/audio/stream')
+  @UseGuards(AuthGuard('jwt'))
+  public async getSongAudioStreamById(@Param('id') id: string, @Res() response: Response): Promise<void> {
+    const buffer = await this.songService.getSongAudioFile(+id);
+    const fileType = await fromBuffer(buffer);
+    response.setHeader('Content-Type', fileType.mime ?? '');
+    response.setHeader('Content-Disposition', 'inline');
+    response.send(buffer);
   }
 
   @Post()
