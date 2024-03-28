@@ -1,20 +1,19 @@
 <singularity-navbar [transparent]="true">
-  <button sui-button (click)="previous()"><img class="icon" src="assets/icons/backwards.svg" width="20" alt="backwards"></button>
+  <button sui-button (click)="previous()"><img class="icon" src="assets/icons/backwards.svg" width="20" alt="backwards">
+  </button>
   <button sui-button (click)="paused = !paused">
     <img class="icon" src="assets/icons/play.svg" width="20" alt="play" *ngIf="paused">
     <img class="icon" src="assets/icons/pause.svg" width="20" alt="pause" *ngIf="!paused">
   </button>
-  <button sui-button (click)="skip()"><img class="icon" src="assets/icons/forwards.svg" width="20" alt="forwards"></button>
+  <button sui-button (click)="next()"><img class="icon" src="assets/icons/forwards.svg" width="20" alt="forwards">
+  </button>
 </singularity-navbar>
 
 <ng-container *ngIf="songs$ | async; let songs">
   <div class="video-container" [class.collapsed]="isScrolled">
-    <singularity-audio-player class="video" [songs]="songs" [index]="carouselIndex" [paused]="paused" (songFinished)="skip()"></singularity-audio-player>
-    <drag-scroll [scrollbar-hidden]="true" (indexChanged)="onCarouselIndexChange($event, songs)" (dsInitialized)="onCarouselIndexChange(0, songs)" class="bottom">
-      <div drag-scroll-item class="carousel-item" *ngFor="let song of songs; let i = index">
-        <singularity-song-grid-item [song]="song"></singularity-song-grid-item>
-      </div>
-    </drag-scroll>
+    <singularity-audio-player class="video" [songs]="songs" [index]="carouselIndex" [paused]="paused"
+                              (songFinished)="next()"></singularity-audio-player>
+    <singularity-song-carousel [songs]="songs" (changed)="onCarouselChange($event, songs)"></singularity-song-carousel>
   </div>
 
   <div class="search-container">

@@ -2,6 +2,8 @@
 
 @import '@taiga-ui/core/styles/taiga-ui-local';
 @import '../../../libs/ui/src/lib/scss/styles.scss';
+@import 'ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
+@import 'ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
 
 html, body {
   width: 100%;
@@ -17,4 +19,8 @@ html, body {
 
 .flex-1 {
   flex: 1;
+}
+
+.owl-dot span {
+  background: var(--primary);
 }

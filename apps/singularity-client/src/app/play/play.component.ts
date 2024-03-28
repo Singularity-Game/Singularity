@@ -1,29 +1,29 @@
-import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Observable, shareReplay } from 'rxjs';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { map, Observable, of, shareReplay, Subject, switchMap, take, takeUntil } from 'rxjs';
 import { SongOverviewDto } from '@singularity/api-interfaces';
 import { SongService } from '../shared/song.service';
 import { SettingsService } from '../shared/settings/settings.service';
 import { LocalSettings } from '../shared/settings/local-settings';
-import { DragScrollComponent } from 'ngx-drag-scroll';
 import { SuiGlobalColorService } from '@singularity/ui';
+import { SongCarouselComponent } from './song-carousel/song-carousel.component';
+
 @Component({
   selector: 'singularity-play',
   templateUrl: './play.component.html',
-  styleUrls: ['./play.component.scss'],
+  styleUrls: ['./play.component.scss']
 })
-export class PlayComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PlayComponent implements OnInit, OnDestroy {
   public songs$?: Observable<SongOverviewDto[]>;
   public isOfflineMode?: boolean;
   public searchTerm = '';
   public orderBy: { key: keyof SongOverviewDto, ascending: boolean } = { key: 'name', ascending: true };
-  public visibleCarouselItems = window.innerWidth / 270 + 3;
   public carouselIndex = 0;
   public isScrolled = false;
   public paused = false;
 
-  private audio = new Audio();
+  private destroySubject = new Subject<void>();
 
-  @ViewChild(DragScrollComponent) private carousel?: DragScrollComponent;
+  @ViewChild(SongCarouselComponent) private carousel?: SongCarouselComponent;
 
   @HostListener('window:scroll')
   public onScroll(): void {
@@ -40,27 +40,13 @@ export class PlayComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  @HostListener('window:keyup', ['$event'])
-  public onKeyDown(event: KeyboardEvent): void {
-    if(!this.carousel || this.isScrolled) {
-      return;
-    }
-
-    if (event.key === 'ArrowRight') {
-      this.carousel.moveRight();
-    }
-
-    if (event.key === 'ArrowLeft') {
-      this.carousel.moveLeft();
-    }
-  }
-
   constructor(private readonly songService: SongService,
               private readonly settingsService: SettingsService,
-              private readonly suiColorService: SuiGlobalColorService) {}
+              private readonly suiColorService: SuiGlobalColorService) {
+  }
 
   public ngOnInit(): void {
-    this.isOfflineMode = this.settingsService.getLocalSetting(LocalSettings.OfflineMode) === 'true'
+    this.isOfflineMode = this.settingsService.getLocalSetting(LocalSettings.OfflineMode) === 'true';
 
     if (this.isOfflineMode) {
       this.songs$ = this.songService.getAllOfflineSongs$().pipe(shareReplay(1));
@@ -69,28 +55,42 @@ export class PlayComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  public ngAfterViewInit() {
-    this.skip();
-    this.previous();
-  }
-
   public ngOnDestroy(): void {
-    this.audio.pause();
-    this.audio.src = '';
+    this.destroySubject.next();
+    this.destroySubject.complete();
   }
 
-  public skip(): void {
-    this.carousel?.moveRight();
+  public next(): void {
+    this.carousel?.next();
   }
 
   public previous(): void {
-    this.carousel?.moveLeft();
+    this.carousel?.previous();
   }
 
-  public onCarouselIndexChange(index: number, songs: SongOverviewDto[]): void {
+  public onCarouselChange(index: number, songs: SongOverviewDto[]) {
     this.carouselIndex = index;
-    const song = songs[index];
+    const currentSong = songs[index];
 
-    this.suiColorService.setColorsFromImage(`/api/song/${song.id}/cover`);
+    this.songService.isSongDownloaded$(currentSong.id)
+      .pipe(
+        switchMap((downloaded: boolean) => {
+          if (downloaded) {
+            return this.songService.getSongCoverCached$(currentSong.id);
+          } else {
+            return of(`/api/song/${currentSong.id}/cover`);
+          }
+        }),
+        map((cover: string | Blob) => {
+          if (cover instanceof Blob) {
+            return URL.createObjectURL(cover);
+          } else {
+            return cover;
+          }
+        }),
+        takeUntil(this.destroySubject)
+      ).subscribe((cover: string) => {
+      this.suiColorService.setColorsFromImage(cover);
+    });
   }
 }

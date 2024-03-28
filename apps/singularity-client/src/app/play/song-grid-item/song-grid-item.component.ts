@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class SongGridItemComponent implements OnInit {
   @Input() song?: SongOverviewDto;
+  @Input() disabled = false;
 
   public cover$?: Observable<string>;
   public blurryCover$?: Observable<string>;
@@ -49,6 +50,10 @@ export class SongGridItemComponent implements OnInit {
   }
 
   public startSinging() {
+    if(this.disabled) {
+      return;
+    }
+
     this.router.navigate(['sing', this.song?.id], {
       queryParams: {
         referer: 'play'
