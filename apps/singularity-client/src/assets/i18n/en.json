@@ -48,11 +48,13 @@
       "localSettings": {
         "header": "Local Settings",
         "descriptionHTML": "These settings will only be applied in this browser on this computer.<br>The settings are automatically saved.",
-        "theme": {
-          "header": "Theme:",
-          "light": "Light",
-          "dark": "Dark",
-          "description": "Choose between light and dark."
+        "menuVolume": {
+          "header": "Menu Volume:",
+          "description": "The audio volume in the menu."
+        },
+        "gameVolume": {
+          "header": "Game Volume:",
+          "description": "The audio volume in the game."
         },
         "microphoneLatency": {
           "header": "Microphone Latency:",

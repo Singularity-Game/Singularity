@@ -1,5 +1,5 @@
 import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { map, Observable, of, shareReplay, Subject, switchMap, take, takeUntil } from 'rxjs';
+import { map, Observable, of, shareReplay, Subject, switchMap, takeUntil } from 'rxjs';
 import { SongOverviewDto } from '@singularity/api-interfaces';
 import { SongService } from '../shared/song.service';
 import { SettingsService } from '../shared/settings/settings.service';
@@ -20,6 +20,7 @@ export class PlayComponent implements OnInit, OnDestroy {
   public carouselIndex = 0;
   public isScrolled = false;
   public paused = false;
+  public volume = +(this.settingsService.getLocalSetting(LocalSettings.MenuVolume) || '0');
 
   private destroySubject = new Subject<void>();
 

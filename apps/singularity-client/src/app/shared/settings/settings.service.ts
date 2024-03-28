@@ -44,5 +44,13 @@ export class SettingsService {
     if (this.getLocalSetting(LocalSettings.OfflineMode) === null) {
       this.setLocalSetting(LocalSettings.OfflineMode, 'false');
     }
+
+    if (this.getLocalSetting(LocalSettings.MenuVolume) === null) {
+      this.setLocalSetting(LocalSettings.MenuVolume, '10');
+    }
+
+    if (this.getLocalSetting(LocalSettings.GameVolume) === null) {
+      this.setLocalSetting(LocalSettings.GameVolume, '100');
+    }
   }
 }

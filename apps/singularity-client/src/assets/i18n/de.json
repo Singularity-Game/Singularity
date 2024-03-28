@@ -48,11 +48,13 @@
       "localSettings": {
         "header": "Lokale Einstellungen",
         "descriptionHTML": "Diese Einstellungen werden nur in diesem Browser auf diesem Computer übernommen.<br>Die Einstellungen werden automatisch gespeichert.",
-        "theme": {
-          "header": "Theme:",
-          "light": "Hell",
-          "dark": "Dunkel",
-          "description": "Wähle zwischen hell und dunkel."
+        "menuVolume": {
+          "header": "Menü Lautstärke:",
+          "description": "Die Audio Lautstärke im Menü."
+        },
+        "gameVolume": {
+          "header": "Spiel Lautstärke:",
+          "description": "Die Audio Lautstärke im Spiel."
         },
         "microphoneLatency": {
           "header": "Mikrofon Latenz:",

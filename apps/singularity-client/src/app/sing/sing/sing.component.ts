@@ -13,7 +13,6 @@ import { combineLatest, delay, filter, map, Observable, Subject, switchMap, take
 import { SongDto } from '@singularity/api-interfaces';
 import { SongService } from '../../shared/song.service';
 import { BpmService } from '../services/bpm.service';
-import { MicrophoneService } from '../services/microphone.service';
 import { Singer } from '../singer/singer';
 import { SingerFactory } from '../services/singer-factory.service';
 import { LoadProgress } from '../../shared/types/load-progress';
@@ -21,6 +20,8 @@ import { NoteHelper } from '../../shared/helpers/note-helper';
 import { TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { SingScoreDialogComponent } from '../dialogs/sing-score-dialog/sing-score-dialog.component';
+import { SettingsService } from '../../shared/settings/settings.service';
+import { LocalSettings } from '../../shared/settings/local-settings';
 
 @Component({
   selector: 'singularity-sing',
@@ -42,7 +43,7 @@ export class SingComponent implements AfterViewInit, OnDestroy {
 
   constructor(private readonly songService: SongService,
               private readonly bpmService: BpmService,
-              private readonly microphoneService: MicrophoneService,
+              private readonly settingsService: SettingsService,
               private readonly singerFactory: SingerFactory,
               private readonly dialogService: TuiDialogService) { }
 
@@ -106,6 +107,8 @@ export class SingComponent implements AfterViewInit, OnDestroy {
     if (!this.audioPlayer) {
       return;
     }
+
+    this.audioPlayer.volume = +(this.settingsService.getLocalSetting(LocalSettings.GameVolume) || 0) / 100;
 
     this.audioPlayer.play()
       .then(() => {

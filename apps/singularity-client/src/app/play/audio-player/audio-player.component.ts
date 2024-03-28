@@ -14,6 +14,9 @@ export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
     this.songIndex = index;
     this.playSong();
   }
+  @Input() public set volume(volume: number) {
+    this.audio.volume = volume / 100;
+  }
 
   @Input()
   public set paused(paused: boolean) {

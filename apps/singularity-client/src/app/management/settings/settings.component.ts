@@ -12,8 +12,43 @@ import { take } from 'rxjs';
 })
 export class SettingsComponent {
   private cachedMicrophoneLatency: Nullable<number> = null;
-  private cachedDarkMode: Nullable<boolean> = null;
+  private cachedMenuVolume: Nullable<number> = null;
+  private cachedGameVolume: Nullable<number> = null;
   private cachedOfflineMode: Nullable<boolean> = null;
+
+  public get menuVolume(): number {
+    if (this.cachedMenuVolume === null) {
+      this.cachedMenuVolume = +(this.settingsService.getLocalSetting(LocalSettings.MenuVolume) ?? 0);
+    }
+
+    return this.cachedMenuVolume;
+  }
+
+  public set menuVolume(volume: Nullable<number>) {
+    if(volume === null) {
+      volume = 0;
+    }
+
+    this.cachedMenuVolume = volume;
+    this.settingsService.setLocalSetting(LocalSettings.MenuVolume, `${volume}`);
+  }
+
+  public get gameVolume(): number {
+    if (this.cachedGameVolume === null) {
+      this.cachedGameVolume = +(this.settingsService.getLocalSetting(LocalSettings.GameVolume) ?? 0);
+    }
+
+    return this.cachedGameVolume;
+  }
+
+  public set gameVolume(volume: Nullable<number>) {
+    if(volume === null) {
+      volume = 0;
+    }
+
+    this.cachedGameVolume = volume;
+    this.settingsService.setLocalSetting(LocalSettings.GameVolume, `${volume}`);
+  }
 
   public get microphoneLatency(): number {
     if (this.cachedMicrophoneLatency === null) {
@@ -22,6 +57,7 @@ export class SettingsComponent {
 
     return this.cachedMicrophoneLatency;
   }
+
 
   public set microphoneLatency(latency: Nullable<number>) {
     if (latency === null) {
@@ -32,18 +68,7 @@ export class SettingsComponent {
     this.settingsService.setLocalSetting(LocalSettings.MicrophoneLatency, `${latency}`);
   }
 
-  public get darkMode(): boolean {
-    if (this.cachedDarkMode === null) {
-      this.cachedDarkMode = this.settingsService.getLocalSetting(LocalSettings.DarkMode) === 'true';
-    }
 
-    return this.cachedDarkMode;
-  }
-
-  public set darkMode(darkMode: boolean) {
-    this.cachedDarkMode = darkMode;
-    this.settingsService.setLocalSetting(LocalSettings.DarkMode, `${darkMode}`);
-  }
 
   public get offlineMode(): boolean {
     if (this.cachedOfflineMode === null) {

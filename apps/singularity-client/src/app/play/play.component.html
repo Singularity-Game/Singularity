@@ -11,7 +11,7 @@
 
 <ng-container *ngIf="songs$ | async; let songs">
   <div class="video-container" [class.collapsed]="isScrolled">
-    <singularity-audio-player class="video" [songs]="songs" [index]="carouselIndex" [paused]="paused"
+    <singularity-audio-player class="video" [songs]="songs" [index]="carouselIndex" [paused]="paused" [volume]="volume"
                               (songFinished)="next()"></singularity-audio-player>
     <singularity-song-carousel [songs]="songs" (changed)="onCarouselChange($event, songs)"></singularity-song-carousel>
   </div>

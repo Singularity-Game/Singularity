@@ -7,7 +7,7 @@ import {
   TuiIslandModule,
   TuiProgressModule,
   TuiRadioBlockModule,
-  TuiSelectModule
+  TuiSelectModule, TuiSliderModule
 } from '@taiga-ui/kit';
 import {
   TuiButtonModule,
@@ -21,7 +21,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
   declarations: [SettingsComponent],
-  imports: [CommonModule, SettingsRoutingModule, TuiIslandModule, TuiButtonModule, TuiInputCountModule, TuiLabelModule, FormsModule, TuiSelectModule, TuiTextfieldControllerModule, TuiDataListModule, TuiGroupModule, TuiRadioBlockModule, TuiProgressModule, TranslocoModule],
+  imports: [CommonModule, SettingsRoutingModule, TuiIslandModule, TuiButtonModule, TuiInputCountModule, TuiLabelModule, FormsModule, TuiSelectModule, TuiTextfieldControllerModule, TuiDataListModule, TuiGroupModule, TuiRadioBlockModule, TuiProgressModule, TranslocoModule, TuiSliderModule],
   providers: [],
 })
 export class SettingsModule {}
