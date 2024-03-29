@@ -1,5 +1,5 @@
-<div class="button-wrapper">
-  <div class="text">
+<div class="button-wrapper" [class.size-s]="size === 's'">
+  <div class="text" [class.size-s]="size === 's'">
     <ng-content></ng-content>
   </div>
   <span class="bottom-glow"></span>

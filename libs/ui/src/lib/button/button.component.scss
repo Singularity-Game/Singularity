@@ -3,6 +3,11 @@
   line-height: 43px;
   border-radius: var(--border-radius);
 
+  &.size-s {
+    min-height: 36px;
+    line-height: 20px;
+  }
+
   &:hover {
     .bottom-glow {
       opacity: 1;
@@ -12,6 +17,11 @@
 
 .text {
   padding: 0 var(--padding) 0 var(--padding);
+
+  &.size-s {
+    padding: 8px 12px 8px 12px;
+    line-height: 20px;
+  }
 }
 
 .bottom-glow {

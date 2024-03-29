@@ -59,3 +59,9 @@ tui-scrollbar {
 .bottom-section {
   min-height: 100vh;
 }
+
+.select-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

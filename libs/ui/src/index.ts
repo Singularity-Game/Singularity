@@ -5,4 +5,6 @@ export { LogoComponent } from './lib/logo/logo.component';
 export { ButtonComponent } from './lib/button/button.component';
 export { InputContainerComponent } from './lib/input/input-container.component';
 export { InputDirective } from './lib/input/input.directive';
+export { SelectComponent } from './lib/select/select.component';
+export { SelectOptionComponent } from './lib/select/select-option.component';
 export { SuiGlobalColorService } from './lib/sui-global-color/sui-global-color.service';

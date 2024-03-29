@@ -23,59 +23,32 @@
       <sui-input-container>
         <input suiInput type="text" [placeholder]="'play.search' | transloco" [(ngModel)]="searchTerm" />
       </sui-input-container>
-<!--      <sui-input-container>-->
-<!--        <select>-->
-<!--          <option>{{ 'play.name' | transloco }}</option>-->
-<!--          <option>{{ 'play.name' | transloco }}</option>-->
-<!--          <option>{{ 'play.name' | transloco }}</option>-->
-<!--          <option>{{ 'play.name' | transloco }}</option>-->
-<!--        </select>-->
-<!--      </sui-input-container>-->
-      <tui-select
-        class="search-item"
-        [(ngModel)]="orderBy"
-        [valueContent]="valueTemplate"
-        tuiTextfieldSize="m"
-      >
-        {{ 'play.orderBy' | transloco }}
-        <tui-data-list *tuiDataList>
-          <button
-            tuiOption
-            [value]="{ key: 'name', ascending: true }"
-          >
-            {{ 'play.name' | transloco }}
-            <tui-svg src="tuiIconArrowDown"></tui-svg>
-          </button>
-          <button
-            tuiOption
-            [value]="{ key: 'name', ascending: false }"
-          >
-            {{ 'play.name' | transloco }}
-            <tui-svg src="tuiIconArrowUp"></tui-svg>
-          </button>
-          <button
-            tuiOption
-            [value]="{ key: 'artist', ascending: true }"
-          >
-            {{ 'play.artist' | transloco }}
-            <tui-svg src="tuiIconArrowDown"></tui-svg>
-          </button>
-          <button
-            tuiOption
-            [value]="{ key: 'artist', ascending: false }"
-          >
-            {{ 'play.artist' | transloco }}
-            <tui-svg src="tuiIconArrowUp"></tui-svg>
-          </button>
-        </tui-data-list>
-      </tui-select>
-      <ng-template #valueTemplate let-orderBy>
-        <ng-container *ngIf="orderBy.key === 'artist'">{{ 'play.artist' | transloco }}</ng-container>
-        <ng-container *ngIf="orderBy.key === 'name'">{{ 'play.name' | transloco }}</ng-container>
-        <tui-svg *ngIf="orderBy.ascending" src="tuiIconArrowDown"></tui-svg>
-        <tui-svg *ngIf="!orderBy.ascending" src="tuiIconArrowUp"></tui-svg>
-      </ng-template>
-
+      <sui-select [(ngModel)]="orderBy" *ngIf="'play.artist' | transloco">
+        <sui-select-option [value]="{ key: 'artist', ascending: true }">
+          <div class="select-option">
+            <span>{{ 'play.artist' | transloco }}</span>
+            <img src="assets/icons/order-asc.svg" alt="order asc" width="20" height="20" />
+          </div>
+        </sui-select-option>
+        <sui-select-option [value]="{ key: 'artist', ascending: false }">
+          <div class="select-option">
+            <span>{{ 'play.artist' | transloco }}</span>
+            <img src="assets/icons/order-desc.svg" alt="order desc" width="20" height="20" />
+          </div>
+        </sui-select-option>
+        <sui-select-option [value]="{ key: 'name', ascending: true }">
+          <div class="select-option">
+            <span>{{ 'play.name' | transloco }}</span>
+            <img src="assets/icons/order-asc.svg" alt="order asc" width="20" height="20" />
+          </div>
+        </sui-select-option>
+        <sui-select-option [value]="{ key: 'name', ascending: false }">
+          <div class="select-option">
+            <span>{{ 'play.name' | transloco }}</span>
+            <img src="assets/icons/order-desc.svg" alt="order desc" width="20" height="20" />
+          </div>
+        </sui-select-option>
+      </sui-select>
     </div>
 
     <tui-notification *ngIf="isOfflineMode">

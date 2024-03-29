@@ -26,8 +26,6 @@ export class InputContainerComponent {
   }
 
   public handleMouseMove(event: MouseEvent): void {
-    console.log(this.visible, event);
-
     if(!this.inputContainer) {
       return;
     }

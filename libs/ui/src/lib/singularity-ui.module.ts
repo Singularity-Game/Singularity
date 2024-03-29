@@ -7,6 +7,8 @@ import { FastImageComponent } from './fast-image/fast-image.component';
 import { ButtonComponent } from './button/button.component';
 import { InputContainerComponent } from './input/input-container.component';
 import { InputDirective } from './input/input.directive';
+import { SelectComponent } from './select/select.component';
+import { SelectOptionComponent } from './select/select-option.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { InputDirective } from './input/input.directive';
     ButtonComponent,
     InputContainerComponent,
     InputDirective,
+    SelectComponent,
+    SelectOptionComponent,
   ],
   imports: [
     CommonModule,
@@ -28,7 +32,9 @@ import { InputDirective } from './input/input.directive';
     FastImageComponent,
     ButtonComponent,
     InputContainerComponent,
-    InputDirective
+    InputDirective,
+    SelectComponent,
+    SelectOptionComponent
   ]
 })
 export class SingularityUiModule { }
