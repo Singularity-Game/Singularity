@@ -1,0 +1,21 @@
+.mask {
+  mask-image: radial-gradient(rgba(0, 0, 0, 0) 20%, rgb(0, 0, 0));
+  background-color: var(--black);
+  position: absolute;
+}
+
+.background {
+  position: relative;
+}
+
+.grid-background {
+  background-image: url('/assets/backgrounds/background-grid.svg');
+}
+
+.grid-small-background {
+  background-image: url('/assets/backgrounds/background-grid-small.svg');
+}
+
+.dots-background {
+  background-image: url('/assets/backgrounds/background-dots.svg');
+}

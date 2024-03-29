@@ -9,6 +9,7 @@ import { InputContainerComponent } from './input/input-container.component';
 import { InputDirective } from './input/input.directive';
 import { SelectComponent } from './select/select.component';
 import { SelectOptionComponent } from './select/select-option.component';
+import { BackgroundComponent } from './background-beams/background.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SelectOptionComponent } from './select/select-option.component';
     InputDirective,
     SelectComponent,
     SelectOptionComponent,
+    BackgroundComponent,
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,8 @@ import { SelectOptionComponent } from './select/select-option.component';
     InputContainerComponent,
     InputDirective,
     SelectComponent,
-    SelectOptionComponent
+    SelectOptionComponent,
+    BackgroundComponent
   ]
 })
 export class SingularityUiModule { }

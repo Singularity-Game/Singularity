@@ -17,48 +17,48 @@
   </div>
 
   <div class="bottom-section">
+    <sui-background type="dots">
+      <div class="search-container">
+        <sui-input-container>
+          <input suiInput type="text" [placeholder]="'play.search' | transloco" [(ngModel)]="searchTerm" />
+        </sui-input-container>
+        <sui-select [(ngModel)]="orderBy" *ngIf="'play.artist' | transloco">
+          <sui-select-option [value]="{ key: 'artist', ascending: true }">
+            <div class="select-option">
+              <span>{{ 'play.artist' | transloco }}</span>
+              <img src="assets/icons/order-asc.svg" alt="order asc" width="20" height="20" />
+            </div>
+          </sui-select-option>
+          <sui-select-option [value]="{ key: 'artist', ascending: false }">
+            <div class="select-option">
+              <span>{{ 'play.artist' | transloco }}</span>
+              <img src="assets/icons/order-desc.svg" alt="order desc" width="20" height="20" />
+            </div>
+          </sui-select-option>
+          <sui-select-option [value]="{ key: 'name', ascending: true }">
+            <div class="select-option">
+              <span>{{ 'play.name' | transloco }}</span>
+              <img src="assets/icons/order-asc.svg" alt="order asc" width="20" height="20" />
+            </div>
+          </sui-select-option>
+          <sui-select-option [value]="{ key: 'name', ascending: false }">
+            <div class="select-option">
+              <span>{{ 'play.name' | transloco }}</span>
+              <img src="assets/icons/order-desc.svg" alt="order desc" width="20" height="20" />
+            </div>
+          </sui-select-option>
+        </sui-select>
+      </div>
 
+      <tui-notification *ngIf="isOfflineMode">
+        {{ 'play.activeOfflineModeWarning' | transloco }} <a
+        routerLink="/management/settings">{{ 'play.turnOffOfflineMode' | transloco }}</a>
+      </tui-notification>
 
-    <div class="search-container">
-      <sui-input-container>
-        <input suiInput type="text" [placeholder]="'play.search' | transloco" [(ngModel)]="searchTerm" />
-      </sui-input-container>
-      <sui-select [(ngModel)]="orderBy" *ngIf="'play.artist' | transloco">
-        <sui-select-option [value]="{ key: 'artist', ascending: true }">
-          <div class="select-option">
-            <span>{{ 'play.artist' | transloco }}</span>
-            <img src="assets/icons/order-asc.svg" alt="order asc" width="20" height="20" />
-          </div>
-        </sui-select-option>
-        <sui-select-option [value]="{ key: 'artist', ascending: false }">
-          <div class="select-option">
-            <span>{{ 'play.artist' | transloco }}</span>
-            <img src="assets/icons/order-desc.svg" alt="order desc" width="20" height="20" />
-          </div>
-        </sui-select-option>
-        <sui-select-option [value]="{ key: 'name', ascending: true }">
-          <div class="select-option">
-            <span>{{ 'play.name' | transloco }}</span>
-            <img src="assets/icons/order-asc.svg" alt="order asc" width="20" height="20" />
-          </div>
-        </sui-select-option>
-        <sui-select-option [value]="{ key: 'name', ascending: false }">
-          <div class="select-option">
-            <span>{{ 'play.name' | transloco }}</span>
-            <img src="assets/icons/order-desc.svg" alt="order desc" width="20" height="20" />
-          </div>
-        </sui-select-option>
-      </sui-select>
-    </div>
-
-    <tui-notification *ngIf="isOfflineMode">
-      {{ 'play.activeOfflineModeWarning' | transloco }} <a
-      routerLink="/management/settings">{{ 'play.turnOffOfflineMode' | transloco }}</a>
-    </tui-notification>
-
-    <div class="song-grid">
-      <singularity-song-grid-item [song]="song"
-                                  *ngFor="let song of ((songs | search: 'name,artist' :searchTerm) | orderBy: orderBy.key :orderBy.ascending)"></singularity-song-grid-item>
-    </div>
+      <div class="song-grid">
+        <singularity-song-grid-item [song]="song"
+                                    *ngFor="let song of ((songs | search: 'name,artist' :searchTerm) | orderBy: orderBy.key :orderBy.ascending)"></singularity-song-grid-item>
+      </div>
+    </sui-background>
   </div>
 </ng-container>
