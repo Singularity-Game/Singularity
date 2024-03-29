@@ -5,6 +5,8 @@ import { LogoComponent } from './logo/logo.component';
 import { LayoutComponent } from './layout/layout.component';
 import { FastImageComponent } from './fast-image/fast-image.component';
 import { ButtonComponent } from './button/button.component';
+import { InputContainerComponent } from './input/input-container.component';
+import { InputDirective } from './input/input.directive';
 
 @NgModule({
   declarations: [
@@ -13,6 +15,8 @@ import { ButtonComponent } from './button/button.component';
     LayoutComponent,
     FastImageComponent,
     ButtonComponent,
+    InputContainerComponent,
+    InputDirective,
   ],
   imports: [
     CommonModule,
@@ -22,7 +26,9 @@ import { ButtonComponent } from './button/button.component';
     LogoComponent,
     LayoutComponent,
     FastImageComponent,
-    ButtonComponent
+    ButtonComponent,
+    InputContainerComponent,
+    InputDirective
   ]
 })
 export class SingularityUiModule { }

@@ -41,3 +41,22 @@ button {
   border-top-right-radius: var(--border-radius);
   overflow: hidden;
 }
+
+// Inputs
+[suiInput] {
+  background-color: var(--zinc-800);
+  border-radius: var(--input-border-radius);
+  padding: 8px 12px 8px 12px;
+  line-height: 20px;
+  border: none;
+  outline: var(--neutral-700) 1px solid;
+
+  &:hover {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: var(--neutral-700) 2px solid;
+  }
+
+}

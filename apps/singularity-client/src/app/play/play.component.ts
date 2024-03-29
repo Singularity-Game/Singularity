@@ -62,10 +62,12 @@ export class PlayComponent implements OnInit, OnDestroy {
   }
 
   public next(): void {
+    this.paused = false;
     this.carousel?.next();
   }
 
   public previous(): void {
+    this.paused = false;
     this.carousel?.previous();
   }
 
