@@ -9,7 +9,8 @@ import { InputContainerComponent } from './input/input-container.component';
 import { InputDirective } from './input/input.directive';
 import { SelectComponent } from './select/select.component';
 import { SelectOptionComponent } from './select/select-option.component';
-import { BackgroundComponent } from './background-beams/background.component';
+import { BackgroundComponent } from './background/background.component';
+import { BlurryBackgroundBlobComponent } from './blurry-background-blob/blurry-background-blob.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { BackgroundComponent } from './background-beams/background.component';
     SelectComponent,
     SelectOptionComponent,
     BackgroundComponent,
+    BlurryBackgroundBlobComponent,
   ],
   imports: [
     CommonModule,
@@ -37,7 +39,8 @@ import { BackgroundComponent } from './background-beams/background.component';
     InputDirective,
     SelectComponent,
     SelectOptionComponent,
-    BackgroundComponent
+    BackgroundComponent,
+    BlurryBackgroundBlobComponent
   ]
 })
 export class SingularityUiModule { }

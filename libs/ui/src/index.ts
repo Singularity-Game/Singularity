@@ -7,5 +7,6 @@ export { InputContainerComponent } from './lib/input/input-container.component';
 export { InputDirective } from './lib/input/input.directive';
 export { SelectComponent } from './lib/select/select.component';
 export { SelectOptionComponent } from './lib/select/select-option.component';
-export { BackgroundComponent } from './lib/background-beams/background.component';
+export { BackgroundComponent } from './lib/background/background.component';
+export { BlurryBackgroundBlobComponent } from './lib/blurry-background-blob/blurry-background-blob.component';
 export { SuiGlobalColorService } from './lib/sui-global-color/sui-global-color.service';

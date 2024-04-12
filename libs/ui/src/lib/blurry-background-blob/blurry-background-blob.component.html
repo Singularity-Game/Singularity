@@ -1,0 +1,8 @@
+<div #container
+     class="container"
+     (mouseleave)="handleMouseLeave()"
+     (mouseenter)="handleMouseEnter()">
+  <div class="blur"></div>
+  <div class="blob" [class.invisible]="!mouseInside" #blob></div>
+  <ng-content></ng-content>
+</div>

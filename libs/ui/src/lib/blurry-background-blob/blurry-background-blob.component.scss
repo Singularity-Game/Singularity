@@ -1,0 +1,44 @@
+@keyframes rotate {
+  from {
+    rotate: 0deg;
+  }
+
+  50% {
+    scale: 1 1.5
+  }
+
+  to {
+    rotate: 360deg;
+  }
+
+}
+
+.blob {
+  height: 500px;
+  aspect-ratio: 1;
+  position: absolute;
+  transition: opacity 200ms ease;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  animation: rotate 20s infinite;
+  opacity: 1;
+}
+
+.invisible {
+  opacity: 0;
+}
+
+.container {
+  position: relative;
+  overflow: hidden;
+}
+
+.blur {
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  backdrop-filter: blur(200px);
+}
