@@ -57,22 +57,14 @@
     tuiGroup
     [collapsed]="true"
   >
-    <tui-radio-block
-      contentAlign="right"
-      [(ngModel)]="offlineMode"
-      [item]="false"
-      size="l"
-    >
-      {{ 'management.settings.localSettings.offlineMode.online' | transloco }}
-    </tui-radio-block>
-    <tui-radio-block
-      contentAlign="right"
-      [(ngModel)]="offlineMode"
-      [item]="true"
-      size="l"
-    >
-      {{ 'management.settings.localSettings.offlineMode.offline' | transloco }}
-    </tui-radio-block>
+    <sui-select [(ngModel)]="offlineMode" *ngIf="('management.settings.localSettings.offlineMode.online' | transloco) && ('management.settings.localSettings.offlineMode.offline' | transloco)">
+      <sui-select-option [value]="false">
+        <span>{{ 'management.settings.localSettings.offlineMode.online' | transloco }}</span>
+      </sui-select-option>
+      <sui-select-option [value]="true">
+        <span>{{ 'management.settings.localSettings.offlineMode.offline' | transloco }}</span>
+      </sui-select-option>
+    </sui-select>
   </div>
   <p class="flex-1">
     {{ 'management.settings.localSettings.offlineMode.description' | transloco }}

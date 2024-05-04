@@ -1,11 +1,11 @@
 import {
-  AfterContentChecked,
-  AfterContentInit, AfterViewChecked,
   AfterViewInit,
   Component,
   ContentChildren,
-  ElementRef, forwardRef,
-  HostListener, QueryList,
+  ElementRef,
+  forwardRef,
+  HostListener,
+  QueryList,
   Renderer2,
   ViewChild
 } from '@angular/core';
@@ -44,7 +44,7 @@ export class SelectComponent implements ControlValueAccessor, AfterViewInit {
       return;
     }
 
-    if(this.expanded) {
+    if (this.expanded) {
       this.toggleExpand();
     }
   }
@@ -54,12 +54,17 @@ export class SelectComponent implements ControlValueAccessor, AfterViewInit {
   }
 
   public ngAfterViewInit(): void {
-    const firstOption = this.selectOptions?.first;
-    if (!firstOption || !firstOption.content) {
+    let selectedOption = this.selectOptions?.first;
+
+    if (this.value) {
+      selectedOption = this.selectOptions?.find((item: SelectOptionComponent) => item.value === this.value);
+    }
+
+    if (!selectedOption || !selectedOption.content) {
       return;
     }
 
-    this.setValue(firstOption.value, firstOption.content);
+    this.setValue(selectedOption.value, selectedOption.content, false);
   }
 
   public toggleExpand(): void {
@@ -72,16 +77,16 @@ export class SelectComponent implements ControlValueAccessor, AfterViewInit {
     }
   }
 
-  public setValue(value: unknown, content?: ElementRef): void {
+  public setValue(value: unknown, content?: ElementRef, triggerChange = true): void {
     this.value = value;
 
-    if (this.onChange) {
+    if (this.onChange && triggerChange) {
       this.onChange(value);
     }
 
     if (this.textElement && content) {
       const clone = content.nativeElement.cloneNode(true);
-      if(this.textElement.nativeElement.firstChild) {
+      if (this.textElement.nativeElement.firstChild) {
         this.renderer.removeChild(this.textElement.nativeElement, this.textElement.nativeElement.firstChild);
       }
       this.renderer.appendChild(this.textElement.nativeElement, clone);
@@ -89,11 +94,17 @@ export class SelectComponent implements ControlValueAccessor, AfterViewInit {
   }
 
   public writeValue(obj: unknown): void {
-    this.value = obj;
+    const selectedOption = this.selectOptions?.find((item: SelectOptionComponent) => item.value === obj);
+
+    if (!selectedOption || !selectedOption.content) {
+      return;
+    }
+
+    this.setValue(selectedOption.value, selectedOption.content);
   }
 
   public registerOnChange(fn: (value: unknown) => void): void {
-    this.onChange = fn
+    this.onChange = fn;
   }
 
   public registerOnTouched(fn: () => void): void {
