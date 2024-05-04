@@ -10,8 +10,8 @@ export class FastImageComponent {
   @Input() src?: Nullable<string> = '';
   @Input() blurrySrc?: Nullable<string> = '';
   @Input() alt?: Nullable<string> = '';
-  @Input() width?: Nullable<number>;
-  @Input() height?: Nullable<number>;
+  @Input() width?: Nullable<string>;
+  @Input() height?: Nullable<string>;
 
   public imageLoaded = false;
 }

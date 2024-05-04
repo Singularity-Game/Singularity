@@ -1,5 +1,7 @@
 @import './colors';
 @import './defaults';
+@import './inputs';
+@import './tables';
 
 
 // General
@@ -40,74 +42,6 @@ button {
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
   overflow: hidden;
-}
-
-// Inputs
-[suiInput] {
-  appearance: none;
-  background-color: var(--zinc-800);
-  border-radius: var(--input-border-radius);
-  padding: 8px 12px 8px 12px;
-  line-height: 20px;
-  border: none;
-  outline: var(--neutral-700) 1px solid;
-
-  &:hover {
-    outline: none;
-  }
-
-  &:focus-visible {
-    outline: var(--neutral-700) 2px solid;
-  }
-}
-
-// Slider
-[suiSlider] {
-  -webkit-appearance: none;
-  appearance: none;
-  height: 2px;
-  --range: calc(var(--max) - var(--min));
-  --ratio: calc((var(--value) - var(--min)) / var(--range));
-  --sx: calc(0.5 * 2em + var(--ratio) * (100% - 2em));
-  background: linear-gradient(var(--primary), var(--primary)) 0/var(--sx) 100% no-repeat, var(--zinc-800);
-  accent-color: var(--primary);
-
-  &::-moz-range-progress {
-    background: var(--primary);
-  }
-
-  &::-moz-range-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 12px;
-    height: 12px;
-    background: var(--primary);
-    border-radius: 50%;
-    cursor: w-resize;
-    transition: 200ms ease;
-
-    &:hover {
-      transform: scale(120%);
-    }
-  }
-
-  &::-webkit-slider-thumb {
-    border: none;
-    outline: none;
-    -webkit-appearance: none;
-    appearance: none;
-    width: 12px;
-    height: 12px;
-    background: var(--primary);
-    border-radius: 50%;
-    cursor: w-resize;
-    transition: 200ms ease;
-    //box-shadow: -20000px 0 0 20000px var(--primary);
-
-    &:hover {
-      transform: scale(120%);
-    }
-  }
 }
 
 // Progress

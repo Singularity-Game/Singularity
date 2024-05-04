@@ -4,9 +4,9 @@ import { SongManagementService } from '../../song-management.service';
 import {
   asyncScheduler,
   catchError,
-  filter,
-  Observable,
-  scheduled,
+  filter, map,
+  Observable, of,
+  scheduled, shareReplay,
   startWith,
   Subject,
   switchMap,
@@ -34,6 +34,7 @@ export class SongListItemComponent implements OnInit, OnDestroy {
 
   public isAdmin$: Observable<boolean> = this.authenticationService.isAdmin$();
   public cover$?: Observable<string>;
+  public fastCover$?: Observable<string>;
   public isDownloaded$?: Observable<boolean>;
   public isDownloading = false;
   public isCheckingDownload = true;
@@ -53,17 +54,37 @@ export class SongListItemComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.cover$ = this.songManagementService.getSongCoverCached$(this.song?.id)
-      .pipe(
-        startWith(''),
-        takeUntil(this.destroySubject)
-      );
-
     this.isDownloaded$ = this.songManagementService.isSongDownloaded$(this.song.id)
       .pipe(
         tap(() => this.isCheckingDownload = false),
+        shareReplay(1),
         takeUntil(this.destroySubject)
       );
+
+    this.cover$ = this.isDownloaded$
+      .pipe(
+        switchMap((downloaded: boolean) => {
+          if(!this.song?.id) {
+            return of('');
+          }
+
+          if (downloaded) {
+            return this.songManagementService.getSongCoverCached$(this.song?.id);
+          } else {
+            return of(`/api/song/${this.song?.id}/cover`);
+          }
+        })
+      )
+
+    this.fastCover$ = this.isDownloaded$.pipe(
+      map((downloaded: boolean) => {
+        if (downloaded) {
+          return '';
+        } else {
+          return `/api/song/${this.song?.id}/cover/small`;
+        }
+      })
+    )
   }
 
   public ngOnDestroy(): void {
