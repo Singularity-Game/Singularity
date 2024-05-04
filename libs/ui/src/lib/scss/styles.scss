@@ -76,7 +76,24 @@ button {
     background: var(--primary);
   }
 
+  &::-moz-range-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: var(--primary);
+    border-radius: 50%;
+    cursor: w-resize;
+    transition: 200ms ease;
+
+    &:hover {
+      transform: scale(120%);
+    }
+  }
+
   &::-webkit-slider-thumb {
+    border: none;
+    outline: none;
     -webkit-appearance: none;
     appearance: none;
     width: 12px;
@@ -91,8 +108,28 @@ button {
       transform: scale(120%);
     }
   }
+}
 
-  &::-ms-fill-lower {
+// Progress
+[suiProgress] {
+  width: 100%;
+  background: var(--zinc-800);
+  height: 8px;
+  border-radius: 4px;
+  border: none;
 
+  &::-webkit-progress-bar {
+    background: var(--zinc-800);
+    border-radius: 4px;
+  }
+
+  &::-webkit-progress-value {
+    background: var(--primary);
+    border-radius: 4px;
+  }
+
+  &::-moz-progress-bar {
+    background: var(--primary);
+    border-radius: 4px;
   }
 }

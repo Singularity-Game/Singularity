@@ -52,11 +52,7 @@
   <p class="settings-title">
     {{ 'management.settings.localSettings.offlineMode.header' | transloco }}
   </p>
-  <div
-    class="flex-1"
-    tuiGroup
-    [collapsed]="true"
-  >
+  <div class="flex-1">
     <sui-select [(ngModel)]="offlineMode" *ngIf="('management.settings.localSettings.offlineMode.online' | transloco) && ('management.settings.localSettings.offlineMode.offline' | transloco)">
       <sui-select-option [value]="false">
         <span>{{ 'management.settings.localSettings.offlineMode.online' | transloco }}</span>
@@ -70,9 +66,6 @@
     {{ 'management.settings.localSettings.offlineMode.description' | transloco }}
   </p>
 </div>
-
-<hr>
-
 <div class="flex tui-space_top-5 align-center">
   <p class="settings-title">
     {{ 'management.settings.localSettings.localStorage.header' | transloco }}
@@ -80,16 +73,14 @@
   <div class="flex-1">
     <progress
       *ngIf="storageSpaceProgress !== null"
-      tuiProgressBar
+      suiProgress
       max="100"
-      size="s"
       [value]="storageSpaceProgress"
     ></progress>
     <progress
       *ngIf="storageSpaceProgress === null"
-      tuiProgressBar
+      suiProgress
       max="100"
-      size="s"
     ></progress>
     <p *ngIf="totalStorageSpace !== null && usedStorageSpace !== null" class="storage-space-text">
       {{ usedStorageSpace / 1000000000 | number }} Gb / {{ totalStorageSpace / 1000000000 | number }}
@@ -109,7 +100,7 @@
     {{ 'management.settings.localSettings.emptyLocalStorage.header' | transloco }}
   </p>
   <div class="flex-1">
-    <button tuiButton appearance="outline" class="storage-clear-button" [showLoader]="isClearingSongs"
+    <button suiButton class="storage-clear-button"
             (click)="clearSongs()">{{ 'management.settings.localSettings.emptyLocalStorage.button' | transloco }}
     </button>
   </div>

@@ -11,5 +11,6 @@ export { BackgroundComponent } from './lib/background/background.component';
 export { BlurryBackgroundBlobComponent } from './lib/blurry-background-blob/blurry-background-blob.component';
 export { DropdownComponent } from './lib/dropdown/dropdown.component';
 export { SliderDirective } from './lib/slider/slider.directive';
+export { ProgressDirective } from './lib/progress/progress.directive';
 export { InputNumberComponent } from './lib/input-number/input-number.component';
 export { SuiGlobalColorService } from './lib/sui-global-color/sui-global-color.service';

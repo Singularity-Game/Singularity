@@ -7,15 +7,15 @@
     </div>
   </div>
   <div class="navbar-buttons">
-    <button sui-button routerLink="/play">{{ 'shared.navbar.play' | transloco }}</button>
-    <button sui-button routerLink="/party" *ngIf="partyEnabled">{{ 'shared.navbar.party' | transloco }}</button>
+    <button suiButton routerLink="/play">{{ 'shared.navbar.play' | transloco }}</button>
+    <button suiButton routerLink="/party" *ngIf="partyEnabled">{{ 'shared.navbar.party' | transloco }}</button>
     <ng-content></ng-content>
   </div>
   <div class="navbar-right">
     <sui-dropdown>
       <span sui-dropdown-button>{{ (user$ | async)?.username }}</span>
-      <button sui-button routerLink="/management/settings"><img src="assets/icons/settings.svg" alt="settings" /> {{ 'management.settings.header' | transloco }}</button>
-      <button sui-button (click)="logout()"><img src="assets/icons/lock.svg" alt="logout" /> {{ 'shared.navbar.logout' | transloco }}</button>
+      <button suiButton routerLink="/management/settings"><img src="assets/icons/settings.svg" alt="settings" /> {{ 'management.settings.header' | transloco }}</button>
+      <button suiButton (click)="logout()"><img src="assets/icons/lock.svg" alt="logout" /> {{ 'shared.navbar.logout' | transloco }}</button>
     </sui-dropdown>
   </div>
 </div>

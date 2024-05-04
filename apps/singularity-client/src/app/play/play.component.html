@@ -1,11 +1,11 @@
 <singularity-navbar [transparent]="true">
-  <button sui-button [isIcon]="true" (click)="previous()"><img class="icon" src="assets/icons/backwards.svg" width="20" alt="backwards">
+  <button suiButton [isIcon]="true" (click)="previous()"><img class="icon" src="assets/icons/backwards.svg" width="20" alt="backwards">
   </button>
-  <button sui-button [isIcon]="true" (click)="paused = !paused">
+  <button suiButton [isIcon]="true" (click)="paused = !paused">
     <img class="icon" src="assets/icons/play.svg" width="20" alt="play" *ngIf="paused">
     <img class="icon" src="assets/icons/pause.svg" width="20" alt="pause" *ngIf="!paused">
   </button>
-  <button sui-button [isIcon]="true" (click)="next()"><img class="icon" src="assets/icons/forwards.svg" width="20" alt="forwards">
+  <button suiButton [isIcon]="true" (click)="next()"><img class="icon" src="assets/icons/forwards.svg" width="20" alt="forwards">
   </button>
 </singularity-navbar>
 

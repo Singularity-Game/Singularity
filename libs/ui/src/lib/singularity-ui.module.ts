@@ -15,6 +15,7 @@ import { DropdownComponent } from './dropdown/dropdown.component';
 import { SliderDirective } from './slider/slider.directive';
 import { InputNumberComponent } from './input-number/input-number.component';
 import { FormsModule } from '@angular/forms';
+import { ProgressDirective } from './progress/progress.directive';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { FormsModule } from '@angular/forms';
     DropdownComponent,
     SliderDirective,
     InputNumberComponent,
+    ProgressDirective,
   ],
   imports: [
     CommonModule,
@@ -51,6 +53,7 @@ import { FormsModule } from '@angular/forms';
     BlurryBackgroundBlobComponent,
     DropdownComponent,
     SliderDirective,
+    ProgressDirective,
     InputNumberComponent
   ]
 })
