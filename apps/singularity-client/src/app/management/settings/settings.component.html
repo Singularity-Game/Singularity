@@ -42,18 +42,7 @@
   <p class="settings-title">
     {{ 'management.settings.localSettings.microphoneLatency.header' | transloco }}
   </p>
-  <tui-input-count
-    class="flex-1"
-    [min]="0"
-    [step]="10"
-    [(ngModel)]="microphoneLatency"
-  >
-    {{ 'management.settings.localSettings.microphoneLatency.microphoneLatency' | transloco }}
-    <input
-      tuiTextfield
-      placeholder="90"
-    />
-  </tui-input-count>
+  <sui-input-number class="flex-1" [(ngModel)]="microphoneLatency"></sui-input-number>
   <p class="flex-1">
     {{ 'management.settings.localSettings.microphoneLatency.description' | transloco }}
   </p>

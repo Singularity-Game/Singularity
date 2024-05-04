@@ -13,6 +13,8 @@ import { BackgroundComponent } from './background/background.component';
 import { BlurryBackgroundBlobComponent } from './blurry-background-blob/blurry-background-blob.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { SliderDirective } from './slider/slider.directive';
+import { InputNumberComponent } from './input-number/input-number.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,9 +31,11 @@ import { SliderDirective } from './slider/slider.directive';
     BlurryBackgroundBlobComponent,
     DropdownComponent,
     SliderDirective,
+    InputNumberComponent,
   ],
   imports: [
     CommonModule,
+    FormsModule
   ],
   exports: [
     Card3dComponent,
@@ -46,7 +50,8 @@ import { SliderDirective } from './slider/slider.directive';
     BackgroundComponent,
     BlurryBackgroundBlobComponent,
     DropdownComponent,
-    SliderDirective
+    SliderDirective,
+    InputNumberComponent
   ]
 })
 export class SingularityUiModule { }

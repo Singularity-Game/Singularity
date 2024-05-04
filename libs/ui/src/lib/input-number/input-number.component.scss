@@ -1,0 +1,42 @@
+.input-number-container {
+  display: flex;
+  gap: 3px;
+  max-height: 36px;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 3px;
+  flex-direction: column;
+}
+
+.spinner-button {
+  height: 16.5px;
+  line-height: 12px;
+  background-color: var(--zinc-800);
+  outline: var(--neutral-700) 1px solid;
+
+  &.first {
+    border-top-right-radius: var(--input-border-radius);
+  }
+
+  &.second {
+    border-bottom-right-radius: var(--input-border-radius);
+  }
+}
+
+input {
+  flex: 1;
+  box-sizing: border-box;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  -moz-appearance: textfield;
+
+  &::-webkit-inner-spin-button {
+    display: none;
+  }
+
+  &::-webkit-outer-spin-button {
+    display: none;
+  }
+}
