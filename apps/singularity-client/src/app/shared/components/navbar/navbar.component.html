@@ -14,25 +14,9 @@
   <div class="navbar-right">
     <sui-dropdown>
       <span sui-dropdown-button>{{ (user$ | async)?.username }}</span>
-      <button sui-button routerLink="/management/settings"><tui-svg src="tuiIconSettings"></tui-svg> {{ 'management.settings.header' | transloco }}</button>
-      <button sui-button (click)="logout()"><tui-svg src="tuiIconLock"></tui-svg> {{ 'shared.navbar.logout' | transloco }}</button>
+      <button sui-button routerLink="/management/settings"><img src="assets/icons/settings.svg" alt="settings" /> {{ 'management.settings.header' | transloco }}</button>
+      <button sui-button (click)="logout()"><img src="assets/icons/lock.svg" alt="logout" /> {{ 'shared.navbar.logout' | transloco }}</button>
     </sui-dropdown>
-      <!--    <ng-container>-->
-<!--      <tui-hosted-dropdown [content]="content">-->
-<!--        <button tuiButton type="button" iconRight="tuiIconChevronDown" appearance="flat">-->
-<!--          <tui-avatar [text]="(user$ | async)?.username ?? ''" [autoColor]="true" [rounded]="true" size="s"></tui-avatar>-->
-<!--          <div class="tui-space_left-2">-->
-<!--            {{ (user$ | async)?.username }}-->
-<!--          </div>-->
-<!--        </button>-->
-<!--      </tui-hosted-dropdown>-->
-<!--      <ng-template #content>-->
-<!--        <tui-data-list>-->
-<!--          <button tuiOption routerLink="/management/settings"><tui-svg src="tuiIconSettings"></tui-svg> {{ 'management.settings.header' | transloco }}</button>-->
-<!--          <button tuiOption (click)="logout()"><tui-svg src="tuiIconLock"></tui-svg> {{ 'shared.navbar.logout' | transloco }}</button>-->
-<!--        </tui-data-list>-->
-<!--      </ng-template>-->
-<!--    </ng-container>-->
   </div>
 </div>
 <div class="margin" *ngIf="!transparent">
