@@ -1,5 +1,5 @@
 <div class="button-wrapper" [class.size-s]="size === 's'">
-  <div class="text" [class.size-s]="size === 's'">
+  <div class="text" [class.size-s]="size === 's'" [class.flex-text]="!isIcon">
     <ng-content></ng-content>
   </div>
   <span class="bottom-glow"></span>

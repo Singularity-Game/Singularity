@@ -6,7 +6,7 @@
     </button>
   </sui-input-container>
 
-  <div class="select-content" [class.expanded]="expanded">
+  <div class="select-content" [class.expanded]="expanded" *ngIf="delayedExpanded">
     <ng-content></ng-content>
   </div>
 </div>

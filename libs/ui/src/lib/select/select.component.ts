@@ -27,6 +27,7 @@ import { SelectOptionComponent } from './select-option.component';
 export class SelectComponent implements ControlValueAccessor, AfterViewInit {
 
   public expanded = false;
+  public delayedExpanded = false;
   public disabled = false;
 
   private value: unknown;
@@ -43,7 +44,9 @@ export class SelectComponent implements ControlValueAccessor, AfterViewInit {
       return;
     }
 
-    this.expanded = false;
+    if(this.expanded) {
+      this.toggleExpand();
+    }
   }
 
   constructor(private readonly elementRef: ElementRef,
@@ -61,6 +64,12 @@ export class SelectComponent implements ControlValueAccessor, AfterViewInit {
 
   public toggleExpand(): void {
     this.expanded = !this.expanded;
+
+    if (this.expanded) {
+      this.delayedExpanded = true;
+    } else {
+      setTimeout(() => this.delayedExpanded = false, 200);
+    }
   }
 
   public setValue(value: unknown, content?: ElementRef): void {

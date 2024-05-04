@@ -16,8 +16,21 @@
   border-bottom-left-radius: var(--input-border-radius);
   transition: 200ms ease;
   transform: translateY(-10px);
+  animation: appear 200ms;
 
   &.expanded {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  100% {
     opacity: 1;
     transform: translateY(0);
   }

@@ -1,0 +1,13 @@
+<div class="dropdown-container">
+  <button sui-button [size]="size" (click)="toggleExpand()">
+  <span class="dropdown-button">
+    <ng-content select="[sui-dropdown-button]"></ng-content>
+    <img src="assets/icons/arrow-down.svg" width="20" height="20" alt="arrow down" class="arrow-down"
+         [class.rotated]="expanded" />
+  </span>
+  </button>
+
+  <div class="dropdown-content" [class.expanded]="expanded" *ngIf="delayedExpanded">
+    <ng-content></ng-content>
+  </div>
+</div>

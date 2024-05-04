@@ -11,6 +11,7 @@ import { SelectComponent } from './select/select.component';
 import { SelectOptionComponent } from './select/select-option.component';
 import { BackgroundComponent } from './background/background.component';
 import { BlurryBackgroundBlobComponent } from './blurry-background-blob/blurry-background-blob.component';
+import { DropdownComponent } from './dropdown/dropdown.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { BlurryBackgroundBlobComponent } from './blurry-background-blob/blurry-b
     SelectOptionComponent,
     BackgroundComponent,
     BlurryBackgroundBlobComponent,
+    DropdownComponent,
   ],
   imports: [
     CommonModule,
@@ -40,7 +42,8 @@ import { BlurryBackgroundBlobComponent } from './blurry-background-blob/blurry-b
     SelectComponent,
     SelectOptionComponent,
     BackgroundComponent,
-    BlurryBackgroundBlobComponent
+    BlurryBackgroundBlobComponent,
+    DropdownComponent
   ]
 })
 export class SingularityUiModule { }
