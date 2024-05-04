@@ -18,10 +18,11 @@ import {
 } from '@taiga-ui/core';
 import { FormsModule } from '@angular/forms';
 import { TranslocoModule } from '@ngneat/transloco';
+import { SingularityUiModule } from '@singularity/ui';
 
 @NgModule({
   declarations: [SettingsComponent],
-  imports: [CommonModule, SettingsRoutingModule, TuiIslandModule, TuiButtonModule, TuiInputCountModule, TuiLabelModule, FormsModule, TuiSelectModule, TuiTextfieldControllerModule, TuiDataListModule, TuiGroupModule, TuiRadioBlockModule, TuiProgressModule, TranslocoModule, TuiSliderModule],
+  imports: [CommonModule, SettingsRoutingModule, TuiIslandModule, TuiButtonModule, TuiInputCountModule, TuiLabelModule, FormsModule, TuiSelectModule, TuiTextfieldControllerModule, TuiDataListModule, TuiGroupModule, TuiRadioBlockModule, TuiProgressModule, TranslocoModule, TuiSliderModule, SingularityUiModule],
   providers: [],
 })
 export class SettingsModule {}

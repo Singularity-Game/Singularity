@@ -8,7 +8,7 @@ import { FinalColor } from 'extract-colors/lib/types/Color';
 })
 export class SuiGlobalColorService {
 
-  private readonly colorsSubject: BehaviorSubject<[string, string]> = new BehaviorSubject<[string, string]>(['#000000', '#000000'])
+  private readonly colorsSubject: BehaviorSubject<[string, string]> = new BehaviorSubject<[string, string]>(['rgb(82,110,210)', 'rgb(250,8,224)'])
 
   constructor() { }
 
