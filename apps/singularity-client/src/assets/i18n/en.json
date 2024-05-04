@@ -58,7 +58,6 @@
         },
         "microphoneLatency": {
           "header": "Microphone Latency:",
-          "microphoneLatency": "Microphone Latency",
           "description": "The microphone latency corresponds to the time from the recording of the singing by the microphone to the display of the data in the game. The latency can depend on the speed of the computer, as well as the microphone used. This value should be set so that no deviation is noticeable in the game. In general, the value should be chosen as small as possible and as large as necessary."
         },
         "offlineMode": {

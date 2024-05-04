@@ -58,7 +58,6 @@
         },
         "microphoneLatency": {
           "header": "Mikrofon Latenz:",
-          "microphoneLatency": "Mikrofon Latenz",
           "description": "Die Mikrofon Latenz entspricht der Zeit, von der Aufnahme des Gesangs durch das Mikrofon, bis zur Anzeige der Daten im Spiel. Die Latenz kann Abhängig sein von der Geschwindigkeit des Computers, sowie des verwendeten Mikrofons. Dieser Wert sollte so eingestellt werden, dass im Spiel keine Abweichung zu merken ist. Grundsätzlich sollte der Wert so klein wie möglich und so groß wie nötig gewählt werden."
         },
         "offlineMode": {
