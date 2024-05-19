@@ -1,0 +1,18 @@
+.bottom-glow {
+  display: block;
+  position: relative;
+  bottom: 0;
+  height: 2px;
+  transition: 200ms ease;
+  background-image: linear-gradient(to right, transparent, var(--primary), transparent);
+  margin-top: 5px;
+}
+
+.tooltip {
+  position: fixed;
+  padding: 10px;
+  border-radius: 5px;
+  background: var(--black);
+  transform-origin: center 120%;
+  pointer-events: none;
+}

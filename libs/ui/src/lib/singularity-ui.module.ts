@@ -16,6 +16,8 @@ import { SliderDirective } from './slider/slider.directive';
 import { InputNumberComponent } from './input-number/input-number.component';
 import { FormsModule } from '@angular/forms';
 import { ProgressDirective } from './progress/progress.directive';
+import { TooltipComponent } from './tooltip/tooltip.component';
+import { TooltipDirective } from './tooltip/tooltip.directive';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { ProgressDirective } from './progress/progress.directive';
     SliderDirective,
     InputNumberComponent,
     ProgressDirective,
+    TooltipComponent,
+    TooltipDirective
   ],
   imports: [
     CommonModule,
@@ -54,7 +58,8 @@ import { ProgressDirective } from './progress/progress.directive';
     DropdownComponent,
     SliderDirective,
     ProgressDirective,
-    InputNumberComponent
+    InputNumberComponent,
+    TooltipDirective
   ]
 })
 export class SingularityUiModule { }
