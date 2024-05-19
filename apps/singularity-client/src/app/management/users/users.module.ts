@@ -10,6 +10,7 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslocoModule } from '@ngneat/transloco';
+import { SingularityUiModule } from '@singularity/ui';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { TranslocoModule } from '@ngneat/transloco';
     TuiCheckboxLabeledModule,
     ReactiveFormsModule,
     TuiLoaderModule,
-    TranslocoModule
+    TranslocoModule,
+    SingularityUiModule
   ]
 })
 export class UsersModule { }

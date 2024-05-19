@@ -1,42 +1,31 @@
-<td class="tui-table__td tui-table__td_first avatar-td">
-  <tui-avatar
-    new
-    size="m"
-    class="tui-space_vertical-1"
-    [text]="user?.username ?? ''"
-    [autoColor]="true"
-  ></tui-avatar>
-</td>
-<td class="tui-table__td">
+<td>
   <div class="flex icon-td">
-    <tui-svg src="tuiIconShield" [tuiHint]="adminHint" [tuiHintShowDelay]="100" *ngIf="user?.isAdmin"></tui-svg>
-    <tui-svg src="tuiIconUserCheck" [tuiHint]="activeHint" [tuiHintShowDelay]="100" *ngIf="user?.active"></tui-svg>
-    <tui-svg src="tuiIconUserX" [tuiHint]="inactiveHint" [tuiHintShowDelay]="100" *ngIf="!user?.active"></tui-svg>
+    <img src="assets/icons/shield.svg" alt="admin" [suiTooltip]="adminHint" *ngIf="user?.isAdmin" />
+    <img src="assets/icons/check.svg" alt="active" [suiTooltip]="activeHint" *ngIf="user?.active" />
+    <img src="assets/icons/x.svg" alt="inactive" [suiTooltip]="inactiveHint" *ngIf="!user?.active" />
   </div>
 </td>
-<td class="tui-table__td">{{user?.username}}</td>
-<td class="tui-table__td">{{user?.email}}</td>
-<td class="tui-table__td tui-table__td_last">
+<td>{{ user?.username }}</td>
+<td>{{ user?.email }}</td>
+<td>
   <button
-    tuiIconButton
+    suiButton
     type="button"
-    appearance="icon"
-    size="xs"
-    icon="tuiIconEdit2"
-    [tuiHint]="editHint"
-    [tuiHintShowDelay]="100"
+    size="s"
+    [suiTooltip]="editHint"
     [routerLink]="['edit', user?.id]"
-  ></button>
+  >
+    <img class="icon" src="assets/icons/edit.svg" width="20" alt="edit">
+  </button>
   <button
-    tuiIconButton
+    suiButton
     type="button"
-    appearance="icon"
-    size="xs"
-    icon="tuiIconTrash2"
+    size="s"
     (click)="deleteUser()"
-    [tuiHint]="deleteHint"
-    [tuiHintShowDelay]="100"
-  ></button>
+    [suiTooltip]="deleteHint"
+  >
+    <img class="icon" src="assets/icons/delete.svg" width="20" alt="delete">
+  </button>
 </td>
 
 <ng-template #adminHint>

@@ -4,16 +4,15 @@
           class='tui-space_left-2'>{{ 'management.users.userList.newUser' | transloco }}
   </button>
 </h1>
-<table class='tui-table'>
+<table class='sui-table'>
   <tbody>
-  <tr class='tui-table__tr tui-table__tr_border_none'>
-    <th class='tui-table__th tui-table__th_first'></th>
-    <th class='tui-table__th'></th>
-    <th class='tui-table__th'>{{ 'general.username' | transloco }}</th>
-    <th class='tui-table__th'>{{ 'general.email' | transloco }}</th>
-    <th class='tui-table__th tui-table__th_last'>{{ 'management.users.userList.actions' | transloco }}</th>
+  <tr>
+    <th></th>
+    <th>{{ 'general.username' | transloco }}</th>
+    <th>{{ 'general.email' | transloco }}</th>
+    <th>{{ 'management.users.userList.actions' | transloco }}</th>
   </tr>
-  <tr singularity-user-list-item class='tui-table__tr tui-table__tr_border_none'
+  <tr singularity-user-list-item
       *ngFor='let user of users$ | async'
       [user]='user'
       (deleted)='deleteUser(user)'></tr>
