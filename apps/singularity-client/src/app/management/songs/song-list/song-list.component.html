@@ -1,5 +1,8 @@
 <h1>{{ 'management.songs.songList.header' | transloco }}
-  <button tuiButton size="xs" icon="tuiIconPlus" routerLink="new" *ngIf="isAdmin$ | async">{{ 'management.songs.songList.newSong' | transloco }}</button>
+  <button class="sui-right" suiButton size="s" routerLink="new" *ngIf="isAdmin$ | async">
+    <img class="sui-space-right" src="assets/icons/plus-circle.svg" alt="add" />
+    {{ 'management.songs.songList.newSong' | transloco }}
+  </button>
 </h1>
 
 <ng-container *ngIf="isAdmin$ | async">

@@ -18,6 +18,8 @@ import { FormsModule } from '@angular/forms';
 import { ProgressDirective } from './progress/progress.directive';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { TooltipDirective } from './tooltip/tooltip.directive';
+import { LoaderComponent } from './loader/loader.component';
+import { FilesComponent } from './files/files.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { TooltipDirective } from './tooltip/tooltip.directive';
     InputNumberComponent,
     ProgressDirective,
     TooltipComponent,
-    TooltipDirective
+    TooltipDirective,
+    LoaderComponent,
+    FilesComponent
   ],
   imports: [
     CommonModule,
@@ -59,7 +63,9 @@ import { TooltipDirective } from './tooltip/tooltip.directive';
     SliderDirective,
     ProgressDirective,
     InputNumberComponent,
-    TooltipDirective
+    TooltipDirective,
+    LoaderComponent,
+    FilesComponent
   ]
 })
 export class SingularityUiModule { }

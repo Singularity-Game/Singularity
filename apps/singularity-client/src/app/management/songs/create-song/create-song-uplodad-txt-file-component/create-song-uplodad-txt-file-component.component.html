@@ -1,22 +1,10 @@
 <div class="tui-space_top-5">
   <h2>{{ 'management.songs.createSong.createSongUploadTxtFile.txtFile' | transloco }}</h2>
   <p>{{ 'management.songs.createSong.createSongUploadTxtFile.txtFileInfo' | transloco }}</p>
-
-  <tui-input-files
-    *ngIf="!txtFile"
-    accept=".txt"
-    [(ngModel)]="txtFile"
-    (ngModelChange)="txtFileChanged()"
-  ></tui-input-files>
-  <tui-files class="tui-space_top-1">
-    <tui-file
-      [state]="isLoading ? 'loading' : 'normal'"
-      *ngIf="txtFile"
-      [file]="txtFile!"
-      [showDelete]="true"
-      (removed)="txtFile = null"
-    ></tui-file>
-  </tui-files>
+  <sui-input-container *ngIf="!(txtFileSubject | async)">
+    <input suiInput (change)="txtFileChanged($event)" [disabled]="isLoading" type="file" accept=".txt">
+  </sui-input-container>
+  <sui-files *ngIf="(txtFileSubject | async); let file" [files]="[file]" [loading]="isLoading" (removed)="remove()"></sui-files>
 </div>
 
 <ng-container *ngIf="songUploadInfo$ | async; let songUploadInfo">

@@ -1,5 +1,6 @@
 <h1>{{ 'management.songs.createSong.header' | transloco }}
-  <button tuiButton appearance="accent" size="xs" icon="tuiIconArrowLeft" routerLink=".." [disabled]="isUploading">
+  <button class="sui-right" suiButton size="s" routerLink=".." [disabled]="isUploading">
+    <img class="sui-space-right" src="assets/icons/x-circle.svg" alt="cancel" />
     {{ 'general.cancel' | transloco }}
   </button>
 </h1>

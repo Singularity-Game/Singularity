@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Nullable, SongUploadInfo } from '@singularity/api-interfaces';
 import { TuiFileLike } from '@taiga-ui/kit';
-import { filter, Observable, Subject, switchMap, tap } from 'rxjs';
+import { filter, forkJoin, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
 import { SongManagementService } from '../../song-management.service';
 
 @Component({
@@ -10,8 +10,7 @@ import { SongManagementService } from '../../song-management.service';
   styleUrls: ['./create-song-uplodad-txt-file-component.component.scss']
 })
 export class CreateSongUplodadTxtFileComponentComponent implements OnInit {
-  public txtFile: Nullable<TuiFileLike> = null;
-  public txtFileSubject = new Subject<Nullable<TuiFileLike>>();
+  public txtFileSubject = new Subject<Nullable<File>>();
   public songUploadInfo$?: Observable<SongUploadInfo>;
   public isLoading = false;
   public isManualUpload = false;
@@ -24,41 +23,46 @@ export class CreateSongUplodadTxtFileComponentComponent implements OnInit {
 
   public ngOnInit(): void {
     this.songUploadInfo$ = this.txtFileSubject.asObservable().pipe(
-      filter((file: Nullable<TuiFileLike>) => file != null),
+      filter((file: Nullable<File>) => file != null),
       tap(() => this.isLoading = true),
-      switchMap((file: Nullable<TuiFileLike>) => this.songManagementService.getSongUploadInfo$(file as File)),
+      switchMap((file: Nullable<File>) => forkJoin({file: of(file), info: this.songManagementService.getSongUploadInfo$(file as File)})),
       tap(() => this.isLoading = false),
-      tap((info: SongUploadInfo) => {
+      tap(({file, info}) => {
         if (!info.isVideoDownloadable) {
-          this.triggerManualUpload();
+          this.triggerManualUpload(file);
         } else {
-          this.triggerAutomaticUpload();
+          this.triggerAutomaticUpload(file);
         }
-      })
+      }),
+      map(({info}) => info)
     )
   }
 
-  public txtFileChanged(): void {
-    this.txtFileSubject.next(this.txtFile);
-    this.file.emit(this.txtFile as File);
+  public txtFileChanged(event: any): void {
+    this.txtFileSubject.next(event?.target?.files[0]);
+    this.file.emit(event?.target?.files[0]);
   }
 
-  public triggerAutomaticUpload(): void {
-    if (!this.txtFile) {
+  public triggerAutomaticUpload(file: Nullable<File>): void {
+    if(!file) {
       return;
     }
 
-    this.file.emit(this.txtFile as File);
+    this.file.emit(file);
     this.manualUpload.emit(false);
   }
 
-  public triggerManualUpload(): void {
-    if (!this.txtFile) {
+  public triggerManualUpload(file: Nullable<File>): void {
+    if(!file) {
       return;
     }
 
-    this.file.emit(this.txtFile as File);
+    this.file.emit(file);
     this.manualUpload.emit(true);
     this.isManualUpload = true;
+  }
+
+  public remove(): void {
+    this.txtFileSubject.next(null);
   }
 }

@@ -14,4 +14,6 @@ export { SliderDirective } from './lib/slider/slider.directive';
 export { ProgressDirective } from './lib/progress/progress.directive';
 export { InputNumberComponent } from './lib/input-number/input-number.component';
 export { TooltipDirective } from './lib/tooltip/tooltip.directive';
+export { LoaderComponent } from './lib/loader/loader.component';
+export { FilesComponent } from './lib/files/files.component';
 export { SuiGlobalColorService } from './lib/sui-global-color/sui-global-color.service';

@@ -1,0 +1,15 @@
+<sui-input-container>
+  <div class="sui-files">
+    @for (file of files; track file.name) {
+      <sui-loader *ngIf="loading"></sui-loader>
+      <img src="assets/icons/check.svg" alt="success" *ngIf="success && !loading" />
+      <img src="assets/icons/x.svg" alt="failure" *ngIf="!success && !loading" />
+      {{file.name}}
+    }
+
+    <button suiButton size="xs" [isIcon]="true" (click)="removed.emit()">
+      <img src="assets/icons/x.svg" alt="failure" *ngIf="!loading" />
+    </button>
+  </div>
+</sui-input-container>
+
