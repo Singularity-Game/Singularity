@@ -10,6 +10,7 @@ export class YtService {
     const ytdlVideoInfo = await ytdl.getBasicInfo(id);
     const videoInfo = new VideoInfo();
 
+    videoInfo.id = id;
     videoInfo.url = ytdlVideoInfo.videoDetails.video_url;
     videoInfo.title = ytdlVideoInfo.videoDetails.title;
     videoInfo.author = ytdlVideoInfo.videoDetails.author.name;

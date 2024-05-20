@@ -12,10 +12,11 @@ import { SingModule } from '../../sing/sing.module';
 import { TranslocoModule } from '@ngneat/transloco';
 import { CreateSongUplodadTxtFileComponentComponent } from './create-song/create-song-uplodad-txt-file-component/create-song-uplodad-txt-file-component.component';
 import { SingularityUiModule } from '@singularity/ui';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [SongListComponent, SongListItemComponent, CreateSongComponent, CreateSongUplodadTxtFileComponentComponent],
-  imports: [CommonModule, SongsRoutingModule, TuiButtonModule, TuiAvatarModule, TuiIslandModule, TuiInputFilesModule, ReactiveFormsModule, SingModule, TuiSvgModule, TuiLoaderModule, TuiHintModule, TuiProgressModule, TranslocoModule, FormsModule, SingularityUiModule],
+  imports: [CommonModule, SongsRoutingModule, TuiButtonModule, TuiAvatarModule, TuiIslandModule, TuiInputFilesModule, ReactiveFormsModule, SingModule, TuiSvgModule, TuiLoaderModule, TuiHintModule, TuiProgressModule, TranslocoModule, FormsModule, SingularityUiModule, SharedModule],
   providers: [SongManagementService]
 })
 export class SongsModule {}

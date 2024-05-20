@@ -17,11 +17,12 @@ import { OrderByPipe } from './pipes/order-by/order-by.pipe';
 import { AdminFeatureIconComponent } from './components/admin-feature-icon/admin-feature-icon.component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { SingularityUiModule } from '@singularity/ui';
+import { SafePipe } from './pipes/safe/safe.pipe';
 
 @NgModule({
-  declarations: [NavbarComponent, SidebarComponent, NoCommaPipe, SearchPipe, OrderByPipe, AdminFeatureIconComponent],
+  declarations: [NavbarComponent, SidebarComponent, NoCommaPipe, SearchPipe, OrderByPipe, AdminFeatureIconComponent, SafePipe],
   imports: [CommonModule, TuiButtonModule, RouterLink, TuiHostedDropdownModule, TuiAvatarModule, TuiDataListModule, TuiSvgModule, TuiHintModule, TranslocoModule, SingularityUiModule],
   providers: [],
-  exports: [NavbarComponent, SidebarComponent, AdminFeatureIconComponent, NoCommaPipe, SearchPipe, OrderByPipe],
+  exports: [NavbarComponent, SidebarComponent, AdminFeatureIconComponent, NoCommaPipe, SearchPipe, OrderByPipe, SafePipe]
 })
 export class SharedModule {}

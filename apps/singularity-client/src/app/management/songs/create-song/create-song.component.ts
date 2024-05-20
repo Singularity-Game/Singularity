@@ -46,7 +46,7 @@ export class CreateSongComponent implements OnDestroy {
     this.isManualUpload = manualUpload;
   }
 
-  public setTxtFile(file: File): void {
+  public setTxtFile(file: Nullable<File>): void {
     this.songForm.controls.txtFile.setValue(file);
   }
 

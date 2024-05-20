@@ -1,37 +1,18 @@
-<div class="tui-space_top-5">
-  <h2>{{ 'management.songs.createSong.createSongUploadTxtFile.txtFile' | transloco }}</h2>
-  <p>{{ 'management.songs.createSong.createSongUploadTxtFile.txtFileInfo' | transloco }}</p>
-  <sui-input-container *ngIf="!(txtFileSubject | async)">
-    <input suiInput (change)="txtFileChanged($event)" [disabled]="isLoading" type="file" accept=".txt">
-  </sui-input-container>
-  <sui-files *ngIf="(txtFileSubject | async); let file" [files]="[file]" [loading]="isLoading" (removed)="remove()"></sui-files>
-</div>
+<h2>{{ 'management.songs.createSong.createSongUploadTxtFile.txtFile' | transloco }}</h2>
+<p>{{ 'management.songs.createSong.createSongUploadTxtFile.txtFileInfo' | transloco }}</p>
+<sui-input-container *ngIf="!(txtFileSubject | async)">
+  <input suiInput (change)="txtFileChanged($event)" [disabled]="isLoading" type="file" accept=".txt">
+</sui-input-container>
+<sui-files *ngIf="(txtFileSubject | async); let file" [files]="[file]" [loading]="isLoading"
+           (removed)="remove()"></sui-files>
+
 
 <ng-container *ngIf="songUploadInfo$ | async; let songUploadInfo">
   <ng-container *ngIf="songUploadInfo.isVideoDownloadable && !isManualUpload">
     <h2>{{ 'management.songs.createSong.createSongUploadTxtFile.downloadable' | transloco }}</h2>
     <div class="flex">
-      <tui-island class="flex-item video-thumbnail">
-        <img [src]="songUploadInfo.videoInfo?.thumbnailUrl">
-        <div class="container">
-          <div class="tui-island__content">
-            <figure class="tui-island__figure">
-              <tui-avatar [avatarUrl]="songUploadInfo.videoInfo?.authorThumbnailUrl ?? ''"></tui-avatar>
-            </figure>
-          </div>
-          <div class="video-title-container">
-            <p class="tui-island__category">{{ songUploadInfo.videoInfo?.author }}</p>
-            <h3 class="tui-island__title">
-              <a [href]="songUploadInfo.videoInfo?.url" target="_blank" rel="noopener noreferrer">
-                {{ songUploadInfo.videoInfo?.title }}
-              </a>
-            </h3>
-          </div>
-        </div>
-      </tui-island>
-    </div>
-    <div class="container">
-
+      <iframe class="flex-item"
+              [src]="'https://www.youtube-nocookie.com/embed/' + songUploadInfo.videoInfo?.id | safe"></iframe>
     </div>
   </ng-container>
 </ng-container>

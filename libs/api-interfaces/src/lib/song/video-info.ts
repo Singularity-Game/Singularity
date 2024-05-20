@@ -4,4 +4,5 @@ export class VideoInfo {
   authorThumbnailUrl!: string;
   thumbnailUrl!: string;
   url!: string;
+  id!: string;
 }

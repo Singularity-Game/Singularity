@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Nullable, SongUploadInfo } from '@singularity/api-interfaces';
-import { TuiFileLike } from '@taiga-ui/kit';
 import { filter, forkJoin, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
 import { SongManagementService } from '../../song-management.service';
 
@@ -15,7 +14,7 @@ export class CreateSongUplodadTxtFileComponentComponent implements OnInit {
   public isLoading = false;
   public isManualUpload = false;
 
-  @Output() file = new EventEmitter<File>();
+  @Output() file = new EventEmitter<Nullable<File>>();
   @Output() manualUpload = new EventEmitter<boolean>();
 
   constructor(private readonly songManagementService: SongManagementService) {
@@ -64,5 +63,6 @@ export class CreateSongUplodadTxtFileComponentComponent implements OnInit {
 
   public remove(): void {
     this.txtFileSubject.next(null);
+    this.file.emit(null);
   }
 }
