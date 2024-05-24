@@ -14,12 +14,13 @@ import { BlurryBackgroundBlobComponent } from './blurry-background-blob/blurry-b
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { SliderDirective } from './slider/slider.directive';
 import { InputNumberComponent } from './input-number/input-number.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProgressDirective } from './progress/progress.directive';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { TooltipDirective } from './tooltip/tooltip.directive';
 import { LoaderComponent } from './loader/loader.component';
 import { FilesComponent } from './files/files.component';
+import { InputFileComponent } from './input-file/input-file.component';
 
 @NgModule({
   declarations: [
@@ -41,11 +42,13 @@ import { FilesComponent } from './files/files.component';
     TooltipComponent,
     TooltipDirective,
     LoaderComponent,
-    FilesComponent
+    FilesComponent,
+    InputFileComponent
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     Card3dComponent,
@@ -65,7 +68,8 @@ import { FilesComponent } from './files/files.component';
     InputNumberComponent,
     TooltipDirective,
     LoaderComponent,
-    FilesComponent
+    FilesComponent,
+    InputFileComponent
   ]
 })
 export class SingularityUiModule { }

@@ -2,6 +2,7 @@
   min-height: 45px;
   line-height: 43px;
   border-radius: var(--border-radius);
+  position: relative;
 
   &.size-s {
     min-height: 36px;
@@ -33,6 +34,18 @@
     padding: 0;
     line-height: 20px;
   }
+
+  &.success {
+    color: var(--success);
+  }
+
+  &.warn {
+    color: var(--warn);
+  }
+
+  &.error {
+    color: var(--error);
+  }
 }
 
 .flex-text {
@@ -49,4 +62,16 @@
   transition: 200ms ease;
   opacity: 0;
   background-image: linear-gradient(to right, transparent, var(--primary), transparent)
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.loading {
+  color: var(--zinc-500);
+  opacity: 50%
 }

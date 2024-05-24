@@ -1,7 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CreateSongForm } from './create-song-form';
-import { TuiFileLike } from '@taiga-ui/kit';
 import { catchError, filter, map, Observable, Subject, takeUntil, tap, throwError } from 'rxjs';
 import { CreateSongRequest } from '../../models/create-song-request';
 import { SongManagementService } from '../song-management.service';
@@ -19,10 +18,10 @@ import { TranslocoService } from '@ngneat/transloco';
 export class CreateSongComponent implements OnDestroy {
 
   public songForm = new FormGroup<CreateSongForm>({
-    txtFile: new FormControl<TuiFileLike | null>(null),
-    coverFile: new FormControl<TuiFileLike | null>(null),
-    videoFile: new FormControl<TuiFileLike | null>(null),
-    audioFile: new FormControl<TuiFileLike | null>(null)
+    txtFile: new FormControl<File | null>(null),
+    coverFile: new FormControl<File | null>(null),
+    videoFile: new FormControl<File | null>(null),
+    audioFile: new FormControl<File | null>(null)
   });
 
   public destroySubject = new Subject<void>();

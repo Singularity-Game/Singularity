@@ -1,5 +1,12 @@
 <div class="button-wrapper" [class.size-s]="size === 's'" [class.size-xs]="size === 'xs'">
+  <div class="loader" *ngIf="loading">
+    <sui-loader></sui-loader>
+  </div>
   <div class="text"
+       [class.loading]="loading"
+       [class.success]="appearance === 'success'"
+       [class.warn]="appearance === 'warn'"
+       [class.error]="appearance === 'error'"
        [class.size-s]="size === 's'"
        [class.size-xs]="size === 'xs'"
        [class.flex-text]="!isIcon">

@@ -9,77 +9,49 @@
   (manualUpload)="setManualUpload($event)"
   (file)="setTxtFile($event)">
 </singularity-create-song-uplodad-txt-file-component>
-<div *ngIf="isManualUpload === false && songForm.controls.txtFile.value">
-  <button tuiButton appearance="primary" (click)="this.uploadSongYt()" [disabled]="isUploading" [showLoader]="isUploading">
+<div *ngIf="!isManualUpload && songForm.controls.txtFile.value" class="sui-space-top-large">
+  <button suiButton (click)="this.uploadSongYt()" [disabled]="isUploading" [loading]="isUploading" class="sui-space-right-large">
     {{ 'management.songs.createSong.createSongUploadTxtFile.downloadButtonText' | transloco }}
   </button>
-  <button tuiButton appearance="accent" class="tui-space_left-5" (click)="this.setManualUpload(true)" [disabled]="isUploading">
+  <button suiButton appearance="warn" (click)="this.setManualUpload(true)" [disabled]="isUploading">
     {{ 'management.songs.createSong.createSongUploadTxtFile.manualText' | transloco }}
   </button>
 </div>
 
 
 <form [formGroup]="songForm" *ngIf="isManualUpload">
-  <div class="tui-space_top-5">
+  <div class="sui-space-top-large">
     <h2>{{ 'management.songs.createSong.audioFile' | transloco }}</h2>
-    <tui-input-files
-      *ngIf="!songForm.controls.audioFile.value"
-      accept="audio/*"
-      formControlName="audioFile"
-    ></tui-input-files>
-    <tui-files class="tui-space_top-1">
-      <tui-file
-        *ngIf="songForm.controls.audioFile.value"
-        [file]="songForm.controls.audioFile.value!"
-        [showDelete]="true"
-        (removed)="songForm.controls.audioFile.setValue(null)"
-      ></tui-file>
-    </tui-files>
+
+    <sui-input-file accept="audio/*" formControlName="audioFile" *ngIf="!songForm.controls.audioFile.value"></sui-input-file>
+    <sui-files *ngIf="songForm.controls.audioFile.value" [files]="[songForm.controls.audioFile.value!]"
+               (removed)="songForm.controls.audioFile.setValue(null)"></sui-files>
   </div>
 
-  <div class="tui-space_top-5">
+  <div class="sui-space-top-large">
     <h2>{{ 'management.songs.createSong.videoFile' | transloco }}</h2>
-    <tui-input-files
-      *ngIf="!songForm.controls.videoFile.value"
-      [maxFileSize]='200 * 1000 * 1000'
-      accept="video/*"
-      formControlName="videoFile"
-    ></tui-input-files>
-    <tui-files class="tui-space_top-1">
-      <tui-file
-        *ngIf="songForm.controls.videoFile.value"
-        [file]="songForm.controls.videoFile.value!"
-        [showDelete]="true"
-        (removed)="songForm.controls.videoFile.setValue(null)"
-      ></tui-file>
-    </tui-files>
+
+    <sui-input-file accept="video/*" formControlName="videoFile" *ngIf="!songForm.controls.videoFile.value"></sui-input-file>
+    <sui-files *ngIf="songForm.controls.videoFile.value" [files]="[songForm.controls.videoFile.value!]"
+               (removed)="songForm.controls.videoFile.setValue(null)"></sui-files>
   </div>
 
-  <div class="tui-space_top-5">
+  <div class="sui-space-top-large">
     <h2>{{ 'management.songs.createSong.coverFile' | transloco }}</h2>
-    <tui-input-files
-      *ngIf="!songForm.controls.coverFile.value"
-      accept="image/*"
-      formControlName="coverFile"
-    ></tui-input-files>
-    <tui-files class="tui-space_top-1">
-      <tui-file
-        *ngIf="songForm.controls.coverFile.value"
-        [file]="songForm.controls.coverFile.value!"
-        [showDelete]="true"
-        (removed)="songForm.controls.coverFile.setValue(null)"
-      ></tui-file>
-    </tui-files>
+
+    <sui-input-file accept="image/*" formControlName="coverFile" *ngIf="!songForm.controls.coverFile.value"></sui-input-file>
+    <sui-files *ngIf="songForm.controls.coverFile.value" [files]="[songForm.controls.coverFile.value!]"
+               (removed)="songForm.controls.coverFile.setValue(null)"></sui-files>
   </div>
 
     <div class="flex">
-      <button tuiButton class="tui-space_top-3" (click)="uploadSong()"
-              [showLoader]="isUploading">{{ 'general.submit' | transloco }}
+      <button suiButton class="sui-space-top-large" (click)="uploadSong()"
+              [loading]="isUploading">{{ 'general.submit' | transloco }}
       </button>
       <progress
         *ngIf="isUploading"
         max="100"
-        tuiProgressBar
+        suiProgress
         [value]="uploadProgress"
       ></progress>
     </div>

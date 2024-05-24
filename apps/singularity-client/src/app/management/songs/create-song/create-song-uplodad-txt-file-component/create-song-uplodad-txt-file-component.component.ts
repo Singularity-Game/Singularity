@@ -39,7 +39,6 @@ export class CreateSongUplodadTxtFileComponentComponent implements OnInit {
 
   public txtFileChanged(event: any): void {
     this.txtFileSubject.next(event?.target?.files[0]);
-    this.file.emit(event?.target?.files[0]);
   }
 
   public triggerAutomaticUpload(file: Nullable<File>): void {

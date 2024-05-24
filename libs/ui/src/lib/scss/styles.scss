@@ -21,6 +21,18 @@
   margin-right: 5px;
 }
 
+.sui-space-right-large {
+  margin-right: 20px;
+}
+
+.sui-space-top {
+  margin-top: 5px;
+}
+
+.sui-space-top-large {
+  margin-top: 20px;
+}
+
 .sui-single-line{
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -63,15 +75,18 @@ button {
   &::-webkit-progress-bar {
     background: var(--zinc-800);
     border-radius: 4px;
+    transition: 200ms;
   }
 
   &::-webkit-progress-value {
     background: var(--primary);
     border-radius: 4px;
+    transition: 200ms;
   }
 
   &::-moz-progress-bar {
     background: var(--primary);
     border-radius: 4px;
+    transition: 200ms;
   }
 }
