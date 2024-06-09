@@ -3,12 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { VocalGridComponent } from './sing/vocal-grid/vocal-grid.component';
 import { TuiButtonModule, TuiHostedDropdownModule, TuiNotificationModule, TuiSvgModule } from '@taiga-ui/core';
-import { BpmService } from './services/bpm.service';
 import { SingComponent } from './sing/sing.component';
 import { SingPageRoutingModule } from './sing-routing.module';
 import { SingPageComponent } from './sing-page.component';
 import { LyricsComponent } from './sing/lyrics/lyrics.component';
-import { MicrophoneService } from './services/microphone.service';
 import {
   MicrophoneSelectionDialogComponent
 } from './dialogs/microphone-selection-dialog/microphone-selection-dialog.component';
@@ -59,8 +57,6 @@ import { TranslocoModule } from '@ngneat/transloco';
     TranslocoModule
   ],
   providers: [
-    BpmService,
-    MicrophoneService,
     MicrophoneGuard,
     AudioContextGuard,
     SingerFactory

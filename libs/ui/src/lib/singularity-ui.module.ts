@@ -21,6 +21,7 @@ import { TooltipDirective } from './tooltip/tooltip.directive';
 import { LoaderComponent } from './loader/loader.component';
 import { FilesComponent } from './files/files.component';
 import { InputFileComponent } from './input-file/input-file.component';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { InputFileComponent } from './input-file/input-file.component';
     TooltipDirective,
     LoaderComponent,
     FilesComponent,
-    InputFileComponent
+    InputFileComponent,
+    ModalComponent
   ],
   imports: [
     CommonModule,
@@ -69,7 +71,7 @@ import { InputFileComponent } from './input-file/input-file.component';
     TooltipDirective,
     LoaderComponent,
     FilesComponent,
-    InputFileComponent
+    InputFileComponent,
   ]
 })
 export class SingularityUiModule { }

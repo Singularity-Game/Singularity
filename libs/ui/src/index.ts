@@ -17,4 +17,6 @@ export { TooltipDirective } from './lib/tooltip/tooltip.directive';
 export { LoaderComponent } from './lib/loader/loader.component';
 export { FilesComponent } from './lib/files/files.component';
 export { InputFileComponent } from './lib/input-file/input-file.component';
+export { ModalService } from './lib/modal/modal.service';
+export { ModalContext } from './lib/modal/modal-context';
 export { SuiGlobalColorService } from './lib/sui-global-color/sui-global-color.service';

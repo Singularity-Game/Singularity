@@ -1,18 +1,16 @@
-import { Inject, Injectable, Injector } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
-import { TuiDialogService } from '@taiga-ui/core';
+import { Injectable } from '@angular/core';
+import { CanActivate, UrlTree } from '@angular/router';
+import { map, Observable } from 'rxjs';
 import { MicrophoneService } from '../services/microphone.service';
-import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import {
   MicrophoneSelectionDialogComponent
 } from '../dialogs/microphone-selection-dialog/microphone-selection-dialog.component';
+import { ModalService } from '@singularity/ui';
 
 @Injectable()
 export class MicrophoneGuard implements CanActivate {
-  constructor(@Inject(TuiDialogService) private readonly tuiDialogService: TuiDialogService,
-              private readonly microphoneService: MicrophoneService,
-              private readonly injector: Injector) {
+  constructor(private readonly modalService: ModalService,
+              private readonly microphoneService: MicrophoneService) {
   }
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       const microphonesSelected = this.microphoneService.isAnyMicrophoneSelected();
@@ -21,10 +19,10 @@ export class MicrophoneGuard implements CanActivate {
         return true
       }
 
-      return this.tuiDialogService.open<boolean>(new PolymorpheusComponent(MicrophoneSelectionDialogComponent, this.injector), {
-        closeable: false,
-        dismissible: false
-      });
+    return this.modalService.open$<boolean>(MicrophoneSelectionDialogComponent)
+      .pipe(
+        map((value) => !!value)
+      );
   }
 
 }

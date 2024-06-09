@@ -1,11 +1,10 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
-import { TuiDialogContext } from '@taiga-ui/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MicrophoneService } from '../../services/microphone.service';
 import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { FormArray, FormControl } from '@angular/forms';
 import { MicrophoneWithMeter } from './microphone-with-meter';
 import { Nullable } from '@singularity/api-interfaces';
+import { ModalContext } from '@singularity/ui';
 
 @Component({
   selector: 'singularity-microphone-selection-dialog',
@@ -20,7 +19,7 @@ export class MicrophoneSelectionDialogComponent implements OnInit, OnDestroy {
 
   public destroySubject = new Subject<void>();
 
-  constructor(@Inject(POLYMORPHEUS_CONTEXT) private readonly context: TuiDialogContext<boolean>,
+  constructor(private readonly modalContext: ModalContext<boolean>,
               private readonly microphoneService: MicrophoneService) {
   }
 
@@ -41,11 +40,11 @@ export class MicrophoneSelectionDialogComponent implements OnInit, OnDestroy {
 
     this.microphoneService.setMicrophones(microphonesDeviceIds);
 
-    this.context.completeWith(true);
+    this.modalContext.close(true);
   }
 
   public abort(): void {
-    this.context.completeWith(false);
+    this.modalContext.close(false);
   }
 
   private setupDevicesObservale(): void {

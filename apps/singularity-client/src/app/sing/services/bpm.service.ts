@@ -4,7 +4,7 @@ import * as Tone from 'tone'
 import { SettingsService } from '../../shared/settings/settings.service';
 import { LocalSettings } from '../../shared/settings/local-settings';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class BpmService {
   private delay = 0;
   private running = false;
