@@ -2,15 +2,18 @@ import { ApplicationRef, createComponent, Injectable, Type } from '@angular/core
 import { ModalComponent } from './modal.component';
 import { Observable, of, tap } from 'rxjs';
 import { Nullable } from '@singularity/api-interfaces';
+import { ModalContext } from './modal-context';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
 
-  constructor(private readonly applicationRef: ApplicationRef) { }
+  constructor(private readonly applicationRef: ApplicationRef,
+              private readonly router: Router) { }
 
-  public open$<T>(component: Type<unknown>): Observable<Nullable<T>> {
+  public open$<ResultType, DataType = null>(component: Type<unknown>, data: DataType): Observable<Nullable<ResultType>> {
     const hostElement = document.getElementById('modal-outlet');
     const newElement = document.createElement('sui-modal');
 
@@ -20,19 +23,17 @@ export class ModalService {
 
     hostElement.parentNode.insertBefore(newElement, hostElement.nextSibling);
 
-    const componentRef = createComponent(ModalComponent<T>, {
+    const componentRef = createComponent(ModalComponent<ResultType, DataType>, {
       hostElement: newElement,
       environmentInjector: this.applicationRef.injector,
     });
 
+    componentRef.instance.context = new ModalContext<ResultType, DataType>(data, componentRef);
     componentRef.instance.component = component;
 
     this.applicationRef.attachView(componentRef.hostView);
     componentRef.changeDetectorRef.detectChanges();
 
-    return componentRef.instance.onClose$()
-      .pipe(
-        tap(() => componentRef.destroy())
-      );
+    return componentRef.instance.onClose$();
   }
 }

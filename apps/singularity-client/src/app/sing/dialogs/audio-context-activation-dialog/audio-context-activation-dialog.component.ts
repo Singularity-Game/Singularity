@@ -8,7 +8,7 @@ import { ModalContext } from '@singularity/ui';
   styleUrls: ['./audio-context-activation-dialog.component.scss'],
 })
 export class AudioContextActivationDialogComponent {
-  constructor(private readonly modalContext: ModalContext<boolean>) {
+  constructor(private readonly modalContext: ModalContext<boolean, null>) {
   }
 
   public activateContext(): void {

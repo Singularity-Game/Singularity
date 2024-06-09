@@ -4,6 +4,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
   max-width: 50%;
+  min-width: 400px;
   background: var(--glass-black-background);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);

@@ -10,21 +10,18 @@ import {
   ViewChild
 } from '@angular/core';
 import { ModalContext } from './modal-context';
-import { Observable } from 'rxjs';
+import { NEVER, Observable } from 'rxjs';
 
 @Component({
   selector: 'sui-modal',
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss'
 })
-export class ModalComponent<T> implements AfterViewInit {
-
-  private modalContext = new ModalContext<T>();
-
+export class ModalComponent<ResultType, DataType> implements AfterViewInit {
   @ViewChild('modal') private modal?: ElementRef<HTMLDivElement>;
 
   @Input() public component?: Type<unknown>;
-
+  @Input() public context?: ModalContext<ResultType, DataType>
 
   constructor(private readonly appRef: ApplicationRef,
               private readonly injector: Injector) {
@@ -39,7 +36,7 @@ export class ModalComponent<T> implements AfterViewInit {
       providers: [
         {
           provide: ModalContext,
-          useValue: this.modalContext
+          useValue: this.context
         }
       ],
       parent: this.injector
@@ -55,7 +52,7 @@ export class ModalComponent<T> implements AfterViewInit {
     componentRef.changeDetectorRef.detectChanges();
   }
 
-  public onClose$(): Observable<T> {
-    return this.modalContext.onClose$();
+  public onClose$(): Observable<ResultType> {
+    return this.context?.onClose$() ?? NEVER;
   }
 }

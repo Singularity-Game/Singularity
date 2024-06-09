@@ -19,7 +19,7 @@ export class MicrophoneSelectionDialogComponent implements OnInit, OnDestroy {
 
   public destroySubject = new Subject<void>();
 
-  constructor(private readonly modalContext: ModalContext<boolean>,
+  constructor(private readonly modalContext: ModalContext<boolean, null>,
               private readonly microphoneService: MicrophoneService) {
   }
 

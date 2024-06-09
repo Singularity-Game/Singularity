@@ -22,6 +22,7 @@ import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { SingScoreDialogComponent } from '../dialogs/sing-score-dialog/sing-score-dialog.component';
 import { SettingsService } from '../../shared/settings/settings.service';
 import { LocalSettings } from '../../shared/settings/local-settings';
+import { ModalService } from '@singularity/ui';
 
 @Component({
   selector: 'singularity-sing',
@@ -45,7 +46,7 @@ export class SingComponent implements AfterViewInit, OnDestroy {
               private readonly bpmService: BpmService,
               private readonly settingsService: SettingsService,
               private readonly singerFactory: SingerFactory,
-              private readonly dialogService: TuiDialogService) { }
+              private readonly modalService: ModalService) { }
 
   @HostListener('document:keydown', ['$event'])
   public handleKeyboardEvent(event: KeyboardEvent): void {
@@ -152,13 +153,9 @@ export class SingComponent implements AfterViewInit, OnDestroy {
         filter(([beat, scores]: [number, number[]]) => beat === lastNote.startBeat + lastNote.lengthInBeats),
         delay(2000),
         switchMap(([beat, scores]: [number, number[]]) => {
-          return this.dialogService.open(new PolymorpheusComponent(SingScoreDialogComponent), {
-            data: {
+          return this.modalService.open$(SingScoreDialogComponent, {
               singers: this.singers,
               scores: scores,
-            },
-            closeable: false,
-            dismissible: false
           })
         }),
         takeUntil(this.destroySubject)

@@ -19,7 +19,7 @@ export class MicrophoneGuard implements CanActivate {
         return true
       }
 
-    return this.modalService.open$<boolean>(MicrophoneSelectionDialogComponent)
+    return this.modalService.open$<boolean, null>(MicrophoneSelectionDialogComponent, null)
       .pipe(
         map((value) => !!value)
       );

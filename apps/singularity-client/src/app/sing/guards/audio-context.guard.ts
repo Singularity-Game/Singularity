@@ -20,7 +20,7 @@ export class AudioContextGuard implements CanActivate {
       return true;
     }
 
-    return this.modalService.open$<boolean>(AudioContextActivationDialogComponent)
+    return this.modalService.open$<boolean>(AudioContextActivationDialogComponent, null)
       .pipe(
         map((value) => !!value)
       );
