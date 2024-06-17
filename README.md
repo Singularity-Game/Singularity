@@ -14,6 +14,7 @@ Introducing Singularity: Your browser's karaoke stage! Gather your friends for a
 
 
 ![Screenshot1](/docs/images/screenshot1.png)
+![Screenshot3](/docs/images/screenshot3.png)
 
 
 ## ✨ Features ✨
