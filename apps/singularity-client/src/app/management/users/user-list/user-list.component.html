@@ -1,7 +1,8 @@
 <h1>{{ 'management.users.userList.header' | transloco }}
   <singularity-admin-feature-icon size='large'></singularity-admin-feature-icon>
-  <button tuiButton size='xs' icon='tuiIconPlus' routerLink='new'
-          class='tui-space_left-2'>{{ 'management.users.userList.newUser' | transloco }}
+  <button class="sui-right" suiButton size="s" (click)="createUser()">
+    <img class="sui-space-right" src="assets/icons/plus-circle.svg" alt="add" />
+    {{ 'management.users.userList.newUser' | transloco }}
   </button>
 </h1>
 <table class='sui-table'>

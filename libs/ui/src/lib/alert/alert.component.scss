@@ -1,0 +1,34 @@
+.alert {
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 1);
+  padding: var(--padding-small);
+  animation: alert-appear 1s ease;
+  overflow: hidden;
+}
+
+.error {
+  background: var(--glass-error-background);
+}
+
+.success {
+  background: var(--glass-success-background);
+}
+
+.warning {
+  background: var(--glass-warn-background);
+}
+
+.info {
+  background: var(--glass-info-background);
+}
+
+@keyframes alert-appear {
+  0% {
+    height: 0;
+  }
+
+  100% {
+    height: auto;
+  }
+}

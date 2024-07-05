@@ -1,4 +1,4 @@
-<div class="button-wrapper" [class.size-s]="size === 's'" [class.size-xs]="size === 'xs'">
+<div class="button-wrapper" [class.size-s]="size === 's'" [class.size-xs]="size === 'xs'" [class.disabled]="disabled">
   <div class="loader" *ngIf="loading">
     <sui-loader></sui-loader>
   </div>
@@ -12,5 +12,5 @@
        [class.flex-text]="!isIcon">
     <ng-content></ng-content>
   </div>
-  <span class="bottom-glow"></span>
+  <span class="bottom-glow" *ngIf="!disabled"></span>
 </div>

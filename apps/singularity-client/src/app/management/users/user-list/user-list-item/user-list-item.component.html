@@ -13,7 +13,7 @@
     type="button"
     size="s"
     [suiTooltip]="editHint"
-    [routerLink]="['edit', user?.id]"
+    (click)="editUser()"
   >
     <img class="icon" src="assets/icons/edit.svg" width="20" alt="edit">
   </button>

@@ -22,6 +22,8 @@ import { LoaderComponent } from './loader/loader.component';
 import { FilesComponent } from './files/files.component';
 import { InputFileComponent } from './input-file/input-file.component';
 import { ModalComponent } from './modal/modal.component';
+import { CheckboxDirective } from './checkbox/checkbox.directive';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { ModalComponent } from './modal/modal.component';
     LoaderComponent,
     FilesComponent,
     InputFileComponent,
-    ModalComponent
+    ModalComponent,
+    CheckboxDirective,
+    AlertComponent
   ],
   imports: [
     CommonModule,
@@ -72,6 +76,8 @@ import { ModalComponent } from './modal/modal.component';
     LoaderComponent,
     FilesComponent,
     InputFileComponent,
+    CheckboxDirective,
+    AlertComponent
   ]
 })
 export class SingularityUiModule { }

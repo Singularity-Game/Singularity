@@ -19,4 +19,6 @@ export { FilesComponent } from './lib/files/files.component';
 export { InputFileComponent } from './lib/input-file/input-file.component';
 export { ModalService } from './lib/modal/modal.service';
 export { ModalContext } from './lib/modal/modal-context';
+export { CheckboxDirective } from './lib/checkbox/checkbox.directive';
+export { AlertComponent } from './lib/alert/alert.component';
 export { SuiGlobalColorService } from './lib/sui-global-color/sui-global-color.service';

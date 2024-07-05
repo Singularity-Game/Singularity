@@ -18,9 +18,10 @@ import { AdminFeatureIconComponent } from './components/admin-feature-icon/admin
 import { TranslocoModule } from '@ngneat/transloco';
 import { SingularityUiModule } from '@singularity/ui';
 import { SafePipe } from './pipes/safe/safe.pipe';
+import { PromptDialogComponent } from './components/prompt-dialog/prompt-dialog.component';
 
 @NgModule({
-  declarations: [NavbarComponent, SidebarComponent, NoCommaPipe, SearchPipe, OrderByPipe, AdminFeatureIconComponent, SafePipe],
+  declarations: [NavbarComponent, SidebarComponent, NoCommaPipe, SearchPipe, OrderByPipe, AdminFeatureIconComponent, SafePipe, PromptDialogComponent],
   imports: [CommonModule, TuiButtonModule, RouterLink, TuiHostedDropdownModule, TuiAvatarModule, TuiDataListModule, TuiSvgModule, TuiHintModule, TranslocoModule, SingularityUiModule],
   providers: [],
   exports: [NavbarComponent, SidebarComponent, AdminFeatureIconComponent, NoCommaPipe, SearchPipe, OrderByPipe, SafePipe]

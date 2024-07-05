@@ -10,4 +10,5 @@ export class ButtonComponent {
   @Input() isIcon = false;
   @Input() appearance: 'success' | 'warn' | 'error' | 'default' = 'default';
   @Input() loading = false;
+  @Input() disabled = false;
 }

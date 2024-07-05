@@ -9,5 +9,4 @@ export interface EditUserForm {
   active: FormControl<Nullable<boolean>>;
   password?: FormControl<Nullable<string>>;
   repeatPassword?: FormControl<Nullable<string>>;
-
 }

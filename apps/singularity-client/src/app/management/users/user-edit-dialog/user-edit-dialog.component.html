@@ -1,0 +1,68 @@
+<h1>
+  {{ isEditMode ? ('management.users.editUser.editUserHeader' | transloco) : ('management.users.editUser.createUserHeader' | transloco) }}
+</h1>
+
+<sui-alert [message]="errorMessage" type="error"></sui-alert>
+
+<form [formGroup]="userForm">
+  <label>
+    {{ 'general.username' | transloco }}
+    <sui-input-container>
+      <input type="text" suiInput formControlName="username">
+    </sui-input-container>
+  </label>
+
+  <div class="sui-space-top-large">
+    <label>
+      {{ 'general.email' | transloco }}
+      <sui-input-container>
+        <input type="text" suiInput formControlName="email">
+      </sui-input-container>
+    </label>
+  </div>
+
+  <div class="sui-space-top-large">
+    <label>
+      {{ 'management.users.editUser.admin' | transloco }}
+      <input type="checkbox" suiCheckbox formControlName="isAdmin">
+    </label>
+  </div>
+
+  <div class="sui-space-top-large">
+    <label>
+      {{ 'management.users.editUser.active' | transloco }}
+      <input type="checkbox" suiCheckbox formControlName="active">
+    </label>
+  </div>
+
+  <div>
+    <button
+      class="sui-space-top-large"
+      suiButton
+      type="submit"
+      size="l"
+      [disabled]="userForm.invalid"
+      (click)="save()"
+      [loading]="isLoading"
+    >
+      {{ 'general.save' | transloco }}
+    </button>
+
+    <button suiButton
+            appearance="warn"
+            class="tui-space_top-5"
+            *ngIf="isEditMode"
+            [loading]="isLoading"
+            (click)="resetPassword()">
+      {{ 'management.users.editUser.resetPassword' | transloco }}
+    </button>
+
+    <button suiButton
+            appearance="warn"
+            class="tui-space_top-5"
+            (click)="cancel()">
+      {{ 'general.cancel' | transloco }}
+    </button>
+  </div>
+
+</form>

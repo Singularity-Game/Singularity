@@ -1,17 +1,15 @@
 import { ApplicationRef, createComponent, Injectable, Type } from '@angular/core';
 import { ModalComponent } from './modal.component';
-import { Observable, of, tap } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Nullable } from '@singularity/api-interfaces';
 import { ModalContext } from './modal-context';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
 
-  constructor(private readonly applicationRef: ApplicationRef,
-              private readonly router: Router) { }
+  constructor(private readonly applicationRef: ApplicationRef) { }
 
   public open$<ResultType, DataType = null>(component: Type<unknown>, data: DataType): Observable<Nullable<ResultType>> {
     const hostElement = document.getElementById('modal-outlet');
@@ -21,7 +19,7 @@ export class ModalService {
       return of(null);
     }
 
-    hostElement.parentNode.insertBefore(newElement, hostElement.nextSibling);
+    hostElement.parentNode.insertBefore(newElement, hostElement.previousSibling);
 
     const componentRef = createComponent(ModalComponent<ResultType, DataType>, {
       hostElement: newElement,

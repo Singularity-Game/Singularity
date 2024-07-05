@@ -5,6 +5,8 @@ import { TuiAlertService, TuiDialogService, TuiNotification } from '@taiga-ui/co
 import { catchError, filter, Subject, switchMap, takeUntil, throwError } from 'rxjs';
 import { UserService } from '../../user.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { ModalService } from '@singularity/ui';
+import { UserEditDialogComponent } from '../../user-edit-dialog/user-edit-dialog.component';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -22,12 +24,22 @@ export class UserListItemComponent implements OnDestroy {
   constructor(private readonly dialogService: TuiDialogService,
               private readonly alertService: TuiAlertService,
               private readonly userService: UserService,
+              private readonly modalService: ModalService,
               private readonly transloco: TranslocoService) {
   }
 
   public ngOnDestroy(): void {
     this.destroySubject.next();
     this.destroySubject.complete();
+  }
+
+  public editUser(): void {
+    if(!this.user) {
+      return;
+    }
+
+    this.modalService.open$<UserDto, UserDto>(UserEditDialogComponent, this.user)
+      .subscribe();
   }
 
   public deleteUser(): void {
