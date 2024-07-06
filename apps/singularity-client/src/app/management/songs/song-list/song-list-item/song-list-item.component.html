@@ -2,10 +2,10 @@
   <sui-fast-image [src]="cover$ | async" [blurrySrc]="fastCover$ | async" alt="Song Cover" width="50px" height="50px"></sui-fast-image>
 </td>
 <td>
-  <div class="flex download-icon-td" *ngIf="isDownloaded$ | async">
-    <tui-svg src="tuiIconDownload"  class="downloaded" [tuiHint]="downloadedHint" [tuiHintShowDelay]="100"></tui-svg>
+  <div class="flex no-gap download-icon-td">
+    <img src="/assets/icons/download.svg" class="downloaded icon" alt="downloaded" [suiTooltip]="downloadedHint" *ngIf="isDownloaded$ | async" />
+    <sui-loader *ngIf="isDownloading || isCheckingDownload"></sui-loader>
   </div>
-  <tui-loader size="s" [showLoader]="isDownloading || isCheckingDownload"></tui-loader>
 </td>
 <td>{{song?.name}}</td>
 <td>{{song?.artist}}</td>

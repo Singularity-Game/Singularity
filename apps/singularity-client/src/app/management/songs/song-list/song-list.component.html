@@ -9,16 +9,17 @@
   <ng-container *ngIf="downloadingSongs$ | async; let downloadingSongs">
     <ng-container *ngIf="downloadingSongs.length > 0">
       <p>{{ 'management.songs.songList.serverDownloadsSongs' | transloco }}</p>
-      <tui-files>
-        <tui-file *ngFor="let song of downloadingSongs"
-                  [state]="song.state === songListDownloadState.loading ? 'loading' : 'normal'"
-                  [file]="{ name: song.artist + ' - ' + song.title + '.' }">
-        </tui-file>
-      </tui-files>
+      @for (song of downloadingSongs; track song.title) {
+        <p class="flex">
+          <sui-loader *ngIf="song.state === songListDownloadState.loading"></sui-loader>
+          <img src="/assets/icons/check-circle.svg" alt="check" class="icon" width="24" height="24"
+               *ngIf="song.state === songListDownloadState.finished" />
+          <span>{{ song.artist }} - {{ song.title }}</span>
+        </p>
+      }
     </ng-container>
   </ng-container>
 </ng-container>
-
 
 <table class="sui-table">
   <tbody>

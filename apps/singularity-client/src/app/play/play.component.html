@@ -50,10 +50,7 @@
         </sui-select>
       </div>
 
-      <tui-notification *ngIf="isOfflineMode">
-        {{ 'play.activeOfflineModeWarning' | transloco }} <a
-        routerLink="/management/settings">{{ 'play.turnOffOfflineMode' | transloco }}</a>
-      </tui-notification>
+      <sui-alert [message]="'play.activeOfflineModeWarning' | transloco" *ngIf="isOfflineMode" type="info"></sui-alert>
 
       <div class="song-grid">
         <singularity-song-grid-item [song]="song"

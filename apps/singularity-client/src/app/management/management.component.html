@@ -2,14 +2,11 @@
 
 </singularity-navbar>
 <singularity-sidebar>
-  <button tuiButton type="button" appearance="flat"
-          routerLink="settings">{{ 'management.settings.header' | transloco }}
+  <button suiButton routerLink="settings">{{ 'management.settings.header' | transloco }}
   </button>
-  <button tuiButton type="button" appearance="flat"
-          routerLink="songs">{{ 'management.songs.songList.header' | transloco }}
+  <button suiButton routerLink="songs">{{ 'management.songs.songList.header' | transloco }}
   </button>
-  <button tuiButton type="button" appearance="flat" routerLink="users"
-          *ngIf="isAdmin$ | async">{{ 'management.users.userList.header' | transloco }}
+  <button suiButton *ngIf="isAdmin$ | async">{{ 'management.users.userList.header' | transloco }}
     <singularity-admin-feature-icon></singularity-admin-feature-icon>
   </button>
 </singularity-sidebar>

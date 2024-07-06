@@ -2,7 +2,7 @@
   <sui-fast-image class="sui-card-3d-image" [src]="cover$ | async" [blurrySrc]="blurryCover$ | async" [alt]="song?.name"></sui-fast-image>
   <p class="song-name sui-single-line">
     <a (click)="startSinging()">{{song?.name}}</a>
-    <tui-svg src="tuiIconDownload" *ngIf="isDownloaded$ | async" class="downloaded" [tuiHint]="downloadedHint" [tuiHintShowDelay]="100"></tui-svg>
+    <img src="/assets/icons/download.svg" *ngIf="isDownloaded$ | async" class="downloaded icon" width="24" height="24">
   </p>
   <p class="song-artist sui-single-line">{{song?.artist}}</p>
 </sui-card3d>
