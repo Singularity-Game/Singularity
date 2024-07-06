@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MicrophoneService } from '../../services/microphone.service';
-import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { finalize, map, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { FormArray, FormControl } from '@angular/forms';
 import { MicrophoneWithMeter } from './microphone-with-meter';
 import { Nullable } from '@singularity/api-interfaces';
@@ -53,7 +53,10 @@ export class MicrophoneSelectionDialogComponent implements OnInit, OnDestroy {
         map((devices: MediaDeviceInfo[]) => {
           const array = devices.map<Nullable<MicrophoneWithMeter>>((device: MediaDeviceInfo) => ({
             device: device,
-            meter$: this.microphoneService.getDeviceMeter$(device.deviceId)
+            meter$: this.microphoneService.getDeviceMeter$(device.deviceId).pipe(
+              tap(() => console.log('start')),
+              finalize(() => console.log('strop'))
+            )
           }));
           array.unshift(null);
           return array;

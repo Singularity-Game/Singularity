@@ -64,7 +64,7 @@ export class SelectComponent implements ControlValueAccessor, AfterViewInit {
       return;
     }
 
-    this.setValue(selectedOption.value, selectedOption.content, false);
+    this.setValue(selectedOption.value, selectedOption.valueContent ?? selectedOption.content, false);
   }
 
   public toggleExpand(): void {
@@ -77,19 +77,23 @@ export class SelectComponent implements ControlValueAccessor, AfterViewInit {
     }
   }
 
-  public setValue(value: unknown, content?: ElementRef, triggerChange = true): void {
+  public setValue(value: unknown, content?: ElementRef | string, triggerChange = true): void {
     this.value = value;
 
     if (this.onChange && triggerChange) {
       this.onChange(value);
     }
 
-    if (this.textElement && content) {
+    if (this.textElement && content instanceof ElementRef) {
       const clone = content.nativeElement.cloneNode(true);
       if (this.textElement.nativeElement.firstChild) {
         this.renderer.removeChild(this.textElement.nativeElement, this.textElement.nativeElement.firstChild);
       }
       this.renderer.appendChild(this.textElement.nativeElement, clone);
+    }
+
+    if (this.textElement && typeof content === 'string') {
+      this.renderer.appendChild(this.textElement.nativeElement, content);
     }
   }
 
@@ -100,7 +104,7 @@ export class SelectComponent implements ControlValueAccessor, AfterViewInit {
       return;
     }
 
-    this.setValue(selectedOption.value, selectedOption.content);
+    this.setValue(selectedOption.value, selectedOption.valueContent ?? selectedOption.content);
   }
 
   public registerOnChange(fn: (value: unknown) => void): void {

@@ -6,6 +6,8 @@
   </button>
 </h1>
 
+<sui-alert [message]="alert"></sui-alert>
+
 <singularity-create-song-uplodad-txt-file-component
   (manualUpload)="setManualUpload($event)"
   (file)="setTxtFile($event)">

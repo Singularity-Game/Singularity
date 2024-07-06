@@ -28,6 +28,7 @@ import { SharedModule } from '../shared/shared.module';
 import { SingScoreDialogComponent } from './dialogs/sing-score-dialog/sing-score-dialog.component';
 import { ScoreTitlePipe } from './pipes/score-title.pipe';
 import { TranslocoModule } from '@ngneat/transloco';
+import { SingularityUiModule } from '@singularity/ui';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { TranslocoModule } from '@ngneat/transloco';
     SharedModule,
     TuiIslandModule,
     TuiNotificationModule,
-    TranslocoModule
+    TranslocoModule,
+    SingularityUiModule
   ],
   providers: [
     MicrophoneGuard,

@@ -1,47 +1,38 @@
 <h1>{{ 'sing.microphoneSelectionDialog.header' | transloco }}</h1>
 <ng-container *ngIf="devices$ | async; let devices; else loading">
   <ng-container *ngFor="let formControl of formArray.controls; let i = index">
-    <tui-select [valueContent]="valueContent" [formControl]="formControl" class="tui-space_top-2">
-      {{ 'sing.microphoneSelectionDialog.player' | transloco }} {{i + 1}}
-      <tui-data-list-wrapper *tuiDataList [items]="devices" [itemContent]="content"></tui-data-list-wrapper>
-    </tui-select>
+    <sui-select [formControl]="formControl" class="sui-space-top">
+      <sui-select-option *ngFor="let device of devices" [value]="device" [valueContent]="device?.device?.label ?? null">
+        <div class="flex" *ngIf="device !== null">
+          <p class="analyser-text">{{device.device.label}}</p>
+          <progress
+            suiProgress
+            class="analyser-bar"
+            max="10"
+            [value]="device.meter$ | async"
+          ></progress>
+        </div>
+        <div *ngIf="device === null">
+          {{ 'sing.microphoneSelectionDialog.noPlayer' | transloco }}
+        </div>
+      </sui-select-option>
+    </sui-select>
   </ng-container>
 </ng-container>
 
-<button tuiButton
-        size="m"
-        class="tui-space_top-5"
+<button suiButton
+        class="sui-space-top-large"
         [disabled]="formArray.length < 2"
         (click)="submit()">{{ 'sing.microphoneSelectionDialog.submit' | transloco }}</button>
-<button tuiButton
-        size="m"
-        appearance="secondary-destructive"
-        class="tui-space_top-5 tui-space_left-5"
+<button suiButton
+        appearance="warn"
+        class="sui-space-top-large"
         (click)="abort()">{{ 'general.cancel' | transloco }}</button>
 
 <ng-template #loading>
   <progress
-    tuiProgressBar
+    suiProgress
     max="100"
     class="progress"
   ></progress>
-</ng-template>
-
-<ng-template #content let-device>
-  <div class="flex" *ngIf="device !== null">
-    <p class="analyser-text">{{device.device.label}}</p>
-    <progress
-      tuiProgressBar
-      class="analyser-bar"
-      max="10"
-      [value]="device.meter$ | async"
-    ></progress>
-  </div>
-  <div *ngIf="device === null">
-    {{ 'sing.microphoneSelectionDialog.noPlayer' | transloco }}
-  </div>
-</ng-template>
-
-<ng-template #valueContent let-device>
-  {{device.device.label}}
 </ng-template>

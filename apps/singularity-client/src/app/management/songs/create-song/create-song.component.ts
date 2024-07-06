@@ -1,13 +1,12 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CreateSongForm } from './create-song-form';
-import { catchError, filter, map, Observable, Subject, takeUntil, tap, throwError } from 'rxjs';
+import { catchError, filter, map, Subject, takeUntil, tap, throwError } from 'rxjs';
 import { CreateSongRequest } from '../../models/create-song-request';
 import { SongManagementService } from '../song-management.service';
 import { Router } from '@angular/router';
 import { LoadProgress } from '../../../shared/types/load-progress';
 import { Nullable, SongDto } from '@singularity/api-interfaces';
-import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
@@ -30,9 +29,10 @@ export class CreateSongComponent implements OnDestroy {
   public isUploading = false;
   public isManualUpload: Nullable<boolean> = null;
 
+  public alert = '';
+
   constructor(private readonly songService: SongManagementService,
               private readonly router: Router,
-              private readonly alertService: TuiAlertService,
               private readonly transloco: TranslocoService) {
   }
 
@@ -102,29 +102,16 @@ export class CreateSongComponent implements OnDestroy {
   }
 
   private handleUploadError(message: string): void {
-    let alert: Observable<unknown>;
-
     switch (message) {
       case 'SongAlreadyExists':
-        alert = this.alertService.open(this.transloco.translate('management.songs.createSong.songAlreadyExistsError'), {
-          label: this.transloco.translate('general.error'),
-          status: TuiNotification.Error
-        });
+        this.alert = this.transloco.translate('management.songs.createSong.songAlreadyExistsError');
         break;
       case 'SongSaveError':
-        alert = this.alertService.open(this.transloco.translate('management.songs.createSong.songSaveError'), {
-          label: this.transloco.translate('general.error'),
-          status: TuiNotification.Error
-        });
+        this.alert = this.transloco.translate('management.songs.createSong.songSaveError');
         break;
       default:
-        alert = this.alertService.open(this.transloco.translate('management.songs.createSong.error'), {
-          label: this.transloco.translate('general.error'),
-          status: TuiNotification.Error
-        });
+        this.alert = this.transloco.translate('management.songs.createSong.error');
         break;
     }
-
-    alert.pipe(takeUntil(this.destroySubject)).subscribe();
   }
 }
