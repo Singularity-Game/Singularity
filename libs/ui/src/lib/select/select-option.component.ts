@@ -1,6 +1,5 @@
-import { Component, ContentChild, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
 import { SelectComponent } from './select.component';
-import { ButtonComponent } from '../button/button.component';
 import { Nullable } from '@singularity/api-interfaces';
 
 @Component({
@@ -8,7 +7,7 @@ import { Nullable } from '@singularity/api-interfaces';
   templateUrl: './select-option.component.html',
   styleUrl: './select-option.component.scss'
 })
-export class SelectOptionComponent implements OnDestroy {
+export class SelectOptionComponent {
   @Input() public value: unknown;
   @Input() public valueContent: Nullable<string> = null;
 
@@ -20,9 +19,5 @@ export class SelectOptionComponent implements OnDestroy {
   public select(): void {
     this.selectComponent.toggleExpand();
     this.selectComponent.setValue(this.value, this.valueContent ?? this.content);
-  }
-
-  public ngOnDestroy(): void {
-    console.log('test');
   }
 }
