@@ -1,26 +1,31 @@
 <div class="logo">
-  <img src="assets/logo/singularity-logo.svg" alt="Logo" width="100%"/>
+  <sui-logo></sui-logo>
 </div>
 <h1 class="primary">{{ 'authentication.login.header' | transloco }}</h1>
 <form [formGroup]="loginForm" (ngSubmit)="login()">
-  <tui-input formControlName="username">
-    {{ 'general.username' | transloco }}
-    <input
-      tuiTextfield
-      type="text"
+  <sui-input-container>
+    <input suiInput
+           formControlName="username"
+           [placeholder]="'general.username' | transloco"
+           type="text"
     />
-  </tui-input>
-  <tui-input class="tui-space_top-5" formControlName="password">
-    {{ 'general.password' | transloco }}
+  </sui-input-container>
+  <sui-input-container class="tui-space_top-5">
     <input
+      suiInput
+      [placeholder]="'general.password' | transloco"
+      formControlName="password"
       tuiTextfield
       type="password"
     />
-  </tui-input>
+  </sui-input-container>
   <tui-error [error]="error"></tui-error>
   <div class="flex tui-space_top-5 align-center">
-    <a class="link" routerLink="/authentication/reset-password">{{ 'authentication.login.forgotPassword' | transloco }}</a>
-    <button tuiButton class="flex-item" type="submit" [disabled]="loginForm.invalid" [showLoader]="isLoggingIn">{{ 'authentication.login.login' | transloco }}</button>
+    <a class="link"
+       routerLink="/authentication/reset-password">{{ 'authentication.login.forgotPassword' | transloco }}</a>
+    <button tuiButton class="flex-item" type="submit" [disabled]="loginForm.invalid"
+            [showLoader]="isLoggingIn">{{ 'authentication.login.login' | transloco }}
+    </button>
   </div>
 </form>
 

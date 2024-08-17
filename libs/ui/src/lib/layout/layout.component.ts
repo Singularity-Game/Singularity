@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { SuiGlobalColorService } from '../sui-global-color/sui-global-color.service';
-import { AsyncPipe } from '@angular/common';
+import { ToastService } from '../toast/toast.service';
 
 @Component({
   selector: 'sui-layout',
@@ -11,7 +11,9 @@ export class LayoutComponent {
 
   public colors$ = this.globalColorService.getColors$();
   public textColor$ = this.globalColorService.getTextColor$();
+  public toasts$ = this.toastService.getToasts$();
 
-  constructor(private readonly globalColorService: SuiGlobalColorService) {
+  constructor(private readonly globalColorService: SuiGlobalColorService,
+              private readonly toastService: ToastService) {
   }
 }

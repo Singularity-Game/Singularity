@@ -24,6 +24,7 @@ import { InputFileComponent } from './input-file/input-file.component';
 import { ModalComponent } from './modal/modal.component';
 import { CheckboxDirective } from './checkbox/checkbox.directive';
 import { AlertComponent } from './alert/alert.component';
+import { ToastComponent } from './toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { AlertComponent } from './alert/alert.component';
     InputFileComponent,
     ModalComponent,
     CheckboxDirective,
-    AlertComponent
+    AlertComponent,
+    ToastComponent
   ],
   imports: [
     CommonModule,

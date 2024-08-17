@@ -9,6 +9,7 @@
   <div class="navbar-buttons">
     <button suiButton routerLink="/play">{{ 'shared.navbar.play' | transloco }}</button>
     <button suiButton routerLink="/party" *ngIf="partyEnabled">{{ 'shared.navbar.party' | transloco }}</button>
+    <button suiButton (click)="toast()">Toast!</button>
     <ng-content></ng-content>
   </div>
   <div class="navbar-right">
