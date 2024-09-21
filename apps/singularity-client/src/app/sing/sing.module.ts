@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { VocalGridComponent } from './sing/vocal-grid/vocal-grid.component';
-import { TuiButtonModule, TuiHostedDropdownModule, TuiNotificationModule, TuiSvgModule } from '@taiga-ui/core';
 import { SingComponent } from './sing/sing.component';
 import { SingPageRoutingModule } from './sing-routing.module';
 import { SingPageComponent } from './sing-page.component';
@@ -11,13 +10,6 @@ import {
   MicrophoneSelectionDialogComponent
 } from './dialogs/microphone-selection-dialog/microphone-selection-dialog.component';
 import { MicrophoneGuard } from './guards/microphone.guard';
-import {
-  TuiDataListWrapperModule,
-  TuiIslandModule,
-  TuiProgressModule,
-  TuiSelectModule,
-  TuiSelectOptionModule
-} from '@taiga-ui/kit';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   AudioContextActivationDialogComponent
@@ -44,17 +36,8 @@ import { SingularityUiModule } from '@singularity/ui';
   imports: [
     SingPageRoutingModule,
     CommonModule,
-    TuiButtonModule,
-    TuiHostedDropdownModule,
-    TuiSelectModule,
-    TuiDataListWrapperModule,
-    TuiProgressModule,
     ReactiveFormsModule,
-    TuiSelectOptionModule,
-    TuiSvgModule,
     SharedModule,
-    TuiIslandModule,
-    TuiNotificationModule,
     TranslocoModule,
     SingularityUiModule
   ],

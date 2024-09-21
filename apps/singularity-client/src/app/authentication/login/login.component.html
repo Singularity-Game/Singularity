@@ -3,6 +3,7 @@
 </div>
 <h1 class="primary">{{ 'authentication.login.header' | transloco }}</h1>
 <form [formGroup]="loginForm" (ngSubmit)="login()">
+  <sui-alert *ngIf="error" type="error" [message]="error"></sui-alert>
   <sui-input-container>
     <input suiInput
            formControlName="username"
@@ -10,26 +11,26 @@
            type="text"
     />
   </sui-input-container>
-  <sui-input-container class="tui-space_top-5">
-    <input
-      suiInput
-      [placeholder]="'general.password' | transloco"
-      formControlName="password"
-      tuiTextfield
-      type="password"
-    />
-  </sui-input-container>
-  <tui-error [error]="error"></tui-error>
-  <div class="flex tui-space_top-5 align-center">
+  <div class="sui-space-top-large">
+    <sui-input-container>
+      <input
+        suiInput
+        [placeholder]="'general.password' | transloco"
+        formControlName="password"
+        type="password"
+      />
+    </sui-input-container>
+  </div>
+  <div class="flex sui-space-top-large align-center">
     <a class="link"
        routerLink="/authentication/reset-password">{{ 'authentication.login.forgotPassword' | transloco }}</a>
-    <button tuiButton class="flex-item" type="submit" [disabled]="loginForm.invalid"
-            [showLoader]="isLoggingIn">{{ 'authentication.login.login' | transloco }}
+    <button suiButton class="flex-item" type="submit" [disabled]="loginForm.invalid"
+            [loading]="isLoggingIn">{{ 'authentication.login.login' | transloco }}
     </button>
   </div>
 </form>
 
-<hr class="tui-space_top-5">
-<div class="tui-space_top-5 flex">
+<hr class="sui-space-top-large">
+<div class="sui-space-top-large flex">
   <a (click)="showNoAccountInfoDialog()">{{ 'authentication.login.noAccount' | transloco }}</a>
 </div>

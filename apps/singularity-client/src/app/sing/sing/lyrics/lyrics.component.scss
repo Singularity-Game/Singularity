@@ -11,6 +11,7 @@ $animation-duration: 0.3s;
   font-size: $primary-font-size;
   font-weight: bold;
   text-align: center;
+  margin: 0;
   color: white;
   text-shadow:
     -2px -2px 0 #000,
@@ -29,6 +30,7 @@ $animation-duration: 0.3s;
   font-weight: bold;
   text-align: center;
   color: white;
+  margin: 16px;
   text-shadow:
     -2px -2px 0 #000,
     2px -2px 0 #000,
@@ -80,7 +82,7 @@ $animation-duration: 0.3s;
 
 @keyframes color-changer {
   0% {
-    color: var(--tui-primary);
+    color: var(--safePrimary);
   }
 
   100% {

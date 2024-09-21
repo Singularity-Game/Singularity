@@ -17,8 +17,6 @@ import { Singer } from '../singer/singer';
 import { SingerFactory } from '../services/singer-factory.service';
 import { LoadProgress } from '../../shared/types/load-progress';
 import { NoteHelper } from '../../shared/helpers/note-helper';
-import { TuiDialogService } from '@taiga-ui/core';
-import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { SingScoreDialogComponent } from '../dialogs/sing-score-dialog/sing-score-dialog.component';
 import { SettingsService } from '../../shared/settings/settings.service';
 import { LocalSettings } from '../../shared/settings/local-settings';

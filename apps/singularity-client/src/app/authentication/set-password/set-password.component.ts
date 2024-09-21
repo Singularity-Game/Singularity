@@ -4,9 +4,9 @@ import { SetPasswordForm } from './set-password-form';
 import { AuthenticationService } from '../../shared/authentication.service';
 import { Nullable } from '@singularity/api-interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { asyncScheduler, catchError, scheduled, Subject, takeUntil } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
+import { ToastService } from '@singularity/ui';
 
 @Component({
   selector: 'singularity-set-password',
@@ -26,7 +26,7 @@ export class SetPasswordComponent implements OnInit, OnDestroy {
   constructor(private readonly authenticationService: AuthenticationService,
               private readonly activatedRoute: ActivatedRoute,
               private readonly router: Router,
-              private readonly alertService: TuiAlertService,
+              private readonly toastService: ToastService,
               private readonly transloco: TranslocoService) {
   }
 
@@ -51,20 +51,10 @@ export class SetPasswordComponent implements OnInit, OnDestroy {
       )
       .subscribe((success: boolean) => {
         if (success) {
-          this.alertService.open(this.transloco.translate('authentication.setPassword.successMessage'), {
-            label: this.transloco.translate('authentication.setPassword.successLabel'),
-            status: TuiNotification.Success
-          })
-            .pipe(takeUntil(this.destroySubject))
-            .subscribe();
+          this.toastService.show(this.transloco.translate('authentication.setPassword.successLabel'), this.transloco.translate('authentication.setPassword.successMessage'), 'success')
           this.router.navigate(['/', 'authentication', 'login']);
         } else {
-          this.alertService.open(this.transloco.translate('authentication.setPassword.errorMessage'), {
-            label: this.transloco.translate('authentication.setPassword.errorLabel'),
-            status: TuiNotification.Error
-          })
-            .pipe(takeUntil(this.destroySubject))
-            .subscribe();
+          this.toastService.show(this.transloco.translate('authentication.setPassword.errorLabel'), this.transloco.translate('authentication.setPassword.errorMessage'), 'error')
         }
       });
   }

@@ -32,12 +32,7 @@ singularity-song-grid-item, {
   transform: translateX(-50%);
 }
 
-tui-notification {
-  margin: 25px;
-}
-
 a {
-  color: var(--tui-text-01);
   cursor: pointer;
   text-decoration: underline;
 }
@@ -50,10 +45,6 @@ a {
 
 .search-item {
   flex-basis: 300px;
-}
-
-tui-scrollbar {
-  max-height: calc(100vh - 157px);
 }
 
 .bottom-section {

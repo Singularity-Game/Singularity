@@ -2,9 +2,6 @@
   [style.--primary]="colors[0]"
   [style.--secondary]="colors[1]"
   [style.--text]="textColor$ | async"
-  [style.--tui-primary]="colors[0]"
-  [style.--tui-primary-text]="textColor$ | async"
-  [style.--tui-base-01]="'#000000'"
   >
   <ng-content></ng-content>
   <sui-toast *ngFor="let toast of toasts$ | async; let i = index" [title]="toast.header" [message]="toast.message" [type]="toast.type" [i]="i"></sui-toast>

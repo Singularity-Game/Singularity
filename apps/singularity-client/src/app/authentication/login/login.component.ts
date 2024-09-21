@@ -1,14 +1,13 @@
-import { Component, Injector, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginRequestForm } from './login-request-form';
 import { AuthenticationService } from '../../shared/authentication.service';
 import { Router } from '@angular/router';
-import { TuiAlertService, TuiDialogService, TuiNotification } from '@taiga-ui/core';
-import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { NoAccountInfoDialogComponent } from './no-account-info-dialog/no-account-info-dialog.component';
-import { asyncScheduler, scheduled, Subject, switchMap, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { Nullable } from '@singularity/api-interfaces';
 import { TranslocoService } from '@ngneat/transloco';
+import { ModalService } from '@singularity/ui';
 
 @Component({
   selector: 'singularity-login',
@@ -29,8 +28,7 @@ export class LoginComponent implements OnDestroy {
 
   constructor(private readonly authenticationService: AuthenticationService,
               private readonly router: Router,
-              private readonly dialogService: TuiDialogService,
-              private readonly injector: Injector,
+              private readonly modalService: ModalService,
               private readonly transloco: TranslocoService) {}
 
   public ngOnDestroy(): void {
@@ -63,7 +61,7 @@ export class LoginComponent implements OnDestroy {
   }
 
   public showNoAccountInfoDialog(): void {
-    this.dialogService.open(new PolymorpheusComponent(NoAccountInfoDialogComponent, this.injector))
+    this.modalService.open$(NoAccountInfoDialogComponent, null)
       .pipe(takeUntil(this.destroySubject))
       .subscribe();
   }

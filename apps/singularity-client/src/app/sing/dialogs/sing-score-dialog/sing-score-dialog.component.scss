@@ -2,9 +2,6 @@ $header-height: 200px;
 
 .header {
   height: $header-height;
-  margin-top: -32px;
-  margin-left: -32px;
-  margin-right: -32px;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
 
@@ -21,4 +18,9 @@ canvas {
   height: $header-height;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
+}
+
+
+.singer-list {
+  align-items: center;
 }

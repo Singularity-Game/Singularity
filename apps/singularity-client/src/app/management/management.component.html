@@ -6,7 +6,7 @@
   </button>
   <button suiButton routerLink="songs">{{ 'management.songs.songList.header' | transloco }}
   </button>
-  <button suiButton *ngIf="isAdmin$ | async">{{ 'management.users.userList.header' | transloco }}
+  <button suiButton *ngIf="isAdmin$ | async" routerLink="users">{{ 'management.users.userList.header' | transloco }}
     <singularity-admin-feature-icon></singularity-admin-feature-icon>
   </button>
 </singularity-sidebar>

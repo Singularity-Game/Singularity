@@ -5,12 +5,10 @@
 
 .song-name {
   text-align: center;
-  font: var(--tui-font-text-m);
   font-weight: bold;
   margin: 0;
 
   a {
-    color: var(--tui-text-01);
     cursor: pointer;
     text-decoration: underline;
   }

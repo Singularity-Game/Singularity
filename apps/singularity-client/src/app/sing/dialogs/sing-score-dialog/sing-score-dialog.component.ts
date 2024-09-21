@@ -1,6 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
-import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
-import { TuiDialogContext } from '@taiga-ui/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Singer } from '../../singer/singer';
 import JSConfetti from 'js-confetti';
 import { ModalContext } from '@singularity/ui';

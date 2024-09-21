@@ -9,4 +9,17 @@
   --primary: rgb(82,110,210);
   --secondary: rgb(250,8,224);
   --text: white;
+
+  a {
+    color: var(--text);
+  }
+}
+
+* {
+  font-family: Manrope, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Segoe UI", "Helvetica Neue", sans-serif;
+  color: var(--text);
+}
+
+*::-webkit-scrollbar {
+  display: none;
 }

@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Nullable, UserDto } from '@singularity/api-interfaces';
 import { environment } from '../../../../environments/environment';
-import { ToastService } from '@singularity/ui';
 
 @Component({
   selector: 'singularity-navbar',
@@ -21,8 +20,7 @@ export class NavbarComponent implements OnInit {
   public devMode = isDevMode();
 
   constructor(private readonly authenticationService: AuthenticationService,
-              private readonly router: Router,
-              private readonly toastService: ToastService) {
+              private readonly router: Router) {
   }
 
   public ngOnInit(): void {
@@ -33,9 +31,4 @@ export class NavbarComponent implements OnInit {
     this.authenticationService.logout();
     this.router.navigate(['/', 'authentication', 'login'])
   }
-
-  public toast(): void {
-    this.toastService.show('test', 'test', 'info');
-  }
-
 }

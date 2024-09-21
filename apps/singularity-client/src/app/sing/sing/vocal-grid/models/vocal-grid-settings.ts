@@ -6,7 +6,7 @@ export const VOCAL_GRID_SETTINGS = {
   lineFColor: '#0000FF55',
   lineSharpDash: [5, 5],
   lineNormalDash: [0],
-  textFontFamily: 'Manrope',
+  textFontFamily: 'Manrope, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Segoe UI", "Helvetica Neue", sans-serif',
   textFontSize: 25,
   linePadding: 18,
   noteSpeedInPxPerSecond: 300,

@@ -1,11 +1,11 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ResetPasswordForm } from './reset-password-form';
 import { AuthenticationService } from '../../shared/authentication.service';
-import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { Router } from '@angular/router';
 import { asyncScheduler, catchError, scheduled, Subject, takeUntil } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
+import { ToastService } from '@singularity/ui';
 
 @Component({
   selector: 'singularity-reset-password',
@@ -22,7 +22,7 @@ export class ResetPasswordComponent implements OnDestroy {
   private readonly destroySubject = new Subject<void>();
 
   constructor(private readonly authenticationService: AuthenticationService,
-              @Inject(TuiAlertService) private readonly alertService: TuiAlertService,
+              private readonly toastService: ToastService,
               private readonly router: Router,
               private readonly transloco: TranslocoService) {
   }
@@ -45,13 +45,7 @@ export class ResetPasswordComponent implements OnDestroy {
         takeUntil(this.destroySubject)
       )
       .subscribe(() => {
-        this.alertService.open(this.transloco.translate('authentication.resetPassword.successMessage'),
-          {
-            label: this.transloco.translate('authentication.resetPassword.successLabel'),
-            status: TuiNotification.Success
-          })
-          .pipe(takeUntil(this.destroySubject))
-          .subscribe();
+        this.toastService.show(this.transloco.translate('authentication.resetPassword.successLabel'), this.transloco.translate('authentication.resetPassword.successMessage'), 'success');
 
         this.isLoading = false;
 
