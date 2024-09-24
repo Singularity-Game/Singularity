@@ -1,0 +1,16 @@
+<div class="toast"
+     [class.error]="type === 'error'"
+     [class.success]="type === 'success'"
+     [class.warning]="type === 'warning'"
+     [class.info]="type === 'info'"
+     [style.top]="i * (64 + 10) + 25 + 'px'">
+
+  <img class="icon" src="assets/icons/x.svg" alt="error icon" *ngIf="type === 'error'" />
+  <img class="icon" src="assets/icons/check.svg" alt="check icon" *ngIf="type === 'success'" />
+  <img class="icon" src="assets/icons/warning.svg" alt="warning icon" *ngIf="type === 'warning'" />
+  <img class="icon" src="assets/icons/info.svg" alt="info icon" *ngIf="type === 'info'" />
+  <div>
+    <h4 class="toast-text">{{ title }}</h4>
+    <p class="toast-text">{{ message }}</p>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+<owl-carousel-o [options]="carouselOptions" (dragging)="onDrag($event)" (changed)="onChange($event)">
+  <ng-template carouselSlide *ngFor="let song of songs; let i = index">
+    <div class="carousel-item">
+      <singularity-song-grid-item [song]="song" [disabled]="dragging"></singularity-song-grid-item>
+    </div>
+  </ng-template>
+</owl-carousel-o>

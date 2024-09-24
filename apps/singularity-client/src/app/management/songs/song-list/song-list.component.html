@@ -1,33 +1,37 @@
 <h1>{{ 'management.songs.songList.header' | transloco }}
-  <button tuiButton size="xs" icon="tuiIconPlus" routerLink="new" *ngIf="isAdmin$ | async">{{ 'management.songs.songList.newSong' | transloco }}</button>
+  <button class="sui-right" suiButton size="s" routerLink="new" *ngIf="isAdmin$ | async">
+    <img class="sui-space-right" src="assets/icons/plus-circle.svg" alt="add" />
+    {{ 'management.songs.songList.newSong' | transloco }}
+  </button>
 </h1>
 
 <ng-container *ngIf="isAdmin$ | async">
   <ng-container *ngIf="downloadingSongs$ | async; let downloadingSongs">
     <ng-container *ngIf="downloadingSongs.length > 0">
       <p>{{ 'management.songs.songList.serverDownloadsSongs' | transloco }}</p>
-      <tui-files>
-        <tui-file *ngFor="let song of downloadingSongs"
-                  [state]="song.state === songListDownloadState.loading ? 'loading' : 'normal'"
-                  [file]="{ name: song.artist + ' - ' + song.title + '.' }">
-        </tui-file>
-      </tui-files>
+      @for (song of downloadingSongs; track song.title) {
+        <p class="flex">
+          <sui-loader *ngIf="song.state === songListDownloadState.loading"></sui-loader>
+          <img src="/assets/icons/check-circle.svg" alt="check" class="icon" width="24" height="24"
+               *ngIf="song.state === songListDownloadState.finished" />
+          <span>{{ song.artist }} - {{ song.title }}</span>
+        </p>
+      }
     </ng-container>
   </ng-container>
 </ng-container>
 
-
-<table class="tui-table">
+<table class="sui-table">
   <tbody>
-  <tr class="tui-table__tr tui-table__tr_border_none">
-    <th class="tui-table__th tui-table__th_first"></th>
-    <th class="tui-table__th"></th>
-    <th class="tui-table__th">{{ 'management.songs.songList.title' | transloco }}</th>
-    <th class="tui-table__th">{{ 'management.songs.songList.author' | transloco }}</th>
-    <th class="tui-table__th">{{ 'management.songs.songList.year' | transloco }}</th>
-    <th class="tui-table__th tui-table__th_last">{{ 'management.songs.songList.actions' | transloco }}</th>
+  <tr>
+    <th></th>
+    <th></th>
+    <th>{{ 'management.songs.songList.title' | transloco }}</th>
+    <th>{{ 'management.songs.songList.author' | transloco }}</th>
+    <th>{{ 'management.songs.songList.year' | transloco }}</th>
+    <th>{{ 'management.songs.songList.actions' | transloco }}</th>
   </tr>
-  <tr singularity-song-list-item class="tui-table__tr tui-table__tr_border_none"
+  <tr singularity-song-list-item
       *ngFor="let song of songs"
       [song]="song"
       (deleted)="removeSong(song.id)"></tr>

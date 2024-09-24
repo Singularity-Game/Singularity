@@ -1,0 +1,22 @@
+.card-wrapper {
+  perspective: 1000px;
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius);
+  background-color: var(--black);
+  //transition: 200ms ease;
+  transform-style: preserve-3d;
+  padding: var(--padding);
+  padding-bottom: 0;
+}
+
+.children {
+  transform-style: preserve-3d;
+  transition: 200ms ease;
+
+  &:hover {
+    transform: translateZ(50px);
+  }
+}

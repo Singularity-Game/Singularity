@@ -1,0 +1,10 @@
+<sui-input-container>
+  <div class="input-number-container">
+    <input suiInput type="number" [ngModel]="value" (ngModelChange)="setValue($event)" [disabled]="disabled">
+    <div class="buttons-container">
+      <button class="spinner-button first" (click)="increment()" [disabled]="disabled">+</button>
+      <button class="spinner-button second" (click)="decrement()" [disabled]="disabled">-</button>
+    </div>
+  </div>
+
+</sui-input-container>

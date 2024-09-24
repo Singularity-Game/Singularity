@@ -13,14 +13,14 @@ import { combineLatest, delay, filter, map, Observable, Subject, switchMap, take
 import { SongDto } from '@singularity/api-interfaces';
 import { SongService } from '../../shared/song.service';
 import { BpmService } from '../services/bpm.service';
-import { MicrophoneService } from '../services/microphone.service';
 import { Singer } from '../singer/singer';
 import { SingerFactory } from '../services/singer-factory.service';
 import { LoadProgress } from '../../shared/types/load-progress';
 import { NoteHelper } from '../../shared/helpers/note-helper';
-import { TuiDialogService } from '@taiga-ui/core';
-import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { SingScoreDialogComponent } from '../dialogs/sing-score-dialog/sing-score-dialog.component';
+import { SettingsService } from '../../shared/settings/settings.service';
+import { LocalSettings } from '../../shared/settings/local-settings';
+import { ModalService } from '@singularity/ui';
 
 @Component({
   selector: 'singularity-sing',
@@ -42,9 +42,9 @@ export class SingComponent implements AfterViewInit, OnDestroy {
 
   constructor(private readonly songService: SongService,
               private readonly bpmService: BpmService,
-              private readonly microphoneService: MicrophoneService,
+              private readonly settingsService: SettingsService,
               private readonly singerFactory: SingerFactory,
-              private readonly dialogService: TuiDialogService) { }
+              private readonly modalService: ModalService) { }
 
   @HostListener('document:keydown', ['$event'])
   public handleKeyboardEvent(event: KeyboardEvent): void {
@@ -107,6 +107,8 @@ export class SingComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
+    this.audioPlayer.volume = +(this.settingsService.getLocalSetting(LocalSettings.GameVolume) || 0) / 100;
+
     this.audioPlayer.play()
       .then(() => {
         this.videoElement?.nativeElement.play();
@@ -117,7 +119,7 @@ export class SingComponent implements AfterViewInit, OnDestroy {
     this.audioPlayer.onpause = () => this.stopSong(true);
   }
 
-  private stopSong(abort: boolean = false): void {
+  private stopSong(abort = false): void {
     this.audioPlayer?.pause();
     // this.videoElement?.nativeElement.pause();
     this.audioPlayer?.remove();
@@ -149,13 +151,9 @@ export class SingComponent implements AfterViewInit, OnDestroy {
         filter(([beat, scores]: [number, number[]]) => beat === lastNote.startBeat + lastNote.lengthInBeats),
         delay(2000),
         switchMap(([beat, scores]: [number, number[]]) => {
-          return this.dialogService.open(new PolymorpheusComponent(SingScoreDialogComponent), {
-            data: {
+          return this.modalService.open$(SingScoreDialogComponent, {
               singers: this.singers,
               scores: scores,
-            },
-            closeable: false,
-            dismissible: false
           })
         }),
         takeUntil(this.destroySubject)

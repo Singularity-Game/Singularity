@@ -1,0 +1,13 @@
+<div class="select-container">
+  <sui-input-container>
+    <button class="select-button" (click)="toggleExpand()" [class.expanded]="expanded" [disabled]="disabled">
+      <div #text class="flex-1"></div>
+      <img src="assets/icons/arrow-down.svg" width="20" height="20" alt="arrow down" class="arrow-down" [class.rotated]="expanded" />
+    </button>
+  </sui-input-container>
+
+  <div class="select-content" [class.expanded]="expanded" *ngIf="delayedExpanded">
+    <ng-content></ng-content>
+  </div>
+</div>
+

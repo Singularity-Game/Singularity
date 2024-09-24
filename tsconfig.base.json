@@ -16,7 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@singularity/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+      "@singularity/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@singularity/ui": ["libs/ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

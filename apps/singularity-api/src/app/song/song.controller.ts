@@ -6,7 +6,7 @@ import {
   Get,
   Param,
   Post,
-  Res,
+  Res, StreamableFile,
   UploadedFiles,
   UseGuards,
   UseInterceptors
@@ -25,6 +25,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { SongUploadInfo } from '@singularity/api-interfaces';
 import { SongFile } from './interfaces/song-file';
 import { SongDownloadService } from './song-download.service';
+import * as sharp from 'sharp';
 
 @Controller('song')
 export class SongController {
@@ -63,6 +64,18 @@ export class SongController {
     response.end(buffer);
   }
 
+  @Get(':id/cover/small')
+  @UseGuards(AuthGuard('jwt'))
+  public async getSmallSongCoverById(@Param('id') id: string, @Res() response: Response): Promise<void> {
+    const buffer = await this.songService.getSongCoverFile(+id);
+    const fileType = await fromBuffer(buffer);
+    const downscaledBuffer = await sharp(buffer)
+      .resize(20, 20)
+      .toBuffer();
+    response.setHeader('Content-Type', fileType.mime);
+    response.end(downscaledBuffer);
+  }
+
   @Get(':id/video')
   @UseGuards(AuthGuard('jwt'))
   public async getSongVideoById(@Param('id') id: string, @Res() response: Response): Promise<void> {
@@ -72,6 +85,16 @@ export class SongController {
     response.end(buffer);
   }
 
+  @Get(':id/video/stream')
+  @UseGuards(AuthGuard('jwt'))
+  public async getSongVideoStreamById(@Param('id') id: string, @Res() response: Response): Promise<void> {
+    const buffer = await this.songService.getSongVideoFile(+id);
+    const fileType = await fromBuffer(buffer);
+    response.setHeader('Content-Type', fileType.mime);
+    response.setHeader('Content-Disposition', 'inline');
+    response.send(buffer);
+  }
+
   @Get(':id/audio')
   @UseGuards(AuthGuard('jwt'))
   public async getSongAudioById(@Param('id') id: string, @Res() response: Response): Promise<void> {
@@ -79,6 +102,16 @@ export class SongController {
     const fileType = await fromBuffer(buffer);
     response.setHeader('Content-Type', fileType.mime ?? '');
     response.end(buffer);
+  }
+
+  @Get(':id/audio/stream')
+  @UseGuards(AuthGuard('jwt'))
+  public async getSongAudioStreamById(@Param('id') id: string, @Res() response: Response): Promise<void> {
+    const buffer = await this.songService.getSongAudioFile(+id);
+    const fileType = await fromBuffer(buffer);
+    response.setHeader('Content-Type', fileType.mime ?? '');
+    response.setHeader('Content-Disposition', 'inline');
+    response.send(buffer);
   }
 
   @Post()

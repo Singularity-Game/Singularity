@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { asyncScheduler, finalize, from, map, Observable, scheduled, switchMap, take, timer } from 'rxjs';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class MicrophoneService {
 
   private selectedMicrophones: string[] = [];

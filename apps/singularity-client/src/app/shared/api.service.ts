@@ -1,34 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpEventType, HttpRequest } from '@angular/common/http';
 import { filter, map, Observable } from 'rxjs';
-import { AuthenticationService } from './authentication.service';
 import { LoadProgress } from './types/load-progress';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  constructor(private readonly http: HttpClient,
-              private readonly authenticationService: AuthenticationService) {
+  constructor(private readonly http: HttpClient) {
   }
 
   get$<T>(url: string): Observable<T> {
-    return this.http.get<T>(url, {
-      headers: {
-        'Authorization': `Bearer ${this.authenticationService.getAccessToken()}`
-      }
-    });
+    return this.http.get<T>(url);
   }
 
   getFile$(url: string): Observable<LoadProgress<Blob>> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.authenticationService.getAccessToken()}`
-    });
-
     const request = new HttpRequest('GET', url, {
       responseType: 'blob',
       reportProgress: true,
-      headers: headers
     });
 
     return this.http.request<Blob>(request).pipe(
@@ -57,16 +46,9 @@ export class ApiService {
   post$<T>(url: string, body: object, reportProgress?: false): Observable<T>;
   post$<T>(url: string, body: object, reportProgress: boolean = false): Observable<T> | Observable<LoadProgress<T>> {
     if (!reportProgress) {
-      return this.http.post<T>(url, body, {
-        headers: {
-          'Authorization': `Bearer ${this.authenticationService.getAccessToken()}`
-        }
-      });
+      return this.http.post<T>(url, body, );
     } else {
       return this.http.post<T>(url, body, {
-        headers: {
-          'Authorization': `Bearer ${this.authenticationService.getAccessToken()}`
-        },
         reportProgress: true,
         observe: 'events'
       }).pipe(
@@ -93,18 +75,10 @@ export class ApiService {
   }
 
   put$<T>(url: string, body: object): Observable<T> {
-    return this.http.put<T>(url, body, {
-      headers: {
-        'Authorization': `Bearer ${this.authenticationService.getAccessToken()}`
-      }
-    });
+    return this.http.put<T>(url, body);
   }
 
   delete$<T>(url: string): Observable<T> {
-    return this.http.delete<T>(url, {
-      headers: {
-        'Authorization': `Bearer ${this.authenticationService.getAccessToken()}`
-      }
-    });
+    return this.http.delete<T>(url);
   }
 }

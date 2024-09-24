@@ -1,0 +1,9 @@
+<label *ngIf="label">{{ label }}</label>
+<div class="input-container"
+     #inputContainer
+     (mousemove)="handleMouseMove($event)"
+     (mouseenter)="handleMouseEnter()"
+     (mouseleave)="handleMouseLeave()"
+     [style.background]="'radial-gradient(' + (visible ? radius + 'px' : '0px') + ' circle at ' + mouseX + 'px ' + mouseY + 'px, var(--primary), transparent 80%'">
+  <ng-content></ng-content>
+</div>

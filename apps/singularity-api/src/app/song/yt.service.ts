@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { VideoInfo } from '@singularity/api-interfaces';
-import * as ytdl from 'ytdl-core';
+import * as ytdl from '@distube/ytdl-core';
 import { SongFile } from './interfaces/song-file';
 
 @Injectable()
@@ -10,6 +10,7 @@ export class YtService {
     const ytdlVideoInfo = await ytdl.getBasicInfo(id);
     const videoInfo = new VideoInfo();
 
+    videoInfo.id = id;
     videoInfo.url = ytdlVideoInfo.videoDetails.video_url;
     videoInfo.title = ytdlVideoInfo.videoDetails.title;
     videoInfo.author = ytdlVideoInfo.videoDetails.author.name;
@@ -31,7 +32,7 @@ export class YtService {
 
   public async downloadVideo(id: string): Promise<SongFile> {
     const info = await ytdl.getInfo(id);
-    const format = ytdl.chooseFormat(info.formats, { quality: 'highest', filter: 'videoonly' });
+    const format = ytdl.chooseFormat(info.formats, { quality: 'highestvideo', filter: 'audioandvideo' });
 
     const buffer = await this.download(info, format);
 
@@ -49,11 +50,13 @@ export class YtService {
 
   private async download(info: ytdl.videoInfo, format: ytdl.videoFormat): Promise<Buffer> {
     return new Promise((resolve, reject) => {
-      const stream = ytdl.downloadFromInfo(info, { format: format });
+      const stream = ytdl(info.videoDetails.video_url, { format: format })
       const chunks: Buffer[] = [];
       stream.on('data', (chunk: Buffer) => chunks.push(chunk));
       stream.on('end', () => resolve(Buffer.concat(chunks)));
-      stream.on('error', () => reject());
+      stream.on('error', (error: Error) => {
+        reject(error);
+      });
     })
   }
 }

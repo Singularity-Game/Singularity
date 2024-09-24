@@ -1,69 +1,61 @@
-<singularity-navbar [transparent]="false"></singularity-navbar>
+<singularity-navbar [transparent]="true">
+  <button suiButton [isIcon]="true" (click)="previous()"><img class="icon" src="assets/icons/backwards.svg" width="20" alt="backwards">
+  </button>
+  <button suiButton [isIcon]="true" (click)="paused = !paused">
+    <img class="icon" src="assets/icons/play.svg" width="20" alt="play" *ngIf="paused">
+    <img class="icon" src="assets/icons/pause.svg" width="20" alt="pause" *ngIf="!paused">
+  </button>
+  <button suiButton [isIcon]="true" (click)="next()"><img class="icon" src="assets/icons/forwards.svg" width="20" alt="forwards">
+  </button>
+</singularity-navbar>
 
-<div class="search-container">
-  <tui-input class="search-item" tuiTextfieldSize="m" [(ngModel)]="searchTerm">
-    {{ 'play.search' | transloco }}
-    <input
-      tuiTextfield
-      type="text"
-    />
-  </tui-input>
-  <tui-select
-    class="search-item"
-    [(ngModel)]="orderBy"
-    [valueContent]="valueTemplate"
-    tuiTextfieldSize="m"
-  >
-    {{ 'play.orderBy' | transloco }}
-    <tui-data-list *tuiDataList>
-      <button
-        tuiOption
-        [value]="{ key: 'name', ascending: true }"
-      >
-        {{ 'play.name' | transloco }}
-        <tui-svg src="tuiIconArrowDown"></tui-svg>
-      </button>
-      <button
-        tuiOption
-        [value]="{ key: 'name', ascending: false }"
-      >
-        {{ 'play.name' | transloco }}
-        <tui-svg src="tuiIconArrowUp"></tui-svg>
-      </button>
-      <button
-        tuiOption
-        [value]="{ key: 'artist', ascending: true }"
-      >
-        {{ 'play.artist' | transloco }}
-        <tui-svg src="tuiIconArrowDown"></tui-svg>
-      </button>
-      <button
-        tuiOption
-        [value]="{ key: 'artist', ascending: false }"
-      >
-        {{ 'play.artist' | transloco }}
-        <tui-svg src="tuiIconArrowUp"></tui-svg>
-      </button>
-    </tui-data-list>
-  </tui-select>
-  <singularity-audio-player [playList]="songs$ | async" [shuffle]="true"></singularity-audio-player>
-  <ng-template #valueTemplate let-orderBy>
-    <ng-container *ngIf="orderBy.key === 'artist'">{{ 'play.artist' | transloco }}</ng-container>
-    <ng-container *ngIf="orderBy.key === 'name'">{{ 'play.name' | transloco }}</ng-container>
-    <tui-svg *ngIf="orderBy.ascending" src="tuiIconArrowDown"></tui-svg>
-    <tui-svg *ngIf="!orderBy.ascending" src="tuiIconArrowUp"></tui-svg>
-  </ng-template>
-
-</div>
-
-<tui-notification *ngIf="isOfflineMode">
-  {{ 'play.activeOfflineModeWarning' | transloco }} <a routerLink="/management/settings">{{ 'play.turnOffOfflineMode' | transloco }}</a>
-</tui-notification>
-
-<tui-scrollbar>
-  <div class="song-grid">
-    <singularity-song-grid-item
-      *ngFor="let song of (((songs$ | async) | search: 'name,artist' :searchTerm) | orderBy: orderBy.key :orderBy.ascending)"
-      [song]="song"></singularity-song-grid-item>
+<ng-container *ngIf="songs$ | async; let songs">
+  <div class="video-container" [class.collapsed]="isScrolled">
+    <singularity-audio-player class="video" [songs]="songs" [index]="carouselIndex" [paused]="paused" [volume]="volume"
+                              (songFinished)="next()"></singularity-audio-player>
+    <singularity-song-carousel [songs]="songs" (changed)="onCarouselChange($event, songs)"></singularity-song-carousel>
   </div>
-</tui-scrollbar>
+
+  <div class="bottom-section">
+    <sui-background type="dots">
+      <div class="search-container">
+        <sui-input-container>
+          <input suiInput type="text" [placeholder]="'play.search' | transloco" [(ngModel)]="searchTerm" />
+        </sui-input-container>
+        <sui-select [(ngModel)]="orderBy" *ngIf="'play.artist' | transloco">
+          <sui-select-option [value]="{ key: 'artist', ascending: true }">
+            <div class="select-option">
+              <span>{{ 'play.artist' | transloco }}</span>
+              <img src="assets/icons/order-asc.svg" alt="order asc" width="20" height="20" />
+            </div>
+          </sui-select-option>
+          <sui-select-option [value]="{ key: 'artist', ascending: false }">
+            <div class="select-option">
+              <span>{{ 'play.artist' | transloco }}</span>
+              <img src="assets/icons/order-desc.svg" alt="order desc" width="20" height="20" />
+            </div>
+          </sui-select-option>
+          <sui-select-option [value]="{ key: 'name', ascending: true }">
+            <div class="select-option">
+              <span>{{ 'play.name' | transloco }}</span>
+              <img src="assets/icons/order-asc.svg" alt="order asc" width="20" height="20" />
+            </div>
+          </sui-select-option>
+          <sui-select-option [value]="{ key: 'name', ascending: false }">
+            <div class="select-option">
+              <span>{{ 'play.name' | transloco }}</span>
+              <img src="assets/icons/order-desc.svg" alt="order desc" width="20" height="20" />
+            </div>
+          </sui-select-option>
+        </sui-select>
+      </div>
+
+      <sui-alert [message]="'play.activeOfflineModeWarning' | transloco" *ngIf="isOfflineMode" type="info"></sui-alert>
+
+      <div class="song-grid">
+        <singularity-song-grid-item [song]="song"
+                                    *ngFor="let song of ((songs | search: 'name,artist' :searchTerm) | orderBy: orderBy.key :orderBy.ascending)"></singularity-song-grid-item>
+      </div>
+    </sui-background>
+  </div>
+</ng-container>

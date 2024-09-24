@@ -1,0 +1,7 @@
+<div [class.grid-background]="type === 'grid'"
+     [class.grid-small-background]="type === 'grid-small'"
+     [class.dots-background]="type === 'dots'"
+     class="background">
+  <div class="mask"></div>
+  <ng-content></ng-content>
+</div>

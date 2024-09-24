@@ -49,8 +49,6 @@ export class SongListComponent implements OnInit, OnDestroy {
       startWith([] as SongDownloadInfo[]),
       pairwise(),
       map(([firstValue, secondValue]: [SongDownloadInfo[], SongDownloadInfo[]]) => {
-        console.log(firstValue, secondValue);
-
         const songListDownloadInfos = secondValue.map((value: SongDownloadInfo) =>
           new SongListDownloadInfo(value.title, value.artist, SongListDownloadState.loading)
         );

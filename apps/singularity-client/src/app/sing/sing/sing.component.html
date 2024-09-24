@@ -2,10 +2,16 @@
   <div class="score-list" *ngIf="singerScores$ | async; let singerScores">
     <ng-container *ngFor="let singer of singers; let i = index">
       <p class="score" [style.color]="singer.color">
-        <tui-svg
-          src="tuiIconMicLarge"
-        ></tui-svg>
-        {{singerScores[i] | number: '5.0-0' | noComma}}
+        <svg width="35px" height="35px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+             color="#000000" stroke-width="1.5">
+          <rect x="9" y="2" width="6" height="12" rx="3" [attr.fill]="singer.color" [attr.stroke]="singer.color"
+                stroke-width="1.5"></rect>
+          <path d="M5 10V11C5 14.866 8.13401 18 12 18V18V18C15.866 18 19 14.866 19 11V10" [attr.stroke]="singer.color"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M12 18V22M12 22H9M12 22H15" [attr.stroke]="singer.color" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round"></path>
+        </svg>
+        {{ singerScores[i] | number: '5.0-0' | noComma }}
       </p>
     </ng-container>
   </div>
@@ -18,11 +24,9 @@
 <ng-template #loading>
   <div class="loading-content">
     <h1>{{ 'sing.sing.loadingSong' | transloco }}</h1>
-    <tui-notification class="tui-space_top-5">
-      <h3>{{ 'sing.sing.hint' | transloco }}</h3>
-      {{ 'sing.sing.downloadSongsHint' | transloco }}
-    </tui-notification>
-    <progress tuiProgressBar max="100" [value]="loadingProgress" class="tui-space_top-5"></progress>
+    <h3>{{ 'sing.sing.hint' | transloco }}</h3>
+    <p>{{ 'sing.sing.downloadSongsHint' | transloco }}</p>
+    <progress suiProgress max="100" [value]="loadingProgress" class="sui-space-top-large"></progress>
   </div>
 </ng-template>
 

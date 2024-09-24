@@ -1,30 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { asyncScheduler, BehaviorSubject, catchError, map, Observable, scheduled, tap } from 'rxjs';
+import { asyncScheduler, BehaviorSubject, catchError, map, Observable, scheduled, shareReplay, tap } from 'rxjs';
 import { Md5 } from 'ts-md5';
-import { AccessToken, Nullable, UserDto } from '@singularity/api-interfaces';
+import { Nullable, UserDto } from '@singularity/api-interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  private userSubject = new BehaviorSubject<Nullable<UserDto>>(this.getUser());
+  private user$ = this.http.get<UserDto>('/api/user/me').pipe(shareReplay(1));
+  private authenticated = true;
 
   constructor(private readonly http: HttpClient) { }
 
   public login$(username: string, password: string): Observable<boolean> {
-    return this.http.post<AccessToken>('/api/user/login', {
+    return this.http.post('/api/user/login', {
       username: username,
       password: Md5.hashStr(password)
     })
       .pipe(
-        tap((token: AccessToken) => {
-          localStorage.setItem('access-token', token.accessToken);
-          this.userSubject.next(this.parseJwt<{user: UserDto}>(token.accessToken)?.user ?? null);
-        }),
         map(() => true),
-        catchError(() => scheduled([false], asyncScheduler))
+        catchError(() => scheduled([false], asyncScheduler)),
+        tap((success: boolean) => this.authenticated = success)
       )
   }
 
@@ -46,20 +44,15 @@ export class AuthenticationService {
   }
 
   public logout() {
-    localStorage.removeItem('access-token');
-    this.userSubject.next(null);
+    this.authenticated = false;
   }
 
   public isAuthenticated(): boolean {
-    return Boolean(this.getAccessToken());
-  }
-
-  public getAccessToken(): string | null {
-    return localStorage.getItem('access-token');
+    return this.authenticated;
   }
 
   public getLocalUser$(): Observable<Nullable<UserDto>> {
-    return this.userSubject.asObservable();
+    return this.user$;
   }
 
   public isAdmin$(): Observable<boolean> {
@@ -73,23 +66,5 @@ export class AuthenticationService {
           return user.isAdmin;
         })
       )
-  }
-
-  private parseJwt<T>(token: string): T | null {
-    try {
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-        return `%${(`00${c.charCodeAt(0).toString(16)}`).slice(-2)}`;
-      }).join(''));
-
-      return JSON.parse(jsonPayload);
-    } catch {
-      return null;
-    }
-  }
-
-  private getUser(): Nullable<UserDto> {
-    return this.parseJwt<{user: UserDto}>(this.getAccessToken() ?? '')?.user ?? null;
   }
 }

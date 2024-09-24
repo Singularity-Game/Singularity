@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, isDevMode, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../authentication.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
   public user$?: Observable<Nullable<UserDto>>;
 
   public partyEnabled = environment.partyEnabled;
+  public devMode = isDevMode();
 
   constructor(private readonly authenticationService: AuthenticationService,
               private readonly router: Router) {
@@ -30,5 +31,4 @@ export class NavbarComponent implements OnInit {
     this.authenticationService.logout();
     this.router.navigate(['/', 'authentication', 'login'])
   }
-
 }

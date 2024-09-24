@@ -1,7 +1,6 @@
-import { Component, Inject } from '@angular/core';
-import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
-import { TuiDialogContext } from '@taiga-ui/core';
+import { Component } from '@angular/core';
 import * as Tone from 'tone';
+import { ModalContext } from '@singularity/ui';
 
 @Component({
   selector: 'singularity-audio-context-activation-dialog',
@@ -9,12 +8,12 @@ import * as Tone from 'tone';
   styleUrls: ['./audio-context-activation-dialog.component.scss'],
 })
 export class AudioContextActivationDialogComponent {
-  constructor(@Inject(POLYMORPHEUS_CONTEXT) private readonly context: TuiDialogContext<boolean>) {
+  constructor(private readonly modalContext: ModalContext<boolean, null>) {
   }
 
   public activateContext(): void {
     Tone.context.resume();
-    this.context.completeWith(true);
+    this.modalContext.close(true);
   }
 
 }

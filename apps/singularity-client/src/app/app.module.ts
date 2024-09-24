@@ -1,12 +1,9 @@
-import { NgModule, isDevMode } from '@angular/core';
+import { isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { TuiAlertModule, TuiDialogModule, TuiModeModule, TuiRootModule, TuiThemeNightModule } from '@taiga-ui/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TUI_ENGLISH_LANGUAGE, TUI_LANGUAGE } from '@taiga-ui/i18n';
-import { of } from 'rxjs';
 import { NgxIndexedDBModule } from 'ngx-indexed-db';
 import {
   SONG_AUDIOS_INDEXED_DB_SCHEMA,
@@ -17,6 +14,7 @@ import {
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { UnauthorizedInterceptor } from './interceptors/unauthorized.interceptor';
 import { TranslocoRootModule } from './transloco-root.module';
+import { SingularityUiModule } from '@singularity/ui';
 
 
 const serviceWorkerScript =
@@ -42,11 +40,6 @@ const serviceWorkerScript =
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    TuiRootModule,
-    TuiDialogModule,
-    TuiThemeNightModule,
-    TuiModeModule,
-    TuiAlertModule,
     ServiceWorkerModule.register(serviceWorkerScript, {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
@@ -55,13 +48,10 @@ const serviceWorkerScript =
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    TranslocoRootModule
+    TranslocoRootModule,
+    SingularityUiModule
   ],
   providers: [
-    {
-      provide: TUI_LANGUAGE,
-      useValue: of(TUI_ENGLISH_LANGUAGE)
-    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: UnauthorizedInterceptor,

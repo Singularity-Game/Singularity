@@ -1,6 +1,4 @@
-<tui-theme-night *ngIf="darkMode$ | async"></tui-theme-night>
-<tui-root [tuiMode]="(darkMode$ | async) ? 'onDark' : null">
-  <div [@routeAnimations]="prepareRoute(outlet)">
-    <router-outlet #outlet="outlet" ></router-outlet>
-  </div>
-</tui-root>
+<sui-layout>
+  <router-outlet #outlet="outlet"></router-outlet>
+</sui-layout>
+

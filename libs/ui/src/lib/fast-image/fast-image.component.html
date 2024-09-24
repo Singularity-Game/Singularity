@@ -1,0 +1,8 @@
+<div class="blur-load"
+     [style.background-image]="'url(' + blurrySrc + ')'"
+     [style.width]="width"
+     [style.height]="height"
+     [class.blurry]="!imageLoaded">
+  <img [src]="src" [alt]="alt" loading="lazy" (load)="imageLoaded = true" [class.visible]="imageLoaded">
+</div>
+

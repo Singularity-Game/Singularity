@@ -1,0 +1,25 @@
+:root {
+  --border-radius: 12px;
+  --input-border-radius: 6px;
+  --padding: 20px;
+  --padding-small: 12px;
+  --glass-blur: blur(10px);
+  --font-size: 16px;
+  --font-weight: 700;
+  --primary: rgb(82,110,210);
+  --secondary: rgb(250,8,224);
+  --text: white;
+
+  a {
+    color: var(--text);
+  }
+}
+
+* {
+  font-family: Manrope, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Segoe UI", "Helvetica Neue", sans-serif;
+  color: var(--text);
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}

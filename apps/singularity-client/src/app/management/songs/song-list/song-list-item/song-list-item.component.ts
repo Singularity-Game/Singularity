@@ -1,25 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { SongOverviewDto } from '@singularity/api-interfaces';
 import { SongManagementService } from '../../song-management.service';
-import {
-  asyncScheduler,
-  catchError,
-  filter,
-  Observable,
-  scheduled,
-  startWith,
-  Subject,
-  switchMap,
-  take,
-  takeUntil,
-  tap,
-  throwError
-} from 'rxjs';
+import { filter, map, Observable, of, shareReplay, Subject, switchMap, take, takeUntil, tap } from 'rxjs';
 import { Router } from '@angular/router';
-import { TUI_PROMPT, TuiPromptData } from '@taiga-ui/kit';
-import { TuiAlertService, TuiDialogService, TuiNotification } from '@taiga-ui/core';
 import { AuthenticationService } from '../../../../shared/authentication.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { ModalService } from '@singularity/ui';
+import { PromptDialogComponent } from '../../../../shared/components/prompt-dialog/prompt-dialog.component';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -34,6 +21,7 @@ export class SongListItemComponent implements OnInit, OnDestroy {
 
   public isAdmin$: Observable<boolean> = this.authenticationService.isAdmin$();
   public cover$?: Observable<string>;
+  public fastCover$?: Observable<string>;
   public isDownloaded$?: Observable<boolean>;
   public isDownloading = false;
   public isCheckingDownload = true;
@@ -41,10 +29,9 @@ export class SongListItemComponent implements OnInit, OnDestroy {
   private readonly destroySubject = new Subject<void>();
 
   constructor(private readonly songManagementService: SongManagementService,
-              private readonly dialogService: TuiDialogService,
+              private readonly modalService: ModalService,
               private readonly authenticationService: AuthenticationService,
               private readonly router: Router,
-              private readonly alertService: TuiAlertService,
               private readonly transloco: TranslocoService) {
   }
 
@@ -53,17 +40,37 @@ export class SongListItemComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.cover$ = this.songManagementService.getSongCoverCached$(this.song?.id)
-      .pipe(
-        startWith(''),
-        takeUntil(this.destroySubject)
-      );
-
     this.isDownloaded$ = this.songManagementService.isSongDownloaded$(this.song.id)
       .pipe(
         tap(() => this.isCheckingDownload = false),
+        shareReplay(1),
         takeUntil(this.destroySubject)
       );
+
+    this.cover$ = this.isDownloaded$
+      .pipe(
+        switchMap((downloaded: boolean) => {
+          if(!this.song?.id) {
+            return of('');
+          }
+
+          if (downloaded) {
+            return this.songManagementService.getSongCoverCached$(this.song?.id);
+          } else {
+            return of(`/api/song/${this.song?.id}/cover`);
+          }
+        })
+      )
+
+    this.fastCover$ = this.isDownloaded$.pipe(
+      map((downloaded: boolean) => {
+        if (downloaded) {
+          return '';
+        } else {
+          return `/api/song/${this.song?.id}/cover/small`;
+        }
+      })
+    )
   }
 
   public ngOnDestroy(): void {
@@ -90,10 +97,11 @@ export class SongListItemComponent implements OnInit, OnDestroy {
 
     this.songManagementService.downloadSong$(songId)
       .pipe(
-        catchError(() => {
-          this.handleError(this.transloco.translate('management.songs.songListItem.downloadSongError'), this.transloco.translate('general.error'));
-          return scheduled([null], asyncScheduler);
-        }),
+        // TODO: Add Error Handling
+        // catchError(() => {
+        //   this.handleError(this.transloco.translate('management.songs.songListItem.downloadSongError'), this.transloco.translate('general.error'));
+        //   return scheduled([null], asyncScheduler);
+        // }),
         takeUntil(this.destroySubject)
       )
       .subscribe(() => {
@@ -122,32 +130,19 @@ export class SongListItemComponent implements OnInit, OnDestroy {
 
     const songId = this.song.id;
 
-    const prompt: TuiPromptData = {
-      content: `${this.transloco.translate('management.songs.songListItem.deletePrompt1')} <code>${this.song.artist} - ${this.song.name}</code> ${this.transloco.translate('management.songs.songListItem.deletePrompt2')}`,
-      yes: this.transloco.translate('general.yes'),
-      no: this.transloco.translate('general.no')
-    };
+    const content = `${this.transloco.translate('management.songs.songListItem.deletePrompt1')} ${this.song.artist} - ${this.song.name} ${this.transloco.translate('management.songs.songListItem.deletePrompt2')}`
 
-    this.dialogService.open<boolean>(TUI_PROMPT, {
-      label: this.transloco.translate('management.songs.songListItem.deletePromptTitle'),
-      size: 's',
-      data: prompt
-    }).pipe(
-      filter((value) => value),
+    this.modalService.open$<boolean, string>(PromptDialogComponent, content).pipe(
+      filter((value) => !!value),
       switchMap(() => this.songManagementService.deleteSong$(songId)),
-      catchError(() => {
-        this.handleError(this.transloco.translate('management.songs.songListItem.deleteSongError'), this.transloco.translate('general.error'));
-        return scheduled([null], asyncScheduler);
-      }),
+      // TODO: Add Error Handling
+      // catchError(() => {
+      //   this.handleError(this.transloco.translate('management.songs.songListItem.deleteSongError'), this.transloco.translate('general.error'));
+      //   return throwError(() => new Error());
+      // }),
       takeUntil(this.destroySubject)
     ).subscribe(() => {
       this.deleted.emit();
     });
-  }
-
-  private handleError(message: string, label: string): void {
-    this.alertService.open(message, { label: label, status: TuiNotification.Error })
-      .pipe(takeUntil(this.destroySubject))
-      .subscribe();
   }
 }

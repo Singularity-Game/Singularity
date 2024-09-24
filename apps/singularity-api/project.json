@@ -14,10 +14,7 @@
         "assets": ["apps/singularity-api/src/assets", "apps/singularity-api/src/config"],
         "target": "node",
         "compiler": "tsc",
-        "customWebpackConfig": {
-          "path": "apps/singularity-api/webpack.config.js",
-          "replaceDuplicatePlugins": true
-        }
+        "webpackConfig": "apps/singularity-api/webpack.config.js"
       },
       "configurations": {
         "production": {
@@ -60,24 +57,20 @@
       }
     },
     "serve": {
-      "executor": "@nrwl/node:node",
+      "executor": "@nx/js:node",
       "options": {
         "buildTarget": "singularity-api:build"
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/singularity-api/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/singularity-api"],
       "options": {
-        "jestConfig": "apps/singularity-api/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "apps/singularity-api/jest.config.ts"
       }
     }
   }

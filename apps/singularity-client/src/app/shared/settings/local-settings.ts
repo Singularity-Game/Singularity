@@ -1,5 +1,7 @@
 export enum LocalSettings {
   MicrophoneLatency = 'MicrophoneLatency',
   DarkMode = 'DarkMode',
-  OfflineMode = 'OfflineMode'
+  OfflineMode = 'OfflineMode',
+  MenuVolume = 'MenuVolume',
+  GameVolume = 'GameVolume'
 }

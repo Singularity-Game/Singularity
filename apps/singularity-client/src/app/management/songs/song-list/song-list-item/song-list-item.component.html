@@ -1,66 +1,61 @@
-<td class="tui-table__td tui-table__td_first avatar-td">
-  <tui-avatar
-    new
-    size="m"
-    class="tui-space_vertical-1"
-    [avatarUrl]="cover$ | async"
-  ></tui-avatar>
+<td class="avatar-td">
+  <sui-fast-image [src]="cover$ | async" [blurrySrc]="fastCover$ | async" alt="Song Cover" width="50px" height="50px"></sui-fast-image>
 </td>
-<td class="tui-table__td">
-  <div class="flex download-icon-td" *ngIf="isDownloaded$ | async">
-    <tui-svg src="tuiIconDownload"  class="downloaded" [tuiHint]="downloadedHint" [tuiHintShowDelay]="100"></tui-svg>
+<td>
+  <div class="flex no-gap download-icon-td">
+    <img src="/assets/icons/download.svg" class="downloaded icon" alt="downloaded" [suiTooltip]="downloadedHint" *ngIf="isDownloaded$ | async" />
+    <sui-loader *ngIf="isDownloading || isCheckingDownload"></sui-loader>
   </div>
-  <tui-loader size="s" [showLoader]="isDownloading || isCheckingDownload"></tui-loader>
 </td>
-<td class="tui-table__td">{{song?.name}}</td>
-<td class="tui-table__td">{{song?.artist}}</td>
-<td class="tui-table__td">{{song?.year}}</td>
-<td class="tui-table__td tui-table__td_last">
-  <button
-    tuiIconButton
-    type="button"
-    appearance="icon"
-    size="xs"
-    icon="tuiIconPlay"
-    (click)="start()"
-    [tuiHint]="playHint"
-    [tuiHintShowDelay]="100"
-  ></button>
+<td>{{song?.name}}</td>
+<td>{{song?.artist}}</td>
+<td>{{song?.year}}</td>
+<td>
+    <button
+      suiButton
+      size="s"
+      [isIcon]="true"
+      type="button"
+      (click)="start()"
+      [suiTooltip]="playHint"
+    >
+      <img class="icon" src="assets/icons/play-stroke.svg" width="20" alt="play">
+    </button>
   <button
     *ngIf="(isDownloaded$ | async) === false else notDownloaded"
-    tuiIconButton
+    suiButton
+    size="s"
     type="button"
-    appearance="icon"
-    size="xs"
-    icon="tuiIconDownload"
+    [isIcon]="true"
     (click)="download()"
     [disabled]="isDownloading || isCheckingDownload"
-    [tuiHint]="downloadButtonHint"
-    [tuiHintShowDelay]="100"
-  ></button>
+    [suiTooltip]="downloadButtonHint"
+  >
+    <img class="icon" src="assets/icons/download.svg" width="20" alt="download">
+  </button>
   <button
     *ngIf="isAdmin$ | async"
-    tuiIconButton
+    suiButton
+    size="s"
     type="button"
-    appearance="icon"
-    size="xs"
-    icon="tuiIconTrash2"
+    [isIcon]="true"
     (click)="delete()"
-    [tuiHint]="deleteHint"
-    [tuiHintShowDelay]="100"
-  ></button>
+    [suiTooltip]="deleteHint"
+  >
+    <img class="icon" src="assets/icons/delete.svg" width="20" alt="delete">
+  </button>
   <ng-template #notDownloaded>
     <button
-      tuiIconButton
+      suiButton
+      size="s"
       type="button"
-      appearance="icon"
-      size="xs"
-      icon="tuiIconMinusCircle"
+      [isIcon]="true"
       (click)="removeDownload()"
       [disabled]="isCheckingDownload"
-      [tuiHint]="removeDownloadButtonHint"
-      [tuiHintShowDelay]="100"
-    ></button>
+      [suiTooltip]="removeDownloadButtonHint"
+    >
+      <img class="icon" src="assets/icons/delete-circle.svg" width="20" alt="delete">
+    </button>
   </ng-template>
 </td>
 

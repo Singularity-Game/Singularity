@@ -1,0 +1,19 @@
+.sui-table {
+  width: 100%;
+
+  th {
+    border-bottom: 1px solid var(--zinc-800);
+    text-align: start;
+    padding: 10px 0 10px 0;
+  }
+
+  tr {
+    &:hover {
+      background-color: var(--glass-zinc-background);
+    }
+  }
+
+  td {
+    font-size: var(--font-size);
+  }
+}

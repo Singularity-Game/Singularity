@@ -1,18 +1,16 @@
-import { Inject, Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import * as Tone from 'tone';
-import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
-import { TuiDialogService } from '@taiga-ui/core';
 import {
   AudioContextActivationDialogComponent
 } from '../dialogs/audio-context-activation-dialog/audio-context-activation-dialog.component';
+import { ModalService } from '@singularity/ui';
 
 @Injectable()
 export class AudioContextGuard implements CanActivate {
 
-  constructor(@Inject(TuiDialogService) private readonly tuiDialogService: TuiDialogService,
-              private readonly injector: Injector) {
+  constructor(private readonly modalService: ModalService) {
   }
 
   canActivate(
@@ -22,11 +20,10 @@ export class AudioContextGuard implements CanActivate {
       return true;
     }
 
-    return this.tuiDialogService.open<boolean>(new PolymorpheusComponent(AudioContextActivationDialogComponent, this.injector), {
-      closeable: false,
-      dismissible: false
-    });
-
+    return this.modalService.open$<boolean>(AudioContextActivationDialogComponent, null)
+      .pipe(
+        map((value) => !!value)
+      );
   }
 
 }

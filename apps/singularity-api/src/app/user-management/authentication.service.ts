@@ -2,10 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { UserManagementService } from './user-management.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from './models/user.entity';
-import { AccessToken, Nullable, UserDto } from '@singularity/api-interfaces';
+import { Nullable, UserDto } from '@singularity/api-interfaces';
 import * as bcrypt from 'bcryptjs';
 import { InjectMapper } from '@automapper/nestjs';
 import { Mapper } from '@automapper/core';
+import { AccessTokenWithUser } from './types/access-token-with-user';
 
 @Injectable()
 export class AuthenticationService {
@@ -24,13 +25,11 @@ export class AuthenticationService {
     }
   }
 
-  public login(user: User): AccessToken {
+  public login(user: User): string {
     const userDto = this.mapper.map(user, User, UserDto);
 
     const payload = { username: user.username, sub: user.id, user: userDto };
-    const accessToken = new AccessToken();
-    accessToken.accessToken = this.jwtService.sign(payload);
-    return accessToken;
+    return this.jwtService.sign(payload);
   }
 
   private static async arePasswordsEqual(hashedPassword: string, plainPassword: string) {

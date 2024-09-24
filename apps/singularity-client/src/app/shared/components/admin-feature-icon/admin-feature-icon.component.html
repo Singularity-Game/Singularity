@@ -1,4 +1,7 @@
-<tui-svg [src]="size === 'small' ? 'tuiIconShield' : 'tuiIconShieldLarge'" [tuiHint]="adminHint" [tuiHintShowDelay]="100"></tui-svg>
+<span>
+<img *ngIf="size !== 'small'" src="assets/icons/shield.svg" [suiTooltip]="adminHint" alt="admin only feature" width="24" height="24" />
+<img *ngIf="size === 'small'" src="assets/icons/shield.svg" [suiTooltip]="adminHint" alt="admin only feature" width="16" height="16" />
+</span>
 <ng-template #adminHint>
   {{ 'shared.adminFeatureIcon.adminHint' | transloco }}
 </ng-template>

@@ -1,6 +1,10 @@
 .avatar-td {
   padding: 0;
   width: 50px;
+
+  img {
+    width: 100%;
+  }
 }
 
 .download-icon-td {
@@ -8,9 +12,9 @@
 }
 
 .downloaded {
-  color: var(--tui-positive)
+  color: var(--success)
 }
 
 .not-downloaded {
-  color: var(--tui-text-03)
+  color: var(--text)
 }
