@@ -25,6 +25,7 @@ import { ModalComponent } from './modal/modal.component';
 import { CheckboxDirective } from './checkbox/checkbox.directive';
 import { AlertComponent } from './alert/alert.component';
 import { ToastComponent } from './toast/toast.component';
+import { MouseTimeoutComponent } from './mouse-timeout/mouse-timeout.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { ToastComponent } from './toast/toast.component';
     ModalComponent,
     CheckboxDirective,
     AlertComponent,
-    ToastComponent
+    ToastComponent,
+    MouseTimeoutComponent
   ],
   imports: [
     CommonModule,
@@ -79,7 +81,8 @@ import { ToastComponent } from './toast/toast.component';
     FilesComponent,
     InputFileComponent,
     CheckboxDirective,
-    AlertComponent
+    AlertComponent,
+    MouseTimeoutComponent
   ]
 })
 export class SingularityUiModule { }

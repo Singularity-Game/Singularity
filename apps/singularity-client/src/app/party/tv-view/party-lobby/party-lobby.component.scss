@@ -1,0 +1,43 @@
+.lobby {
+  width: 100lvw;
+  height: 100lvh;
+}
+
+.video {
+  position: absolute;
+  height: 100vh;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.party-code-window {
+  position: fixed;
+  display: flex;
+  gap: 20px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 50%;
+  min-width: 400px;
+  background: var(--glass-black-background);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 1);
+  padding: var(--padding);
+  border-radius: var(--border-radius);
+}
+
+.party-link {
+  background-color: var(--white);
+  display: inline-block;
+  padding: 5px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 20px;
+  color: black
+}
+
+.party-text {
+  font-weight: bold;
+  font-size: 20px;
+}

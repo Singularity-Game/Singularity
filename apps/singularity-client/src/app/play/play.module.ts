@@ -7,12 +7,11 @@ import { SongGridItemComponent } from './song-grid-item/song-grid-item.component
 import { FormsModule } from '@angular/forms';
 import { TranslocoModule } from '@ngneat/transloco';
 import { SingularityUiModule } from '@singularity/ui';
-import { AudioPlayerComponent } from './audio-player/audio-player.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { SongCarouselComponent } from './song-carousel/song-carousel.component';
 
 @NgModule({
-  declarations: [PlayComponent, SongGridItemComponent, AudioPlayerComponent, SongCarouselComponent],
+  declarations: [PlayComponent, SongGridItemComponent, SongCarouselComponent],
   imports: [CommonModule, PlayRoutingModule, SharedModule, FormsModule, TranslocoModule, SingularityUiModule, CarouselModule]
 })
 export class PlayModule {

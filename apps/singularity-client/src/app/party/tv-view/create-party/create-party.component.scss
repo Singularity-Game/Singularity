@@ -16,6 +16,8 @@ img {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  text-align: center;
+  min-width: 300px;
 }
 
 .shadow {
@@ -29,4 +31,8 @@ img {
 
 .flex-item {
   flex: 1;
+}
+
+.logo {
+  width: 180px;
 }

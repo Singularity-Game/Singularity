@@ -1,0 +1,22 @@
+<sui-background type="dots">
+  <div class="sui-lvw sui-lvh">
+    <div class="logo">
+      <a routerLink="/">
+        <sui-logo></sui-logo>
+      </a>
+    </div>
+
+
+    <div class="center">
+      <h1>{{ 'party.createParty.title' | transloco }}</h1>
+      <form [formGroup]="form" (ngSubmit)="createParty()">
+        <sui-input-container>
+          <input suiInput formControlName="name" [placeholder]="'party.createParty.inputPlaceholder' | transloco">
+        </sui-input-container>
+        <button suiButton class="sui-space-top-large" type="submit" [disabled]="form.invalid" [loading]="loading">{{ 'party.createParty.button' | transloco }}</button>
+      </form>
+    </div>
+
+  </div>
+</sui-background>
+

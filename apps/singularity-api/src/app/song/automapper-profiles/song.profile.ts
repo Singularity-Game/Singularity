@@ -16,5 +16,4 @@ export class SongProfile extends AutomapperProfile {
       createMap(mapper, Song, SongOverviewDto);
     };
   }
-
 }

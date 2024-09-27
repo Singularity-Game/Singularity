@@ -1,15 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { Party } from './models/party';
-import { User } from '../user-management/models/user.entity';
 import { Nullable, UUID } from '@singularity/api-interfaces';
+import { User } from '../user-management/models/user.entity';
 
 @Injectable()
 export class PartyService {
 
   private parties: Party[] = [];
 
-  constructor(private readonly configService: ConfigService) {
+  constructor() {
   }
 
   public createParty(party: Party): Party {
@@ -27,6 +26,10 @@ export class PartyService {
     const party = this.parties[index];
     this.parties.splice(index, 1);
     return party;
+  }
+
+  public getPartyByUser(user: User): Nullable<Party> {
+    return this.parties.find((party: Party) => party.creator.id === user.id) ?? null;
   }
 
 }

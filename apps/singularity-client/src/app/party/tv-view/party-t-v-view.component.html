@@ -1,0 +1,14 @@
+<ng-container *ngIf="party$ | async; let party; else loading">
+  @if(party.value) {
+    <singularity-party-lobby [party]="party.value!"></singularity-party-lobby>
+  } @else {
+    <singularity-create-party></singularity-create-party>
+  }
+</ng-container>
+
+
+<ng-template #loading>
+  <div class="center">
+    <sui-loader></sui-loader>
+  </div>
+</ng-template>

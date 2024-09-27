@@ -164,6 +164,17 @@
     "activeOfflineModeWarning": "Offline mode is active. Some songs may not be displayed.",
     "turnOffOfflineMode": "Turn Off Offline Mode"
   },
+  "party": {
+    "createParty": {
+      "title": "Create Party",
+      "inputPlaceholder": "Name",
+      "button": "Let's Go"
+    },
+    "lobby": {
+      "title": "Waiting for Players...",
+      "description": "Scan the QR code to join the party. Choose songs and compete against others!"
+    }
+  },
   "shared": {
     "adminFeatureIcon": {
       "adminHint": "This section is visible only to administrators."

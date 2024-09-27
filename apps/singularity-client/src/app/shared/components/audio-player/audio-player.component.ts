@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { SongOverviewDto } from '@singularity/api-interfaces';
-import { SongService } from '../../shared/song.service';
+import { SongService } from '../../song.service';
 import { combineLatest, map, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 @Component({
@@ -26,6 +26,8 @@ export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
       this.resumeSong();
     }
   }
+
+  @Input() showFade = true;
 
   @Output() public songFinished = new EventEmitter<void>();
 

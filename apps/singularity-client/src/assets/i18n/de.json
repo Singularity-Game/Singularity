@@ -164,6 +164,17 @@
     "activeOfflineModeWarning": "Der Offline Modus ist aktiv. Gegebenenfalls werden nicht alle Songs angezeigt.",
     "turnOffOfflineMode": "Offline Modus ausschalten"
   },
+  "party": {
+    "createParty": {
+      "title": "Party erstellen",
+      "inputPlaceholder": "Name",
+      "button": "Los geht's"
+    },
+    "lobby": {
+      "title": "Warte auf Spieler...",
+      "description": "Scanne den QR Code um der Party beizutreten. Wähle Songs aus und trete gegen andere Personen an!"
+    }
+  },
   "shared": {
     "adminFeatureIcon": {
       "adminHint": "Dieser Bereich ist nur für Administratoren sichtbar."

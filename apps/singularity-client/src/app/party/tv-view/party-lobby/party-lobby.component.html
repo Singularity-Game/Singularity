@@ -1,0 +1,17 @@
+<sui-mouse-timeout>
+  <div class="lobby">
+    <ng-container *ngIf="songs$ | async; let songs">
+      <singularity-audio-player class="video" *ngIf="startIndex$ | async; let startIndex" [index]="startIndex" [songs]="songs" [volume]="volume" [showFade]="true"></singularity-audio-player>
+    </ng-container>
+
+    <div class="party-code-window">
+      <qrcode [qrdata]="link ?? ''" [width]="300"></qrcode>
+      <div>
+        <h1>{{ 'party.lobby.title' | transloco }}</h1>
+        <p class="party-link">{{link}}</p>
+        <p class="party-text">{{ 'party.lobby.description' | transloco }}</p>
+      </div>
+    </div>
+  </div>
+</sui-mouse-timeout>
+

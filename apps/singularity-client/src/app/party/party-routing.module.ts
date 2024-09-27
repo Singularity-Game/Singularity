@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CreatePartyComponent } from './create-party/create-party.component';
+import { PartyTVViewComponent } from './tv-view/party-t-v-view.component';
+import { AuthenticationGuard } from '../shared/guards/authentication.guard';
+import { PartySmartphoneViewComponent } from './smartphone-view/party-smartphone-view.component';
 
 const routes: Routes = [
-  { path: '', component: CreatePartyComponent }
+  { path: '', component: PartyTVViewComponent, canActivate: [AuthenticationGuard], },
+  { path: ':id', component: PartySmartphoneViewComponent }
 ];
 
 @NgModule({

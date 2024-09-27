@@ -13,3 +13,6 @@ export { LoginRequest } from './lib/authentication/login-request';
 export { SongUploadInfo } from './lib/song/song-upload-info';
 export { SongDownloadInfo } from './lib/song/song-download-info';
 export { VideoInfo } from './lib/song/video-info';
+export { CreatePartyDto } from './lib/party/create-party-dto';
+export { PartyDto } from './lib/party/party-dto';
+export { Optional } from './lib/shared/optional';

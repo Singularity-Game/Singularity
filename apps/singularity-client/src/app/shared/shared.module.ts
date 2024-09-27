@@ -11,11 +11,12 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { SingularityUiModule } from '@singularity/ui';
 import { SafePipe } from './pipes/safe/safe.pipe';
 import { PromptDialogComponent } from './components/prompt-dialog/prompt-dialog.component';
+import { AudioPlayerComponent } from './components/audio-player/audio-player.component';
 
 @NgModule({
-  declarations: [NavbarComponent, SidebarComponent, NoCommaPipe, SearchPipe, OrderByPipe, AdminFeatureIconComponent, SafePipe, PromptDialogComponent],
+  declarations: [NavbarComponent, SidebarComponent, NoCommaPipe, SearchPipe, OrderByPipe, AdminFeatureIconComponent, SafePipe, PromptDialogComponent, AudioPlayerComponent],
   imports: [CommonModule, RouterLink, TranslocoModule, SingularityUiModule],
   providers: [],
-  exports: [NavbarComponent, SidebarComponent, AdminFeatureIconComponent, NoCommaPipe, SearchPipe, OrderByPipe, SafePipe]
+  exports: [NavbarComponent, SidebarComponent, AdminFeatureIconComponent, NoCommaPipe, SearchPipe, OrderByPipe, SafePipe, AudioPlayerComponent]
 })
 export class SharedModule {}
