@@ -173,6 +173,21 @@
     "lobby": {
       "title": "Waiting for Players...",
       "description": "Scan the QR code to join the party. Choose songs and compete against others!"
+    },
+    "smartphone": {
+      "wrongId": "This party does not exist.",
+      "joinParty": {
+        "joinPartyText1": "Join the party of ",
+        "joinPartyText2": "!",
+        "userNameDescription": "What's your name?",
+        "userNamePlaceholder": "Your name...",
+        "nextButton": "Next",
+        "selfie": "Take a Selfie!",
+        "triggerSelfie": "Take Picture",
+        "skip": "Skip",
+        "retry": "Retake Picture",
+        "join": "Join Party"
+      }
     }
   },
   "shared": {

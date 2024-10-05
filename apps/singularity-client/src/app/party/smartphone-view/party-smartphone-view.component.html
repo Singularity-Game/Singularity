@@ -1,1 +1,9 @@
-<p>party-smartphone-view works!</p>
+<sui-background type="dots">
+  <div class="party-wrapper">
+    @if(error) {
+      <h1>{{error}}</h1>
+    } @else {
+      <router-outlet></router-outlet>
+    }
+  </div>
+</sui-background>

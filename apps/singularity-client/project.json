@@ -80,7 +80,8 @@
       },
       "defaultConfiguration": "development",
       "options": {
-        "proxyConfig": "apps/singularity-client/proxy.conf.json"
+        "proxyConfig": "apps/singularity-client/proxy.conf.json",
+        "host": "0.0.0.0"
       }
     },
     "lint": {

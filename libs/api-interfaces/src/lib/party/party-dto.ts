@@ -1,4 +1,3 @@
-import { UserDto } from '../authentication/user-dto';
 import { AutoMap } from '@automapper/classes';
 
 export class PartyDto {
@@ -9,7 +8,7 @@ export class PartyDto {
   name!: string;
 
   @AutoMap()
-  creator!: UserDto;
+  creator!: string;
 
   @AutoMap()
   lastInteraction!: Date;

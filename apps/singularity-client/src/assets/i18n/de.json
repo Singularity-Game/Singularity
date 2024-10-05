@@ -173,6 +173,21 @@
     "lobby": {
       "title": "Warte auf Spieler...",
       "description": "Scanne den QR Code um der Party beizutreten. Wähle Songs aus und trete gegen andere Personen an!"
+    },
+    "smartphone": {
+      "wrongId": "Diese Party existiert nicht.",
+      "joinParty": {
+        "joinPartyText1": "Trete der Party von ",
+        "joinPartyText2": "bei!",
+        "userNameDescription": "Wie heißt du?",
+        "userNamePlaceholder": "Dein Name...",
+        "nextButton": "Weiter",
+        "selfie": "Mache ein Selfie!",
+        "triggerSelfie": "Foto aufnehmen",
+        "skip": "Überspringen",
+        "retry": "Erneut versuchen",
+        "join": "Party beitreten"
+      }
     }
   },
   "shared": {

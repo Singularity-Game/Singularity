@@ -1,0 +1,13 @@
+<div class="center">
+  <div class="flex">
+    <img [src]="profilePictureBase64" alt="Profile Picture" width="48" height="48" class="round">
+    <span>{{userName}}</span>
+  </div>
+  <div class="flex sui-space-top-large">
+    <button suiButton (click)="join.emit()">{{ 'party.smartphone.joinParty.join' | transloco }}</button>
+  </div>
+  <div class="flex sui-space-top-large">
+    <button suiButton (click)="cancel.emit()">{{ 'general.cancel' | transloco }}</button>
+  </div>
+
+</div>

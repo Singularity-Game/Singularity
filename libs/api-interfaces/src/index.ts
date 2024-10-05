@@ -16,3 +16,6 @@ export { VideoInfo } from './lib/song/video-info';
 export { CreatePartyDto } from './lib/party/create-party-dto';
 export { PartyDto } from './lib/party/party-dto';
 export { Optional } from './lib/shared/optional';
+export { SimpleValueDto } from './lib/shared/simple-value-dto';
+export { PartyParticipantDto } from './lib/party/party-participant-dto';
+export { JoinPartyDto } from './lib/party/join-party-dto';
