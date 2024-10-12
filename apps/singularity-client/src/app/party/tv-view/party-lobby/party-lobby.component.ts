@@ -1,32 +1,54 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { PartyDto, SongOverviewDto } from '@singularity/api-interfaces';
 import { SongService } from '../../../shared/song.service';
-import { map, Observable, shareReplay } from 'rxjs';
+import { Observable, shareReplay, Subject, takeUntil, tap } from 'rxjs';
 import { LocalSettings } from '../../../shared/settings/local-settings';
 import { SettingsService } from '../../../shared/settings/settings.service';
+import { PartyService } from '../../party.service';
 
 @Component({
   selector: "singularity-party-lobby",
   templateUrl: "./party-lobby.component.html",
   styleUrl: "./party-lobby.component.scss"
 })
-export class PartyLobbyComponent implements OnInit {
+export class PartyLobbyComponent implements OnInit, OnDestroy {
   @Input() party?: PartyDto;
 
   public songs$?: Observable<SongOverviewDto[]>;
-  public startIndex$?: Observable<number>;
+  public index = 0;
 
   public link?: string;
   public volume = +(this.settingsService.getLocalSetting(LocalSettings.MenuVolume) || '0');
 
+  private destroySubject = new Subject<void>();
+
   constructor(private readonly songService: SongService,
-              private readonly settingsService: SettingsService) {
+              private readonly settingsService: SettingsService,
+              private readonly partyService: PartyService) {
   }
 
   public ngOnInit(): void {
-    this.songs$ = this.songService.getAllSongs$().pipe(shareReplay(1));
-    this.startIndex$ = this.songs$.pipe(map((songs: SongOverviewDto[]) => Math.floor(Math.random() * songs.length)));
+    this.songs$ = this.songService.getAllSongs$()
+      .pipe(
+        tap((songs: SongOverviewDto[]) => this.setNextSong(songs)),
+        shareReplay(1)
+      );
 
     this.link = `${window.location.origin}/party/${this.party?.id}`
+  }
+
+  public ngOnDestroy(): void {
+    this.destroySubject.next();
+    this.destroySubject.complete();
+  }
+
+  public setNextSong(songs: SongOverviewDto[]): void {
+    let currentIndex = this.index;
+    while(currentIndex === this.index && songs.length > 1) {
+      currentIndex = Math.floor(Math.random() * songs.length);
+    }
+
+    this.index = currentIndex;
+    this.partyService.setCurrentSong$(songs[this.index]).pipe(takeUntil(this.destroySubject)).subscribe();
   }
 }

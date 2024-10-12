@@ -187,6 +187,11 @@
         "skip": "Skip",
         "retry": "Retake Picture",
         "join": "Join Party"
+      },
+      "songList": {
+        "title": "Title",
+        "author": "Author",
+        "actions": "Actions"
       }
     }
   },

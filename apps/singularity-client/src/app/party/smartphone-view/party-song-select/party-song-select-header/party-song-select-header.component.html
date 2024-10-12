@@ -1,0 +1,7 @@
+<div class="cover-container">
+<ng-container *ngIf="currentSong$ | async; let currentSong">
+  <sui-fast-image [src]="'/api/party/' + party?.id + '/songs/' + currentSong.id + '/cover'"
+                  [blurrySrc]="'/api/party/' + party?.id + '/songs/' + currentSong.id + '/cover/small'"
+                  alt="Song Cover"></sui-fast-image>
+</ng-container>
+</div>

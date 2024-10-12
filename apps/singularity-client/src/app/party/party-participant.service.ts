@@ -19,4 +19,11 @@ export class PartyParticipantService {
     return this.api.get$<Nullable<PartyParticipantDto>>(`/api/party/${savedPartyId}/participant/${savedParticipantId}`)
       .pipe(map((value) => !!value));
   }
+
+  public getMe$(): Observable<Nullable<PartyParticipantDto>> {
+    const savedPartyId = localStorage.getItem('party-participant-party-id');
+    const savedParticipantId = localStorage.getItem('party-participant-id');
+
+    return this.api.get$<Nullable<PartyParticipantDto>>(`/api/party/${savedPartyId}/participant/${savedParticipantId}`);
+  }
 }

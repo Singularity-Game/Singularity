@@ -3,7 +3,7 @@ import { Party } from './models/party';
 import { Nullable, UUID } from '@singularity/api-interfaces';
 import { User } from '../user-management/models/user.entity';
 import { PartyParticipant } from './models/party-participant';
-import { BehaviorSubject, filter, map, Observable } from 'rxjs';
+import { BehaviorSubject, filter, map, Observable, tap } from 'rxjs';
 
 @Injectable()
 export class PartyService {
@@ -69,5 +69,22 @@ export class PartyService {
       filter(value => !!value),
       map((party: Party) => party.participants)
     )
+  }
+
+  public getPartyCurrentSongId$(partyId: string): Observable<number> {
+    return this.partiesSubject.pipe(
+      tap(() => console.log(1)),
+      map((parties: Party[]) => parties.find(party => party.id === partyId)),
+      tap(() => console.log(2)),
+      filter(value => !!value),
+      tap(() => console.log(3)),
+      map((party: Party) => party.currentSongId)
+    )
+  }
+
+  public setPartyCurrentSong(partyId: string, songId: number): void {
+    const party = this.getPartyById(partyId);
+    party.currentSongId = songId;
+    this.partiesSubject.next(this.partiesSubject.getValue());
   }
 }

@@ -187,6 +187,11 @@
         "skip": "Überspringen",
         "retry": "Erneut versuchen",
         "join": "Party beitreten"
+      },
+      "songList": {
+        "title": "Titel",
+        "author": "Author",
+        "actions": "Aktionen"
       }
     }
   },

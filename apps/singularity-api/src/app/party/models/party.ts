@@ -1,5 +1,4 @@
 import { User } from '../../user-management/models/user.entity';
-import { UUID } from '@singularity/api-interfaces';
 import { PartyParticipant } from './party-participant';
 import { AutoMap } from '@automapper/classes';
 
@@ -18,6 +17,8 @@ export class Party {
 
   @AutoMap()
   public lastInteraction: Date;
+
+  public currentSongId: number;
 
   constructor(name: string, user: User) {
     this.id = Math.random().toString(36).slice(2, 7);

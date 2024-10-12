@@ -18,9 +18,13 @@ import { PartyParticipantGuard } from './guards/party-participant.guard';
 import { JoinPartySetUsernameComponent } from './smartphone-view/join-party/join-party-set-username/join-party-set-username.component';
 import { JoinPartySetProfilePictureComponent } from './smartphone-view/join-party/join-party-set-profile-picture/join-party-set-profile-picture.component';
 import { JoinPartyReadyComponent } from './smartphone-view/join-party/join-party-ready/join-party-ready.component';
+import { PartySongSelectNavbarComponent } from './smartphone-view/party-song-select/party-song-select-navbar/party-song-select-navbar.component';
+import { PartyQrCodeComponent } from './smartphone-view/party-song-select/party-song-select-navbar/party-qr-code/party-qr-code.component';
+import { PartySongSelectHeaderComponent } from './smartphone-view/party-song-select/party-song-select-header/party-song-select-header.component';
+import { PartySongSelectItemComponent } from './smartphone-view/party-song-select/party-song-select-item/party-song-select-item.component';
 
 @NgModule({
-  declarations: [CreatePartyComponent, PartyLobbyComponent, PartyTVViewComponent, PartySmartphoneViewComponent, JoinPartyComponent, PartySongSelectComponent, JoinPartySetUsernameComponent, JoinPartySetProfilePictureComponent, JoinPartyReadyComponent],
+  declarations: [CreatePartyComponent, PartyLobbyComponent, PartyTVViewComponent, PartySmartphoneViewComponent, JoinPartyComponent, PartySongSelectComponent, JoinPartySetUsernameComponent, JoinPartySetProfilePictureComponent, JoinPartyReadyComponent, PartySongSelectNavbarComponent, PartyQrCodeComponent, PartySongSelectHeaderComponent, PartySongSelectItemComponent],
   imports: [CommonModule, PartyRoutingModule, ReactiveFormsModule, SingularityUiModule, TranslocoModule, SharedModule, QRCodeModule, FormsModule],
   providers: [PartyService, PartyParticipantService, PartyParticipantGuard]
 })

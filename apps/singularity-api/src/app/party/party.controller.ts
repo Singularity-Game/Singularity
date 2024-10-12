@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common';
-import { Request } from 'express';
-import { CreatePartyDto, PartyDto } from '@singularity/api-interfaces';
+import { Body, Controller, Get, Param, Post, Req, Res, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Request, Response } from 'express';
+import { CreatePartyDto, CurrentSongDto, PartyDto, SongOverviewDto } from '@singularity/api-interfaces';
 import { AuthGuard } from '@nestjs/passport';
 import { PartyService } from './party.service';
 import { Party } from './models/party';
@@ -8,11 +8,16 @@ import { User } from '../user-management/models/user.entity';
 import { MapInterceptor } from '@automapper/nestjs';
 import { PartyParticipant } from './models/party-participant';
 import { JoinPartyDto } from '@singularity/api-interfaces';
+import { SongService } from '../song/song.service';
+import { Song } from '../song/models/song.entity';
+import { fromBuffer } from 'file-type';
+import * as sharp from 'sharp';
 
 @Controller('party')
 export class PartyController {
 
-  constructor(private readonly partyService: PartyService) {
+  constructor(private readonly partyService: PartyService,
+              private readonly songService: SongService) {
   }
 
   @Post()
@@ -32,6 +37,13 @@ export class PartyController {
   @UseInterceptors(MapInterceptor(Party, PartyDto))
   public getMyParty(@Req() request: Request): Party {
     return this.partyService.getPartyByUser(request.user as User);
+  }
+
+  @Post('my/current-song')
+  @UseGuards(AuthGuard('jwt'))
+  public async setCurrentSong(@Req() request: Request, @Body() currentSong: CurrentSongDto): Promise<void> {
+    const party = this.partyService.getPartyByUser(request.user as User);
+    this.partyService.setPartyCurrentSong(party.id, currentSong.songId);
   }
 
   @Get(':id')
@@ -55,4 +67,50 @@ export class PartyController {
 
     return participant;
   }
+
+  @Get(':partyId/songs')
+  @UseInterceptors(MapInterceptor(Song, SongOverviewDto, { isArray: true }))
+  public getSongs(@Param('partyId') partyId: string): Promise<Song[]> | Song[] {
+    const party = this.partyService.getPartyById(partyId);
+
+    if(!party) {
+      return [];
+    }
+
+    return this.songService.getAllSongs();
+  }
+
+  @Get(':partyId/songs/:songId/cover')
+  @UseInterceptors(MapInterceptor(Song, SongOverviewDto, { isArray: true }))
+  public async getSongCoverById(@Param('partyId') partyId: string, @Param('songId') songId: string, @Res() response: Response): Promise<void> {
+    const party = this.partyService.getPartyById(partyId);
+
+    if(!party) {
+      return;
+    }
+
+    const buffer = await this.songService.getSongCoverFile(+songId);
+    const fileType = await fromBuffer(buffer);
+    response.setHeader('Content-Type', fileType.mime);
+    response.end(buffer);
+  }
+
+  @Get(':partyId/songs/:songId/cover/small')
+  public async getSmallSongCoverById(@Param('partyId') partyId: string, @Param('songId') songId: string, @Res() response: Response): Promise<void> {
+    const party = this.partyService.getPartyById(partyId);
+
+    if(!party) {
+      return;
+    }
+
+    const buffer = await this.songService.getSongCoverFile(+songId);
+    const fileType = await fromBuffer(buffer);
+    const downscaledBuffer = await sharp(buffer)
+      .resize(20, 20)
+      .toBuffer();
+    response.setHeader('Content-Type', fileType.mime);
+    response.end(downscaledBuffer);
+  }
+
+
 }

@@ -1,7 +1,7 @@
 <sui-mouse-timeout>
   <div class="lobby">
     <ng-container *ngIf="songs$ | async; let songs">
-      <singularity-audio-player class="video" *ngIf="startIndex$ | async; let startIndex" [index]="startIndex" [songs]="songs" [volume]="volume" [showFade]="true"></singularity-audio-player>
+      <singularity-audio-player class="video" [index]="index" [songs]="songs" [volume]="volume" [showFade]="true" (songFinished)="setNextSong(songs)"></singularity-audio-player>
     </ng-container>
 
     <div class="party-code-window">

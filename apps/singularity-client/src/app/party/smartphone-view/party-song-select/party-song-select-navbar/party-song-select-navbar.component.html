@@ -1,0 +1,7 @@
+<div class="navbar">
+  <img class="profile-picture" *ngIf="participant?.pictureBase64" [src]="participant?.pictureBase64" alt="Profile Picture" width="32" height="32" />
+  <div class="placeholder" *ngIf="!participant?.pictureBase64"></div>
+  <button suiButton [isIcon]="true" (click)="openQRCode()">
+    <img class="icon" src="assets/icons/qr-code.svg" width="20" alt="QR Code Icon">
+  </button>
+</div>

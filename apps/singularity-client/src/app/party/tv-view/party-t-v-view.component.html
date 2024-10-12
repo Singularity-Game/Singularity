@@ -1,8 +1,8 @@
-<ng-container *ngIf="party$ | async; let party; else loading">
+<ng-container *ngIf="partySubject | async; let party; else loading">
   @if(party.value) {
     <singularity-party-lobby [party]="party.value!"></singularity-party-lobby>
   } @else {
-    <singularity-create-party></singularity-create-party>
+    <singularity-create-party (party)="setParty($event)"></singularity-create-party>
   }
 </ng-container>
 
