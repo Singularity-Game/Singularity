@@ -1,18 +1,29 @@
-import { Body, Controller, Get, Param, Post, Req, Res, Sse, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  Res,
+  Sse,
+  UseGuards,
+  UseInterceptors
+} from '@nestjs/common';
 import { Request, Response } from 'express';
-import { CreatePartyDto, CurrentSongDto, PartyDto, SongOverviewDto } from '@singularity/api-interfaces';
+import { CreatePartyDto, CurrentSongDto, JoinPartyDto, PartyDto, SongOverviewDto } from '@singularity/api-interfaces';
 import { AuthGuard } from '@nestjs/passport';
 import { PartyService } from './party.service';
 import { Party } from './models/party';
 import { User } from '../user-management/models/user.entity';
 import { InjectMapper, MapInterceptor } from '@automapper/nestjs';
 import { PartyParticipant } from './models/party-participant';
-import { JoinPartyDto } from '@singularity/api-interfaces';
 import { SongService } from '../song/song.service';
 import { Song } from '../song/models/song.entity';
 import { fromBuffer } from 'file-type';
 import * as sharp from 'sharp';
-import { from, map, Observable, switchMap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Mapper } from '@automapper/core';
 
 @Controller('party')
@@ -46,7 +57,18 @@ export class PartyController {
   @UseGuards(AuthGuard('jwt'))
   public async setCurrentSong(@Req() request: Request, @Body() currentSong: CurrentSongDto): Promise<void> {
     const party = this.partyService.getPartyByUser(request.user as User);
-    this.partyService.setPartyCurrentSong(party.id, currentSong.songId);
+
+    if(!party) {
+      throw new BadRequestException('There is no Party by the given user');
+    }
+
+    const song = await this.songService.getSongById(currentSong.songId);
+
+    if(!song) {
+      throw new BadRequestException('There is no Song with the given id');
+    }
+
+    party.setCurrentSong(song);
   }
 
   @Get(':id')
@@ -57,16 +79,25 @@ export class PartyController {
 
   @Get(':partyId/participant/:participantId')
   public getPartyParticipant(@Param('partyId') partyId: string, @Param('participantId') participantId: string): PartyParticipant {
-    return this.partyService.getPartyParticipant(partyId, participantId);
+    const party = this.partyService.getPartyById(partyId);
+
+    if(!party) {
+      throw new BadRequestException('There is no Party with the given id');
+    }
+
+    return party.getParticipantById(participantId);
   }
 
   @Post(':partyId/join')
   public joinParty(@Param('partyId') partyId: string, @Body() joinPartyDto: JoinPartyDto): PartyParticipant {
     const participant = new PartyParticipant(joinPartyDto.name, joinPartyDto.profilePictureBase64);
-    this.partyService.joinParty(partyId, participant);
+    const party = this.partyService.getPartyById(partyId);
 
-    console.log(joinPartyDto);
-    console.log(participant);
+    if(!party) {
+      throw new BadRequestException('There is no Party with the given id');
+    }
+
+    party.join(participant);
 
     return participant;
   }
@@ -89,7 +120,7 @@ export class PartyController {
     const party = this.partyService.getPartyById(partyId);
 
     if(!party) {
-      return;
+      throw new BadRequestException();
     }
 
     const buffer = await this.songService.getSongCoverFile(+songId);
@@ -103,7 +134,7 @@ export class PartyController {
     const party = this.partyService.getPartyById(partyId);
 
     if(!party) {
-      return;
+      throw new BadRequestException();
     }
 
     const buffer = await this.songService.getSongCoverFile(+songId);
@@ -117,9 +148,14 @@ export class PartyController {
 
   @Sse(':partyId/current-song')
   public getCurrentSongOfParty$(@Param('partyId') partyId: string): Observable<MessageEvent<SongOverviewDto>> {
-    return this.partyService.getPartyCurrentSongId$(partyId)
+    const party = this.partyService.getPartyById(partyId);
+
+    if(!party) {
+      throw new BadRequestException();
+    }
+
+    return party.getCurrentSong$()
       .pipe(
-        switchMap((value: number) => from(this.songService.getSongById(value))),
         map((value: Song) => this.mapper.map(value, Song, SongOverviewDto)),
         map((value: SongOverviewDto) => ({ data: value }) as MessageEvent)
       );
