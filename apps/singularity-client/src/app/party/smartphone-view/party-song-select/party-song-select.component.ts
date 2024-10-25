@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { filter, Observable } from 'rxjs';
+import { filter, map, Observable } from 'rxjs';
 import { PartyDto, PartyParticipantDto, SongOverviewDto } from '@singularity/api-interfaces';
 import { ActivatedRoute } from '@angular/router';
 import { PartyService } from '../../party.service';
@@ -27,6 +27,7 @@ export class PartySongSelectComponent implements OnInit {
       .pipe(filter(value => !!value)) as Observable<PartyDto>;
     this.participant$ = this.partyParticipantService.getMe$()
       .pipe(filter(value => !!value)) as Observable<PartyParticipantDto>;
-    this.songs$ = this.partyService.getPartySongs$(partyId ?? '');
+    this.songs$ = this.partyService.getPartySongs$(partyId ?? '')
+      .pipe(map((songs: SongOverviewDto[]) => songs.sort((songA: SongOverviewDto, songB: SongOverviewDto) => songA.name.localeCompare(songB.name))));
   }
 }

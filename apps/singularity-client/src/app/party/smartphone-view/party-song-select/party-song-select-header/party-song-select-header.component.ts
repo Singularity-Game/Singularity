@@ -25,7 +25,10 @@ export class PartySongSelectHeaderComponent implements OnInit {
 
     this.currentSong$ = this.partyService.getCurrentSong$(this.party.id)
       .pipe(
-        tap((song: SongOverviewDto) => this.colorService.setColorsFromImage(`/api/party/${this.party?.id}/songs/${song.id}/cover`))
+        tap((song: SongOverviewDto) => {
+          this.colorService.setColorsFromImage(`/api/party/${this.party?.id}/songs/${song.id}/cover`)
+          // this.changeDetector.detectChanges();
+        })
       );
   }
 }

@@ -1,23 +1,26 @@
-import { Body, Controller, Get, Param, Post, Req, Res, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, Res, Sse, UseGuards, UseInterceptors } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { CreatePartyDto, CurrentSongDto, PartyDto, SongOverviewDto } from '@singularity/api-interfaces';
 import { AuthGuard } from '@nestjs/passport';
 import { PartyService } from './party.service';
 import { Party } from './models/party';
 import { User } from '../user-management/models/user.entity';
-import { MapInterceptor } from '@automapper/nestjs';
+import { InjectMapper, MapInterceptor } from '@automapper/nestjs';
 import { PartyParticipant } from './models/party-participant';
 import { JoinPartyDto } from '@singularity/api-interfaces';
 import { SongService } from '../song/song.service';
 import { Song } from '../song/models/song.entity';
 import { fromBuffer } from 'file-type';
 import * as sharp from 'sharp';
+import { from, map, Observable, switchMap } from 'rxjs';
+import { Mapper } from '@automapper/core';
 
 @Controller('party')
 export class PartyController {
 
   constructor(private readonly partyService: PartyService,
-              private readonly songService: SongService) {
+              private readonly songService: SongService,
+              @InjectMapper() private readonly mapper: Mapper) {
   }
 
   @Post()
@@ -112,5 +115,13 @@ export class PartyController {
     response.end(downscaledBuffer);
   }
 
-
+  @Sse(':partyId/current-song')
+  public getCurrentSongOfParty$(@Param('partyId') partyId: string): Observable<MessageEvent<SongOverviewDto>> {
+    return this.partyService.getPartyCurrentSongId$(partyId)
+      .pipe(
+        switchMap((value: number) => from(this.songService.getSongById(value))),
+        map((value: Song) => this.mapper.map(value, Song, SongOverviewDto)),
+        map((value: SongOverviewDto) => ({ data: value }) as MessageEvent)
+      );
+  }
 }

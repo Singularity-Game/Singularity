@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { CreatePartyDto, Nullable, PartyDto, PartyParticipantDto, SongOverviewDto } from '@singularity/api-interfaces';
 import { ApiService } from '../shared/api.service';
-import { WebsocketService } from '../shared/websocket.service';
+import { SseService } from '../shared/sse.service';
 
 @Injectable()
 export class PartyService {
 
   constructor(private readonly api: ApiService,
-              private readonly websocket: WebsocketService) {
+              private readonly sse: SseService) {
 
   }
 
@@ -40,7 +40,7 @@ export class PartyService {
   }
 
   public getCurrentSong$(partyId: string): Observable<SongOverviewDto> {
-    return this.websocket.getMessages$('/party', 'current-song', partyId);
+    return this.sse.getMessages$(`api/party/${partyId}/current-song`);
   }
 
   public setCurrentSong$(song: SongOverviewDto): Observable<void> {
