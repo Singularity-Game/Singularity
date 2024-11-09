@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { PartyDto, PartyParticipantDto, PartyQueueItemDto, SongOverviewDto } from '@singularity/api-interfaces';
+import { PartyDto, PartyParticipantDto, PartyQueueItemDto } from '@singularity/api-interfaces';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
