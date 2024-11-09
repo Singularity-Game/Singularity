@@ -1,0 +1,14 @@
+<td>
+  <sui-fast-image [src]="'/api/party/' + party?.id + '/songs/' + queueItem?.song?.id + '/cover'"
+                  [blurrySrc]="'/api/party/' + party?.id + '/songs/' + queueItem?.song?.id + '/cover/small'" alt="Song Cover" width="50px" height="50px"></sui-fast-image>
+</td>
+<td>
+  <span class="song-title">{{ queueItem?.song?.name }}</span>
+  <br>
+  <span class="song-artist">{{queueItem?.song?.artist}}</span>
+</td>
+<td>
+<!--  <button suiButton [isIcon]="true" (click)="addSong()">-->
+<!--    <img class="icon" src="/assets/icons/playlist-plus.svg" width="20" alt="play">-->
+<!--  </button>-->
+</td>

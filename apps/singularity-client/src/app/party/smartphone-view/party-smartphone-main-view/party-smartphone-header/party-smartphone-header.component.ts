@@ -1,15 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PartyDto, SongOverviewDto } from '@singularity/api-interfaces';
-import { PartyService } from '../../../party.service';
 import { SuiGlobalColorService } from '@singularity/ui';
 import { Observable, tap } from 'rxjs';
+import { PartyService } from '../../../party.service';
 
 @Component({
-  selector: 'singularity-party-song-select-header',
-  templateUrl: './party-song-select-header.component.html',
-  styleUrl: './party-song-select-header.component.scss'
+  selector: 'singularity-party-smartphone-header',
+  templateUrl: './party-smartphone-header.component.html',
+  styleUrl: './party-smartphone-header.component.scss'
 })
-export class PartySongSelectHeaderComponent implements OnInit {
+export class PartySmartphoneHeaderComponent implements OnInit {
   @Input() party?: PartyDto;
 
   public currentSong$?: Observable<SongOverviewDto>

@@ -188,6 +188,10 @@
         "retry": "Retake Picture",
         "join": "Join Party"
       },
+      "home": {
+        "upNext": "Up next...",
+        "waiting": "Waiting for Players..."
+      },
       "songList": {
         "title": "Title",
         "author": "Author",

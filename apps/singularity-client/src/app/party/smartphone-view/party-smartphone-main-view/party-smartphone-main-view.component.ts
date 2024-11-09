@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { filter, map, Observable } from 'rxjs';
-import { PartyDto, PartyParticipantDto, SongOverviewDto } from '@singularity/api-interfaces';
+import { filter, Observable } from 'rxjs';
+import { PartyDto, PartyParticipantDto } from '@singularity/api-interfaces';
 import { ActivatedRoute } from '@angular/router';
 import { PartyService } from '../../party.service';
 import { PartyParticipantService } from '../../party-participant.service';
 
 @Component({
-  selector: 'singularity-party-song-select',
-  templateUrl: './party-song-select.component.html',
-  styleUrl: './party-song-select.component.scss'
+  selector: 'singularity-party-smartphone-main-view',
+  templateUrl: './party-smartphone-main-view.component.html',
+  styleUrl: './party-smartphone-main-view.component.scss'
 })
-export class PartySongSelectComponent implements OnInit {
+export class PartySmartphoneMainViewComponent implements OnInit {
   public party$?: Observable<PartyDto>;
   public participant$?: Observable<PartyParticipantDto>;
-  public songs$?: Observable<SongOverviewDto[]>;
 
   constructor(private readonly activatedRoute: ActivatedRoute,
               private readonly partyService: PartyService,
@@ -27,7 +26,6 @@ export class PartySongSelectComponent implements OnInit {
       .pipe(filter(value => !!value)) as Observable<PartyDto>;
     this.participant$ = this.partyParticipantService.getMe$()
       .pipe(filter(value => !!value)) as Observable<PartyParticipantDto>;
-    this.songs$ = this.partyService.getPartySongs$(partyId ?? '')
-      .pipe(map((songs: SongOverviewDto[]) => songs.sort((songA: SongOverviewDto, songB: SongOverviewDto) => songA.name.localeCompare(songB.name))));
   }
+
 }

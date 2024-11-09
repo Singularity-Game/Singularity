@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { CreatePartyDto, Nullable, PartyDto, PartyParticipantDto, SongOverviewDto } from '@singularity/api-interfaces';
+import {
+  CreatePartyDto,
+  Nullable,
+  PartyDto,
+  PartyParticipantDto,
+  PartyQueueItemDto,
+  SongOverviewDto
+} from '@singularity/api-interfaces';
 import { ApiService } from '../shared/api.service';
 import { SseService } from '../shared/sse.service';
 
@@ -45,5 +52,15 @@ export class PartyService {
 
   public setCurrentSong$(song: SongOverviewDto): Observable<void> {
     return this.api.post$(`api/party/my/current-song`, { songId: song.id });
+  }
+
+  public getPartyQueue$(partyId: string): Observable<PartyQueueItemDto[]> {
+    return this.sse.getMessages$(`api/party/${partyId}/queue`);
+  }
+
+  public queueSong$(partyId: string, song: SongOverviewDto, participant: PartyParticipantDto): Observable<PartyQueueItemDto> {
+    const partyQueueItem = { song: song, participants: [participant] };
+
+    return this.api.post$(`api/party/${partyId}/queue`, partyQueueItem);
   }
 }

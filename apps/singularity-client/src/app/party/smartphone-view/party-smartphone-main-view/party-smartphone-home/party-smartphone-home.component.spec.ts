@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PartySongSelectComponent } from './party-song-select.component';
+import { PartySmartphoneHomeComponent } from './party-smartphone-home.component';
 
 describe('PartySongSelectComponent', () => {
-  let component: PartySongSelectComponent;
-  let fixture: ComponentFixture<PartySongSelectComponent>;
+  let component: PartySmartphoneHomeComponent;
+  let fixture: ComponentFixture<PartySmartphoneHomeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PartySongSelectComponent]
+      declarations: [PartySmartphoneHomeComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(PartySongSelectComponent);
+    fixture = TestBed.createComponent(PartySmartphoneHomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

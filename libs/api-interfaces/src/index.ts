@@ -20,3 +20,4 @@ export { SimpleValueDto } from './lib/shared/simple-value-dto';
 export { PartyParticipantDto } from './lib/party/party-participant-dto';
 export { JoinPartyDto } from './lib/party/join-party-dto';
 export { CurrentSongDto } from './lib/party/current-song-dto';
+export { PartyQueueItemDto } from './lib/party/party-queue-item-dto';

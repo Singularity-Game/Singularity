@@ -9,7 +9,4 @@ export class PartyDto {
 
   @AutoMap()
   creator!: string;
-
-  @AutoMap()
-  lastInteraction!: Date;
 }

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PartySongSelectHeaderComponent } from './party-song-select-header.component';
+import { PartySmartphoneHeaderComponent } from './party-smartphone-header.component';
 
 describe('PartySongSelectHeaderComponent', () => {
-  let component: PartySongSelectHeaderComponent;
-  let fixture: ComponentFixture<PartySongSelectHeaderComponent>;
+  let component: PartySmartphoneHeaderComponent;
+  let fixture: ComponentFixture<PartySmartphoneHeaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PartySongSelectHeaderComponent]
+      declarations: [PartySmartphoneHeaderComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(PartySongSelectHeaderComponent);
+    fixture = TestBed.createComponent(PartySmartphoneHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

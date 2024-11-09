@@ -8,7 +8,7 @@
   <span class="song-artist">{{song?.artist}}</span>
 </td>
 <td>
-  <button suiButton [isIcon]="true">
-    <img class="icon" src="assets/icons/play-stroke.svg" width="20" alt="play">
+  <button suiButton [isIcon]="true" (click)="addSong()">
+    <img class="icon" src="/assets/icons/playlist-plus.svg" width="20" alt="play">
   </button>
 </td>

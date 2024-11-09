@@ -1,0 +1,49 @@
+.cover-container {
+  aspect-ratio: 1;
+  width: 100%;
+  padding: 20px 20px 0 20px;
+  box-sizing: border-box;
+}
+
+.cover-description {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 20px 0 20px 0;
+}
+
+.cover-description-text {
+  flex: 1;
+  width: calc(100% - 52px);
+
+  h2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 0 0 4px 0;
+  }
+
+  p {
+    margin: 0
+  }
+}
+
+.cover-description-like-button-wrapper {
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 52px;
+}
+
+.like-button {
+  padding: 10px;
+  width: 52px;
+  height: 52px;
+  background-color: var(--primary);
+  border-radius: 100%;
+  position: relative;
+
+  img {
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+}

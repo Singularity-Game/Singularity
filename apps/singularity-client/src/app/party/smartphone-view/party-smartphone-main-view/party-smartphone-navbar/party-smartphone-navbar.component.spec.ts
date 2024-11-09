@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PartySongSelectNavbarComponent } from './party-song-select-navbar.component';
+import { PartySmartphoneNavbarComponent } from './party-smartphone-navbar.component';
 
 describe('PartySongSelectNavbarComponent', () => {
-  let component: PartySongSelectNavbarComponent;
-  let fixture: ComponentFixture<PartySongSelectNavbarComponent>;
+  let component: PartySmartphoneNavbarComponent;
+  let fixture: ComponentFixture<PartySmartphoneNavbarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PartySongSelectNavbarComponent]
+      declarations: [PartySmartphoneNavbarComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(PartySongSelectNavbarComponent);
+    fixture = TestBed.createComponent(PartySmartphoneNavbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

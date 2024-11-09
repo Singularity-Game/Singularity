@@ -12,12 +12,19 @@ import {
   UseInterceptors
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { CreatePartyDto, CurrentSongDto, JoinPartyDto, PartyDto, SongOverviewDto } from '@singularity/api-interfaces';
+import {
+  CreatePartyDto,
+  CurrentSongDto,
+  JoinPartyDto,
+  PartyDto,
+  PartyQueueItemDto,
+  SongOverviewDto
+} from '@singularity/api-interfaces';
 import { AuthGuard } from '@nestjs/passport';
 import { PartyService } from './party.service';
 import { Party } from './models/party';
 import { User } from '../user-management/models/user.entity';
-import { InjectMapper, MapInterceptor } from '@automapper/nestjs';
+import { InjectMapper, MapInterceptor, MapPipe } from '@automapper/nestjs';
 import { PartyParticipant } from './models/party-participant';
 import { SongService } from '../song/song.service';
 import { Song } from '../song/models/song.entity';
@@ -25,6 +32,7 @@ import { fromBuffer } from 'file-type';
 import * as sharp from 'sharp';
 import { map, Observable } from 'rxjs';
 import { Mapper } from '@automapper/core';
+import { PartyQueueItem } from './models/party-queue-item';
 
 @Controller('party')
 export class PartyController {
@@ -40,10 +48,7 @@ export class PartyController {
   public createParty(@Req() request: Request, @Body() createPartyDto: CreatePartyDto): Party {
     const party = new Party(createPartyDto.name, request.user as User);
 
-    const createdParty = this.partyService.createParty(party);
-    console.log(createdParty);
-
-    return createdParty;
+    return this.partyService.createParty(party);
   }
 
   @Get('my')
@@ -120,13 +125,17 @@ export class PartyController {
     const party = this.partyService.getPartyById(partyId);
 
     if(!party) {
-      throw new BadRequestException();
+      throw new BadRequestException('There is no Party with the given id');
     }
 
     const buffer = await this.songService.getSongCoverFile(+songId);
     const fileType = await fromBuffer(buffer);
+    const downscaledBuffer = await sharp(buffer)
+      .resize(512, 512)
+      .toBuffer();
+
     response.setHeader('Content-Type', fileType.mime);
-    response.end(buffer);
+    response.end(downscaledBuffer);
   }
 
   @Get(':partyId/songs/:songId/cover/small')
@@ -134,7 +143,7 @@ export class PartyController {
     const party = this.partyService.getPartyById(partyId);
 
     if(!party) {
-      throw new BadRequestException();
+      throw new BadRequestException('There is no Party with the given id');
     }
 
     const buffer = await this.songService.getSongCoverFile(+songId);
@@ -151,7 +160,7 @@ export class PartyController {
     const party = this.partyService.getPartyById(partyId);
 
     if(!party) {
-      throw new BadRequestException();
+      throw new BadRequestException('There is no Party with the given id');
     }
 
     return party.getCurrentSong$()
@@ -159,5 +168,38 @@ export class PartyController {
         map((value: Song) => this.mapper.map(value, Song, SongOverviewDto)),
         map((value: SongOverviewDto) => ({ data: value }) as MessageEvent)
       );
+  }
+
+  @Sse(':partyId/queue')
+  public getPartyQueue$(@Param('partyId') partyId: string): Observable<MessageEvent<PartyQueueItem[]>> {
+    const party = this.partyService.getPartyById(partyId);
+
+    if(!party) {
+      throw new BadRequestException('There is no Party with the given id');
+    }
+
+    return party.getQueue$()
+      .pipe(
+        map((value: PartyQueueItem[]) => this.mapper.mapArray(value, PartyQueueItem, PartyQueueItemDto)),
+        map((value: PartyQueueItemDto[]) => ({ data: value }) as MessageEvent)
+      );
+  }
+
+  @Post(':partyId/queue')
+  @UseInterceptors(MapInterceptor(PartyQueueItem, PartyQueueItemDto))
+  public async addQueueItem(@Param('partyId') partyId: string, @Body(MapPipe(PartyQueueItemDto, PartyQueueItem)) partyQueueItem: PartyQueueItem): Promise<PartyQueueItem> {
+    const party = this.partyService.getPartyById(partyId);
+    const song = await this.songService.getSongById(partyQueueItem.song.id);
+
+    if(!party) {
+      throw new BadRequestException('There is no Party with the given id');
+    }
+
+    const newPartyQueueItem = new PartyQueueItem(song, [partyQueueItem.participants[0]])
+
+    console.log(newPartyQueueItem);
+
+    party.queueSong(newPartyQueueItem);
+    return newPartyQueueItem;
   }
 }
