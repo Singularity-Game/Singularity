@@ -1,7 +1,26 @@
 .song-title {
   font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .song-artist {
-  color: var(--neutral-400)
+  color: var(--neutral-400);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-1 {
+  color: #526ED3;
+}
+
+.player-2 {
+  color: #FFA3A3;
+}
+
+.vs {
+display: inline-block;
+  margin: 0 5px 0 5px;
 }

@@ -6,7 +6,15 @@
       <table class="sui-table">
         <tbody>
         <tr singularity-party-song-queue-item
-            *ngFor="let queueItem of queue"
+            *ngFor="let queueItem of queue | partySongsReadyFilter"
+            [queueItem]="queueItem" [party]="party" [participant]="partyParticipant"></tr>
+        </tbody>
+      </table>
+      <h3>{{ 'party.smartphone.home.waiting' | transloco }}</h3>
+      <table class="sui-table">
+        <tbody>
+        <tr singularity-party-song-queue-item
+            *ngFor="let queueItem of queue | partySongsNotReadyFilter"
             [queueItem]="queueItem" [party]="party" [participant]="partyParticipant"></tr>
         </tbody>
       </table>

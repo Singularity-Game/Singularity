@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
-import { createMap, Mapper, MappingProfile } from '@automapper/core';
+import { createMap, forMember, mapFrom, Mapper, MappingProfile } from '@automapper/core';
 import { PartyQueueItem } from '../models/party-queue-item';
-import { PartyQueueItemDto } from '@singularity/api-interfaces';
+import { PartyParticipantDto, PartyQueueItemDto } from '@singularity/api-interfaces';
+import { PartyParticipant } from '../models/party-participant';
 
 @Injectable()
 export class PartyQueueItemProfile extends AutomapperProfile {
@@ -12,8 +13,8 @@ export class PartyQueueItemProfile extends AutomapperProfile {
 
   get profile(): MappingProfile {
     return (mapper) => {
-      createMap(mapper, PartyQueueItem, PartyQueueItemDto);
-      createMap(mapper, PartyQueueItemDto, PartyQueueItem);
+      createMap(mapper, PartyQueueItem, PartyQueueItemDto, forMember(dest => dest.participants, mapFrom(src => mapper.mapArray(src.participants, PartyParticipant, PartyParticipantDto))));
+      createMap(mapper, PartyQueueItemDto, PartyQueueItem, forMember(dest => dest.participants, mapFrom(src => mapper.mapArray(src.participants, PartyParticipantDto, PartyParticipant))));
     };
   }
 }
