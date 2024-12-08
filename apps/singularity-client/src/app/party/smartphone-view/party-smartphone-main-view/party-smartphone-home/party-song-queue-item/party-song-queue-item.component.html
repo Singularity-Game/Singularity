@@ -17,7 +17,9 @@
   }
 </td>
 <td>
-  <button suiButton [isIcon]="true">
-    <img class="icon" src="/assets/icons/playlist-plus.svg" width="20" alt="play">
-  </button>
+  @if (queueItem?.participants && queueItem!.participants!.length != 2) {
+    <button suiButton [isIcon]="true">
+      <img class="icon" src="/assets/icons/user-plus.svg" width="20" alt="play">
+    </button>
+  }
 </td>

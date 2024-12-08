@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { finalize, Observable, Subject } from 'rxjs';
+import { finalize, Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +9,8 @@ export class SseService {
   }
 
   public getMessages$<Result>(url: string): Observable<Result> {
-
     const source = new EventSource(url);
-    const subject = new Subject<Result>();
+    const subject = new ReplaySubject<Result>(1);
 
     source.onmessage = (event: MessageEvent<string>) => {
       // Angular does not detect changes, when a ServerSentEvent is received.

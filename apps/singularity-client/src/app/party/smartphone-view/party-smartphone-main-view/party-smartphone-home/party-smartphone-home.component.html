@@ -6,7 +6,7 @@
       <table class="sui-table">
         <tbody>
         <tr singularity-party-song-queue-item
-            *ngFor="let queueItem of queue | partySongsReadyFilter"
+            *ngFor="let queueItem of queue | partySongsReadyFilter; trackBy: queueTrackBy"
             [queueItem]="queueItem" [party]="party" [participant]="partyParticipant"></tr>
         </tbody>
       </table>
@@ -14,7 +14,7 @@
       <table class="sui-table">
         <tbody>
         <tr singularity-party-song-queue-item
-            *ngFor="let queueItem of queue | partySongsNotReadyFilter"
+            *ngFor="let queueItem of queue | partySongsNotReadyFilter; trackBy: queueTrackBy"
             [queueItem]="queueItem" [party]="party" [participant]="partyParticipant"></tr>
         </tbody>
       </table>

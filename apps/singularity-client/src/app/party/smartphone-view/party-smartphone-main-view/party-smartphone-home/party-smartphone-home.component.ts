@@ -34,4 +34,8 @@ export class PartySmartphoneHomeComponent implements OnInit {
 
     this.partyParticipant$ = this.partyParticipantService.getMe$().pipe(filter(value => !!value)) as Observable<PartyParticipantDto>;
   }
+
+  public queueTrackBy(index: number, item: PartyQueueItemDto) {
+    return item.id;
+  }
 }
