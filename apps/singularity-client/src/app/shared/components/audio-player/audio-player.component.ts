@@ -30,6 +30,7 @@ export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
   @Input() showFade = true;
 
   @Output() public songFinished = new EventEmitter<void>();
+  @Output() public timeRemaining = new EventEmitter<number>();
 
   @ViewChild('video') private video?: ElementRef<HTMLVideoElement>;
 
@@ -45,6 +46,9 @@ export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
     this.playSong();
 
     this.audio.onended = () => this.songFinished.emit();
+    this.audio.ontimeupdate = () => {
+      this.timeRemaining.emit(Math.round(this.audio.duration - this.audio.currentTime));
+    }
   }
 
   public ngOnDestroy(): void {

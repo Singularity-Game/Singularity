@@ -70,6 +70,13 @@ export class Party {
     }
 
     queueItem.participants.push(participant);
+
+    // Move Item to the back of the queue when it is ready.
+    if (queueItem.participants.length === 2) {
+      queue.splice(queue.indexOf(queueItem), 1);
+      queue.push(queueItem);
+    }
+
     this.queueSubject.next(queue);
 
     return queueItem;

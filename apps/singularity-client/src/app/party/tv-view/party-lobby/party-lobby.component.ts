@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { PartyDto, SongOverviewDto } from '@singularity/api-interfaces';
+import { Nullable, PartyDto, PartyQueueItemDto, SongOverviewDto } from '@singularity/api-interfaces';
 import { SongService } from '../../../shared/song.service';
 import { Observable, shareReplay, Subject, takeUntil, tap } from 'rxjs';
 import { LocalSettings } from '../../../shared/settings/local-settings';
@@ -13,12 +13,16 @@ import { PartyService } from '../../party.service';
 })
 export class PartyLobbyComponent implements OnInit, OnDestroy {
   @Input() party?: PartyDto;
+  @Input() upNextQueueItem: Nullable<PartyQueueItemDto> = null;
 
   public songs$?: Observable<SongOverviewDto[]>;
+
+
   public index = 0;
 
   public link?: string;
   public volume = +(this.settingsService.getLocalSetting(LocalSettings.MenuVolume) || '0');
+  public timeRemaining = 0;
 
   private destroySubject = new Subject<void>();
 
@@ -28,13 +32,17 @@ export class PartyLobbyComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    if(!this.party) {
+      return;
+    }
+
     this.songs$ = this.songService.getAllSongs$()
       .pipe(
         tap((songs: SongOverviewDto[]) => this.setNextSong(songs)),
         shareReplay(1)
       );
 
-    this.link = `${window.location.origin}/party/${this.party?.id}`
+    this.link = `${window.location.origin}/party/${this.party.id}`;
   }
 
   public ngOnDestroy(): void {
@@ -51,4 +59,6 @@ export class PartyLobbyComponent implements OnInit, OnDestroy {
     this.index = currentIndex;
     this.partyService.setCurrentSong$(songs[this.index]).pipe(takeUntil(this.destroySubject)).subscribe();
   }
+
+  protected readonly Math = Math;
 }
