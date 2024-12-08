@@ -13,8 +13,12 @@ export class PartyQueueItemProfile extends AutomapperProfile {
 
   get profile(): MappingProfile {
     return (mapper) => {
-      createMap(mapper, PartyQueueItem, PartyQueueItemDto, forMember(dest => dest.participants, mapFrom(src => mapper.mapArray(src.participants, PartyParticipant, PartyParticipantDto))));
-      createMap(mapper, PartyQueueItemDto, PartyQueueItem, forMember(dest => dest.participants, mapFrom(src => mapper.mapArray(src.participants, PartyParticipantDto, PartyParticipant))));
+      createMap(mapper, PartyQueueItem, PartyQueueItemDto,
+        forMember(dest => dest.participants, mapFrom(src => mapper.mapArray(src.participants, PartyParticipant, PartyParticipantDto))),
+        forMember(dest => dest.id, mapFrom(src => src.id)));
+      createMap(mapper, PartyQueueItemDto, PartyQueueItem,
+        forMember(dest => dest.participants, mapFrom(src => mapper.mapArray(src.participants, PartyParticipantDto, PartyParticipant))),
+        forMember(dest => dest.id, mapFrom(src => src.id)));
     };
   }
 }

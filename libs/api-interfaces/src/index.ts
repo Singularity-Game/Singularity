@@ -21,3 +21,4 @@ export { PartyParticipantDto } from './lib/party/party-participant-dto';
 export { JoinPartyDto } from './lib/party/join-party-dto';
 export { CurrentSongDto } from './lib/party/current-song-dto';
 export { PartyQueueItemDto } from './lib/party/party-queue-item-dto';
+export { JoinPartyQueueItemDto } from './lib/party/join-party-queue-item-dto';

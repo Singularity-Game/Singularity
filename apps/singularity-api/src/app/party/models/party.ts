@@ -55,7 +55,7 @@ export class Party {
     this.queueSubject.next(queue);
   }
 
-  public joinQueuedSong(queueId: UUID, participant: PartyParticipant): void {
+  public joinQueuedSong(queueId: UUID, participant: PartyParticipant): PartyQueueItem {
     this.lastInteraction = new Date();
 
     const queue = this.queueSubject.getValue();
@@ -70,6 +70,37 @@ export class Party {
     }
 
     queueItem.participants.push(participant);
+    this.queueSubject.next(queue);
+
+    return queueItem;
+  }
+
+  public leaveQueuedSong(queueId: UUID, participant: PartyParticipant): PartyQueueItem {
+    this.lastInteraction = new Date();
+
+    const queue = this.queueSubject.getValue();
+    const queueItem = queue.find((item: PartyQueueItem) => item.id === queueId);
+
+    if(!queueItem) {
+      throw Error('There is no QueueItem with the given Id');
+    }
+
+    const index = queueItem.participants.findIndex((queueParticipant: PartyParticipant) => queueParticipant.id === participant.id);
+
+    if(index === -1) {
+      throw Error('The given Participant is not a Participant of this queueItem');
+    }
+
+    queueItem.participants.splice(index, 1);
+
+    // Remove the queueItem if there are no participants left
+    if(queueItem.participants.length === 0) {
+      queue.splice(queue.indexOf(queueItem));
+    }
+
+    this.queueSubject.next(queue);
+
+    return queueItem;
   }
 
   public getCurrentSong$(): Observable<Song> {

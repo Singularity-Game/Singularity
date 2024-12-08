@@ -16,9 +16,15 @@
   }
 </td>
 <td>
-  @if (queueItem?.participants && queueItem!.participants!.length != 2) {
-    <button suiButton [isIcon]="true">
+  @if (queueItem?.participants && queueItem!.participants!.length != 2 && queueItem!.participants[0].id !== participant!.id) {
+    <button suiButton [isIcon]="true" (click)="join()">
       <img class="icon" src="/assets/icons/user-plus.svg" width="20" alt="play">
+    </button>
+  }
+
+  @if (queueItem?.participants && (queueItem!.participants[0]?.id === participant?.id || queueItem!.participants[1]?.id === participant?.id)) {
+    <button suiButton [isIcon]="true" (click)="leave()">
+      <img class="icon" src="/assets/icons/user-minus.svg" width="20" alt="play">
     </button>
   }
 </td>

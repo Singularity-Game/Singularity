@@ -1,10 +1,10 @@
 import {
   BadRequestException,
   Body,
-  Controller,
+  Controller, Delete,
   Get,
   Param,
-  Post,
+  Post, Put,
   Req,
   Res,
   Sse,
@@ -15,7 +15,7 @@ import { Request, Response } from 'express';
 import {
   CreatePartyDto,
   CurrentSongDto,
-  JoinPartyDto,
+  JoinPartyDto, JoinPartyQueueItemDto,
   PartyDto,
   PartyQueueItemDto,
   SongOverviewDto
@@ -63,13 +63,13 @@ export class PartyController {
   public async setCurrentSong(@Req() request: Request, @Body() currentSong: CurrentSongDto): Promise<void> {
     const party = this.partyService.getPartyByUser(request.user as User);
 
-    if(!party) {
+    if (!party) {
       throw new BadRequestException('There is no Party by the given user');
     }
 
     const song = await this.songService.getSongById(currentSong.songId);
 
-    if(!song) {
+    if (!song) {
       throw new BadRequestException('There is no Song with the given id');
     }
 
@@ -86,7 +86,7 @@ export class PartyController {
   public getPartyParticipant(@Param('partyId') partyId: string, @Param('participantId') participantId: string): PartyParticipant {
     const party = this.partyService.getPartyById(partyId);
 
-    if(!party) {
+    if (!party) {
       throw new BadRequestException('There is no Party with the given id');
     }
 
@@ -98,7 +98,7 @@ export class PartyController {
     const participant = new PartyParticipant(joinPartyDto.name, joinPartyDto.profilePictureBase64);
     const party = this.partyService.getPartyById(partyId);
 
-    if(!party) {
+    if (!party) {
       throw new BadRequestException('There is no Party with the given id');
     }
 
@@ -112,7 +112,7 @@ export class PartyController {
   public getSongs(@Param('partyId') partyId: string): Promise<Song[]> | Song[] {
     const party = this.partyService.getPartyById(partyId);
 
-    if(!party) {
+    if (!party) {
       return [];
     }
 
@@ -124,7 +124,7 @@ export class PartyController {
   public async getSongCoverById(@Param('partyId') partyId: string, @Param('songId') songId: string, @Res() response: Response): Promise<void> {
     const party = this.partyService.getPartyById(partyId);
 
-    if(!party) {
+    if (!party) {
       throw new BadRequestException('There is no Party with the given id');
     }
 
@@ -142,7 +142,7 @@ export class PartyController {
   public async getSmallSongCoverById(@Param('partyId') partyId: string, @Param('songId') songId: string, @Res() response: Response): Promise<void> {
     const party = this.partyService.getPartyById(partyId);
 
-    if(!party) {
+    if (!party) {
       throw new BadRequestException('There is no Party with the given id');
     }
 
@@ -159,7 +159,7 @@ export class PartyController {
   public getCurrentSongOfParty$(@Param('partyId') partyId: string): Observable<MessageEvent<SongOverviewDto>> {
     const party = this.partyService.getPartyById(partyId);
 
-    if(!party) {
+    if (!party) {
       throw new BadRequestException('There is no Party with the given id');
     }
 
@@ -174,7 +174,7 @@ export class PartyController {
   public getPartyQueue$(@Param('partyId') partyId: string): Observable<MessageEvent<PartyQueueItem[]>> {
     const party = this.partyService.getPartyById(partyId);
 
-    if(!party) {
+    if (!party) {
       throw new BadRequestException('There is no Party with the given id');
     }
 
@@ -191,15 +191,54 @@ export class PartyController {
     const party = this.partyService.getPartyById(partyId);
     const song = await this.songService.getSongById(partyQueueItem.song.id);
 
-    if(!party) {
+    if (!party) {
       throw new BadRequestException('There is no Party with the given id');
     }
 
-    const newPartyQueueItem = new PartyQueueItem(song, [partyQueueItem.participants[0]])
+    const newPartyQueueItem = new PartyQueueItem(song, [partyQueueItem.participants[0]]);
 
     console.log(newPartyQueueItem);
 
     party.queueSong(newPartyQueueItem);
     return newPartyQueueItem;
+  }
+
+  @Put(':partyId/queue/:queueItemId')
+  @UseInterceptors(MapInterceptor(PartyQueueItem, PartyQueueItemDto))
+  public async joinQueueItem(@Param('partyId') partyId: string, @Param('queueItemId') partyQueueItemId: string, @Body() joinPartyQueueItemDto: JoinPartyQueueItemDto): Promise<PartyQueueItem> {
+    const party = this.partyService.getPartyById(partyId);
+
+    if (!party) {
+      throw new BadRequestException('There is no Party with the given id');
+    }
+
+    const participant = party.getParticipantById(joinPartyQueueItemDto.participantId);
+
+    if (!participant) {
+      throw new BadRequestException('There is no Participant with the given id');
+    }
+
+    return party.joinQueuedSong(partyQueueItemId, participant);
+  }
+
+  @Delete(':partyId/queue/:queueItemId/participants/:participantId')
+  @UseInterceptors(MapInterceptor(PartyQueueItem, PartyQueueItemDto))
+  public async leaveQueueITem(
+    @Param('partyId') partyId: string,
+    @Param('queueItemId') partyQueueItemId: string,
+    @Param('participantId') partyParticipantId: string): Promise<PartyQueueItem> {
+    const party = this.partyService.getPartyById(partyId);
+
+    if (!party) {
+      throw new BadRequestException('There is no Party with the given id');
+    }
+
+    const participant = party.getParticipantById(partyParticipantId);
+
+    if (!participant) {
+      throw new BadRequestException('There is no Participant with the given id');
+    }
+
+    return party.leaveQueuedSong(partyQueueItemId, participant);
   }
 }

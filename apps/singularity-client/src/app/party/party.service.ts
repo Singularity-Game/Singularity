@@ -63,4 +63,14 @@ export class PartyService {
 
     return this.api.post$(`api/party/${partyId}/queue`, partyQueueItem);
   }
+
+  public joinQueuedSong$(partyId: string, queueItemId: string, participant: PartyParticipantDto): Observable<PartyQueueItemDto> {
+    const joinPartyQueueItemDto = { queueItemId: queueItemId, participantId: participant.id };
+
+    return this.api.put$(`api/party/${partyId}/queue/${queueItemId}`, joinPartyQueueItemDto);
+  }
+
+  public leaveQueuedSong$(partyId: string, queueItemId: string, participant: PartyParticipantDto): Observable<PartyQueueItemDto> {
+    return this.api.delete$(`api/party/${partyId}/queue/${queueItemId}/participants/${participant.id}`);
+  }
 }
