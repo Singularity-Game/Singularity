@@ -135,4 +135,8 @@ export class Party {
 
     return this.queueSubject.asObservable();
   }
+
+  public getLastInteraction(): Date {
+    return this.lastInteraction;
+  }
 }

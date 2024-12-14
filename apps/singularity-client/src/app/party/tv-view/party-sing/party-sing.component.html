@@ -1,15 +1,17 @@
-<div class="countdown" *ngIf="countdown > 0 && partyQueueItem">
-  <div>
-    <h1>{{countdown}}</h1>
-    <div class="participants">
-      <h1>
-        <span class="player-1">{{ partyQueueItem.participants[0].name }}</span>
-        <span> vs </span>
-        <span clasS="player-2">{{ partyQueueItem.participants[1].name }}</span>
-      </h1>
+<sui-mouse-timeout>
+  <div class="countdown" *ngIf="countdown > 0 && partyQueueItem">
+    <div>
+      <h1>{{countdown}}</h1>
+      <div class="participants">
+        <h1>
+          <span class="player-1">{{ partyQueueItem.participants[0].name }}</span>
+          <span> vs </span>
+          <span clasS="player-2">{{ partyQueueItem.participants[1].name }}</span>
+        </h1>
+      </div>
     </div>
   </div>
-</div>
-<div class="sing" *ngIf="countdown <= 0 && partyQueueItem">
-  <singularity-sing [songId]="partyQueueItem.song.id" (stopped)="songFinished()"></singularity-sing>
-</div>
+  <div class="sing" *ngIf="countdown <= 0 && partyQueueItem">
+    <singularity-sing [songId]="partyQueueItem.song.id" (stopped)="songFinished()"></singularity-sing>
+  </div>
+</sui-mouse-timeout>
