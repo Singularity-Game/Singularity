@@ -86,14 +86,23 @@ export class SelectComponent implements ControlValueAccessor, AfterViewInit {
 
     if (this.textElement && content instanceof ElementRef) {
       const clone = content.nativeElement.cloneNode(true);
+
       if (this.textElement.nativeElement.firstChild) {
         this.renderer.removeChild(this.textElement.nativeElement, this.textElement.nativeElement.firstChild);
       }
+
       this.renderer.appendChild(this.textElement.nativeElement, clone);
     }
 
     if (this.textElement && typeof content === 'string') {
-      this.renderer.appendChild(this.textElement.nativeElement, content);
+      const node = this.renderer.createText(content);
+
+
+      if (this.textElement.nativeElement.firstChild) {
+        this.renderer.removeChild(this.textElement.nativeElement, this.textElement.nativeElement.firstChild);
+      }
+
+      this.renderer.appendChild(this.textElement.nativeElement, node);
     }
   }
 
