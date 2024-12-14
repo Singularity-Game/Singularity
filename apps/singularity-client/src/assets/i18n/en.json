@@ -172,7 +172,8 @@
     },
     "lobby": {
       "title": "Waiting for Players...",
-      "description": "Scan the QR code to join the party. Choose songs and compete against others!"
+      "description": "Scan the QR code to join the party. Choose songs and compete against others!",
+      "getReady": "Get Ready"
     },
     "smartphone": {
       "wrongId": "This party does not exist.",

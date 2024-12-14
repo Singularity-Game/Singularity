@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="center" *ngIf="upNextQueueItem">
-        <h2 (dblclick)="ready.emit()">Get Ready ({{ Math.floor(timeRemaining / 60) }}:{{ timeRemaining % 60 | number: '2.0-0' }})</h2>
+        <h2 (dblclick)="ready.emit()">{{ 'party.lobby.getReady' | transloco }} ({{ Math.floor(timeRemaining / 60) }}:{{ timeRemaining % 60 | number: '2.0-0' }})</h2>
         <div class="participants">
           <h1>
             <span class="player-1">{{ upNextQueueItem.participants[0].name }}</span>

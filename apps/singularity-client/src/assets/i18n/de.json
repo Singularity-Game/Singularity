@@ -172,7 +172,8 @@
     },
     "lobby": {
       "title": "Warte auf Spieler...",
-      "description": "Scanne den QR Code um der Party beizutreten. Wähle Songs aus und trete gegen andere Personen an!"
+      "description": "Scanne den QR Code um der Party beizutreten. Wähle Songs aus und trete gegen andere Personen an!",
+      "getReady": "Macht euch bereit"
     },
     "smartphone": {
       "wrongId": "Diese Party existiert nicht.",
