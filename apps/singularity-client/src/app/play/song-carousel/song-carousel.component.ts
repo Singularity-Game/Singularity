@@ -26,7 +26,6 @@ export class SongCarouselComponent {
   public dragging = false;
 
   public onDrag(drag: any): void {
-    console.log(drag);
     this.dragging = drag.dragging;
   }
 

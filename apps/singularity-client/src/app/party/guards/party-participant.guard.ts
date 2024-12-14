@@ -17,8 +17,6 @@ export class PartyParticipantGuard implements CanActivate {
 
     const id = route.paramMap.get('id');
 
-    console.log(route.paramMap);
-
     if(!id) {
       return false;
     }

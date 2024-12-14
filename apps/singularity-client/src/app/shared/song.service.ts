@@ -15,8 +15,6 @@ export class SongService {
   }
 
   public getAllSongs$(): Observable<SongOverviewDto[]> {
-    this.api.get$('/api/user/me').subscribe((value) => console.log(value));
-
     return this.api.get$<SongOverviewDto[]>('api/song')
       .pipe(
         catchError(() => {

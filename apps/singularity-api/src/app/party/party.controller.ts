@@ -197,8 +197,6 @@ export class PartyController {
 
     const newPartyQueueItem = new PartyQueueItem(song, [partyQueueItem.participants[0]]);
 
-    console.log(newPartyQueueItem);
-
     party.queueSong(newPartyQueueItem);
     return newPartyQueueItem;
   }

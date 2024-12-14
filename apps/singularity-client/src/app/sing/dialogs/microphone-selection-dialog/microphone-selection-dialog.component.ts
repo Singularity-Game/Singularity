@@ -58,10 +58,7 @@ export class MicrophoneSelectionDialogComponent implements OnInit, OnDestroy {
         map((devices: MediaDeviceInfo[]) => {
           const array = devices.map<Nullable<MicrophoneWithMeter>>((device: MediaDeviceInfo) => ({
             device: device,
-            meter$: this.microphoneService.getDeviceMeter$(device.deviceId).pipe(
-              tap(() => console.log('start')),
-              finalize(() => console.log('strop'))
-            )
+            meter$: this.microphoneService.getDeviceMeter$(device.deviceId)
           }));
           array.unshift(null);
           return array;

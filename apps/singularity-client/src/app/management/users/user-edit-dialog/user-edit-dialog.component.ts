@@ -39,8 +39,6 @@ export class UserEditDialogComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.isEditMode = !!this.modalContext.data;
 
-    console.log(this.isEditMode, this.modalContext);
-
     if (!this.isEditMode) {
       // When a new user is created, they will be inactive by default, until they set a password.
       this.userForm.controls.active.disable();
