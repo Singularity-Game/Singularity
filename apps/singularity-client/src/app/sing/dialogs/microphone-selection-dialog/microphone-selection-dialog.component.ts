@@ -19,7 +19,7 @@ export class MicrophoneSelectionDialogComponent implements OnInit, OnDestroy {
 
   public destroySubject = new Subject<void>();
 
-  constructor(private readonly modalContext: ModalContext<boolean, null>,
+  constructor(public readonly modalContext: ModalContext<boolean, {minCount: number, maxCount: number}>,
               private readonly microphoneService: MicrophoneService) {
   }
 
@@ -37,6 +37,11 @@ export class MicrophoneSelectionDialogComponent implements OnInit, OnDestroy {
     const microphonesDeviceIds = this.formArray.value
       .filter((value: Nullable<MicrophoneWithMeter>) => value !== null)
       .map((value: Nullable<MicrophoneWithMeter>) => (value as MicrophoneWithMeter).device.deviceId);
+
+    const length = microphonesDeviceIds.length;
+    if (length < this.modalContext.data.minCount || length > this.modalContext.data.maxCount) {
+      return;
+    }
 
     this.microphoneService.setMicrophones(microphonesDeviceIds);
 

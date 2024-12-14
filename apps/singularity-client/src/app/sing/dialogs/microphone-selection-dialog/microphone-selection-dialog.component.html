@@ -22,7 +22,7 @@
 
 <button suiButton
         class="sui-space-top-large"
-        [disabled]="formArray.length < 2"
+        [disabled]="formArray.length < modalContext.data.minCount + 1 || formArray.length > modalContext.data.maxCount + 1"
         (click)="submit()">{{ 'sing.microphoneSelectionDialog.submit' | transloco }}</button>
 <button suiButton
         appearance="warn"

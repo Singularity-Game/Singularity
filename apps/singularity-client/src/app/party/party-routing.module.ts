@@ -15,7 +15,7 @@ import { MicrophoneGuard } from '../sing/guards/microphone.guard';
 import { AudioContextGuard } from '../sing/guards/audio-context.guard';
 
 const routes: Routes = [
-  { path: '', component: PartyTVViewComponent, canActivate: [AuthenticationGuard, MicrophoneGuard, AudioContextGuard] },
+  { path: '', component: PartyTVViewComponent, canActivate: [AuthenticationGuard, MicrophoneGuard(2, 2), AudioContextGuard] },
   {
     path: ':id', component: PartySmartphoneViewComponent, children: [
       {
