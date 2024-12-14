@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { CarouselComponent, OwlOptions } from 'ngx-owl-carousel-o';
 import { SongOverviewDto } from '@singularity/api-interfaces';
 

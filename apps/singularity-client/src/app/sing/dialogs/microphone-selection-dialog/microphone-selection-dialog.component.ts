@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MicrophoneService } from '../../services/microphone.service';
-import { finalize, map, Observable, Subject, takeUntil, tap } from 'rxjs';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { FormArray, FormControl } from '@angular/forms';
 import { MicrophoneWithMeter } from './microphone-with-meter';
 import { Nullable } from '@singularity/api-interfaces';
