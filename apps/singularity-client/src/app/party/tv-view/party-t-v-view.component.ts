@@ -1,6 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PartyService } from '../party.service';
-import { filter, map, Observable, ReplaySubject, Subject, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs';
+import {
+  combineLatest,
+  filter,
+  map,
+  Observable,
+  of,
+  ReplaySubject,
+  Subject,
+  switchMap,
+  takeUntil,
+  withLatestFrom
+} from 'rxjs';
 import { Nullable, Optional, PartyDto, PartyQueueItemDto } from '@singularity/api-interfaces';
 
 @Component({
@@ -40,10 +51,17 @@ export class PartyTVViewComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.currentSong$ = this.readySubject.pipe(
+    this.currentSong$ = combineLatest([this.readySubject, this.partySubject]).pipe(
       withLatestFrom(this.upNextQueueItem$),
-      map((value: [void, Nullable<PartyQueueItemDto>]) => value[1] === null ? null : { ...value[1] }),
-      tap((value) => console.log('test', value))
+      switchMap(([[_, party], queueItem]: [[void, Optional<PartyDto>], Nullable<PartyQueueItemDto>]) => {
+        if(queueItem === null || !party.hasValue()) {
+          return of(null);
+        }
+
+        return this.partyService.popSong$(party.value!.id, queueItem.id).pipe(
+          map(() => queueItem)
+        )
+      })
     )
   }
 

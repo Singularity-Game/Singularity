@@ -55,6 +55,20 @@ export class Party {
     this.queueSubject.next(queue);
   }
 
+  public popSong(queueItemId: string): void {
+    this.lastInteraction = new Date();
+
+    const queue = this.queueSubject.getValue();
+    const index = queue.findIndex((queueItem) => queueItem.id === queueItemId);
+
+    if(index === -1) {
+      throw new Error('There is no queueItem with the given id')
+    }
+
+    queue.splice(index, 1);
+    this.queueSubject.next(queue);
+  }
+
   public joinQueuedSong(queueId: UUID, participant: PartyParticipant): PartyQueueItem {
     this.lastInteraction = new Date();
 

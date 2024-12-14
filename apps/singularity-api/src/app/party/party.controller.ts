@@ -241,4 +241,17 @@ export class PartyController {
 
     return party.leaveQueuedSong(partyQueueItemId, participant);
   }
+
+  @Delete(':partyId/queue/:queueItemId')
+  @UseInterceptors(MapInterceptor(PartyQueueItem, PartyQueueItemDto))
+  public async popQueueItem(@Param('partyId') partyId: string,
+                            @Param('queueItemId') partyQueueItemId: string): Promise<void> {
+    const party = this.partyService.getPartyById(partyId);
+
+    if (!party) {
+      throw new BadRequestException('There is no Party with the given id');
+    }
+
+    party.popSong(partyQueueItemId)
+  }
 }

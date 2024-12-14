@@ -73,4 +73,8 @@ export class PartyService {
   public leaveQueuedSong$(partyId: string, queueItemId: string, participant: PartyParticipantDto): Observable<PartyQueueItemDto> {
     return this.api.delete$(`api/party/${partyId}/queue/${queueItemId}/participants/${participant.id}`);
   }
+
+  public popSong$(partyId: string, queueItemId: string): Observable<void> {
+    return this.api.delete$(`api/party/${partyId}/queue/${queueItemId}`);
+  }
 }
