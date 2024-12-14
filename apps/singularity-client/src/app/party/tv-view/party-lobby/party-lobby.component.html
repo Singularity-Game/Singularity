@@ -1,0 +1,40 @@
+<sui-mouse-timeout>
+  <div class="lobby">
+    <ng-container *ngIf="songs$ | async; let songs">
+      <singularity-audio-player class="video" [index]="index" [songs]="songs" [volume]="volume" [showFade]="true"
+                                (songFinished)="setNextSong(songs)"
+                                (timeRemaining)="timeRemaining = $event"></singularity-audio-player>
+    </ng-container>
+
+    <div class="party-code-window">
+      <div class="flex">
+        <qrcode [qrdata]="link ?? ''" [width]="300"></qrcode>
+        <div>
+          <h1>{{ 'party.lobby.title' | transloco }}</h1>
+          <p class="party-link">{{ link }}</p>
+          <p class="party-text">{{ 'party.lobby.description' | transloco }}</p>
+        </div>
+      </div>
+      <div class="center" *ngIf="upNextQueueItem">
+        <h2 (dblclick)="ready.emit()">{{ 'party.lobby.getReady' | transloco }} ({{ Math.floor(timeRemaining / 60) }}:{{ timeRemaining % 60 | number: '2.0-0' }})</h2>
+        <div class="participants">
+          <h1>
+            <span class="player-1">{{ upNextQueueItem.participants[0].name }}</span>
+            <span> vs </span>
+            <span clasS="player-2">{{ upNextQueueItem.participants[1].name }}</span>
+          </h1>
+        </div>
+        <div class="song-title">
+          <sui-fast-image [src]="'/api/party/' + party?.id + '/songs/' + upNextQueueItem.song.id + '/cover'"
+                          [blurrySrc]="'/api/party/' + party?.id + '/songs/' + upNextQueueItem.song.id + '/cover/small'"
+                          height="75px" width="75px"></sui-fast-image>
+          <div>
+            <h3>{{ upNextQueueItem.song.name }}</h3>
+            <p>{{ upNextQueueItem.song.artist }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</sui-mouse-timeout>
+

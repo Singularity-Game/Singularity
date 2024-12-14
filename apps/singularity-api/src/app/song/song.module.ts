@@ -15,6 +15,7 @@ import { SongDownloadService } from './song-download.service';
 @Module({
   controllers: [SongController],
   providers: [SongService, YtService, FanartService, SongDownloadService, SongProfile, SongNoteProfile],
-  imports: [TypeOrmModule.forFeature([Song, SongNote]), ConfigModule, HttpModule]
+  imports: [TypeOrmModule.forFeature([Song, SongNote]), ConfigModule, HttpModule],
+  exports: [SongService, SongProfile]
 })
 export class SongModule {}

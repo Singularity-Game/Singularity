@@ -11,6 +11,7 @@ import { classes } from '@automapper/classes';
 import { UserManagementModule } from './user-management/user-management.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { PartyModule } from './party/party.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { PartyModule } from './party/party.module';
     AutomapperModule.forRoot({
       strategyInitializer: classes()
     }),
+    ScheduleModule.forRoot(),
     SongModule,
     UserManagementModule,
     PartyModule

@@ -1,0 +1,39 @@
+<ng-container *ngIf="party$ | async; let party; else loading">
+  <ng-container *ngIf="partyParticipant$ | async; let partyParticipant; else loading">
+    <singularity-party-smartphone-header [party]="party"></singularity-party-smartphone-header>
+    <ng-container *ngIf="queue$ | async; let queue">
+      <h3>{{ 'party.smartphone.home.upNext' | transloco }}</h3>
+      <table class="sui-table">
+        <tbody>
+        <tr singularity-party-song-queue-item
+            *ngFor="let queueItem of queue | partySongsReadyFilter; trackBy: queueTrackBy"
+            [queueItem]="queueItem" [party]="party" [participant]="partyParticipant"></tr>
+        </tbody>
+      </table>
+      <h3>{{ 'party.smartphone.home.waiting' | transloco }}</h3>
+      <table class="sui-table">
+        <tbody>
+        <tr singularity-party-song-queue-item
+            *ngFor="let queueItem of queue | partySongsNotReadyFilter; trackBy: queueTrackBy"
+            [queueItem]="queueItem" [party]="party" [participant]="partyParticipant"></tr>
+        </tbody>
+      </table>
+    </ng-container>
+
+    <h3>Select Songs</h3>
+    <table class="sui-table">
+      <tbody>
+      <tr singularity-party-song-select-item
+          *ngFor="let song of songs$ | async"
+          [song]="song" [party]="party" [participant]="partyParticipant"></tr>
+      </tbody>
+    </table>
+
+  </ng-container>
+</ng-container>
+
+<ng-template #loading>
+  <div class="center">
+    <sui-loader></sui-loader>
+  </div>
+</ng-template>

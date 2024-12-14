@@ -39,6 +39,7 @@ export class SingComponent implements AfterViewInit, OnDestroy {
   public singerScores$?: Observable<number[]>;
   private audioPlayer?: HTMLAudioElement;
   private destroySubject = new Subject<void>();
+  private stopEmitted = false;
 
   constructor(private readonly songService: SongService,
               private readonly bpmService: BpmService,
@@ -125,8 +126,9 @@ export class SingComponent implements AfterViewInit, OnDestroy {
     this.audioPlayer?.remove();
     this.bpmService.stop();
 
-    if (abort) {
+    if (abort && !this.stopEmitted) {
       this.stopped.emit();
+      this.stopEmitted = true;
     }
   }
 
@@ -163,7 +165,7 @@ export class SingComponent implements AfterViewInit, OnDestroy {
         }
 
         if (this.audioPlayer.paused) {
-          this.stopped.emit();
+          this.stopSong(true);
         } else {
           this.audioPlayer.onended = () => this.stopSong(true);
         }

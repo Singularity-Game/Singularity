@@ -12,11 +12,11 @@ const routes: Routes = [
   {
     path: 'party',
     loadChildren: () => import('./party/party.module').then(m => m.PartyModule),
-    canActivate: [AuthenticationGuard],
   },
   {
     path: 'management',
     loadChildren: () => import('./management/management.module').then(m => m.ManagementModule),
+    canActivate: [AuthenticationGuard],
     data: { animation: 'management' }
   },
   {

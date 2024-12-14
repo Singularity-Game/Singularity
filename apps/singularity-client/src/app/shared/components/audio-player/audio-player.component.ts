@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { SongOverviewDto } from '@singularity/api-interfaces';
-import { SongService } from '../../shared/song.service';
+import { SongService } from '../../song.service';
 import { combineLatest, map, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 @Component({
@@ -27,7 +27,10 @@ export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  @Input() showFade = true;
+
   @Output() public songFinished = new EventEmitter<void>();
+  @Output() public timeRemaining = new EventEmitter<number>();
 
   @ViewChild('video') private video?: ElementRef<HTMLVideoElement>;
 
@@ -43,6 +46,9 @@ export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
     this.playSong();
 
     this.audio.onended = () => this.songFinished.emit();
+    this.audio.ontimeupdate = () => {
+      this.timeRemaining.emit(Math.round(this.audio.duration - this.audio.currentTime));
+    }
   }
 
   public ngOnDestroy(): void {

@@ -10,7 +10,6 @@ import { ToastService } from '../toast/toast.service';
 export class LayoutComponent {
 
   public colors$ = this.globalColorService.getColors$();
-  public textColor$ = this.globalColorService.getTextColor$();
   public toasts$ = this.toastService.getToasts$();
 
   constructor(private readonly globalColorService: SuiGlobalColorService,

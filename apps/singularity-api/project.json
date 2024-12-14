@@ -59,7 +59,8 @@
     "serve": {
       "executor": "@nx/js:node",
       "options": {
-        "buildTarget": "singularity-api:build"
+        "buildTarget": "singularity-api:build",
+        "runtimeArgs": ["--watch"]
       }
     },
     "lint": {

@@ -1,0 +1,30 @@
+<td>
+  <sui-fast-image [src]="'/api/party/' + party?.id + '/songs/' + queueItem?.song?.id + '/cover'"
+                  [blurrySrc]="'/api/party/' + party?.id + '/songs/' + queueItem?.song?.id + '/cover/small'"
+                  alt="Song Cover" width="50px" height="50px"></sui-fast-image>
+</td>
+<td>
+  <span class="song-title">{{ queueItem?.song?.name }}</span>
+  <span class="song-artist">{{ queueItem?.song?.artist }}</span>
+  <br>
+  @if (queueItem?.participants && queueItem!.participants!.length > 0) {
+    <span class="player-1">{{ queueItem!.participants[0].name }}</span>
+  }
+  @if (queueItem?.participants && queueItem!.participants!.length === 2) {
+    <span class="vs">vs</span>
+    <span class="player-2">{{ queueItem!.participants[1].name }}</span>
+  }
+</td>
+<td>
+  @if (queueItem?.participants && queueItem!.participants!.length != 2 && queueItem!.participants[0].id !== participant!.id) {
+    <button suiButton [isIcon]="true" (click)="join()">
+      <img class="icon" src="/assets/icons/user-plus.svg" width="20" alt="play">
+    </button>
+  }
+
+  @if (queueItem?.participants && (queueItem!.participants[0]?.id === participant?.id || queueItem!.participants[1]?.id === participant?.id)) {
+    <button suiButton [isIcon]="true" (click)="leave()">
+      <img class="icon" src="/assets/icons/user-minus.svg" width="20" alt="play">
+    </button>
+  }
+</td>

@@ -23,3 +23,4 @@ export { CheckboxDirective } from './lib/checkbox/checkbox.directive';
 export { AlertComponent } from './lib/alert/alert.component';
 export { SuiGlobalColorService } from './lib/sui-global-color/sui-global-color.service';
 export { ToastService } from './lib/toast/toast.service';
+export { MouseTimeoutComponent } from './lib/mouse-timeout/mouse-timeout.component';

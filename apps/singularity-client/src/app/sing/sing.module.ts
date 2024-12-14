@@ -9,7 +9,6 @@ import { LyricsComponent } from './sing/lyrics/lyrics.component';
 import {
   MicrophoneSelectionDialogComponent
 } from './dialogs/microphone-selection-dialog/microphone-selection-dialog.component';
-import { MicrophoneGuard } from './guards/microphone.guard';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   AudioContextActivationDialogComponent
@@ -42,7 +41,6 @@ import { SingularityUiModule } from '@singularity/ui';
     SingularityUiModule
   ],
   providers: [
-    MicrophoneGuard,
     AudioContextGuard,
     SingerFactory
   ],

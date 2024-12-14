@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MicrophoneService } from '../../services/microphone.service';
-import { finalize, map, Observable, Subject, takeUntil, tap } from 'rxjs';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { FormArray, FormControl } from '@angular/forms';
 import { MicrophoneWithMeter } from './microphone-with-meter';
 import { Nullable } from '@singularity/api-interfaces';
@@ -19,7 +19,7 @@ export class MicrophoneSelectionDialogComponent implements OnInit, OnDestroy {
 
   public destroySubject = new Subject<void>();
 
-  constructor(private readonly modalContext: ModalContext<boolean, null>,
+  constructor(public readonly modalContext: ModalContext<boolean, {minCount: number, maxCount: number}>,
               private readonly microphoneService: MicrophoneService) {
   }
 
@@ -38,6 +38,11 @@ export class MicrophoneSelectionDialogComponent implements OnInit, OnDestroy {
       .filter((value: Nullable<MicrophoneWithMeter>) => value !== null)
       .map((value: Nullable<MicrophoneWithMeter>) => (value as MicrophoneWithMeter).device.deviceId);
 
+    const length = microphonesDeviceIds.length;
+    if (length < this.modalContext.data.minCount || length > this.modalContext.data.maxCount) {
+      return;
+    }
+
     this.microphoneService.setMicrophones(microphonesDeviceIds);
 
     this.modalContext.close(true);
@@ -53,10 +58,7 @@ export class MicrophoneSelectionDialogComponent implements OnInit, OnDestroy {
         map((devices: MediaDeviceInfo[]) => {
           const array = devices.map<Nullable<MicrophoneWithMeter>>((device: MediaDeviceInfo) => ({
             device: device,
-            meter$: this.microphoneService.getDeviceMeter$(device.deviceId).pipe(
-              tap(() => console.log('start')),
-              finalize(() => console.log('strop'))
-            )
+            meter$: this.microphoneService.getDeviceMeter$(device.deviceId)
           }));
           array.unshift(null);
           return array;

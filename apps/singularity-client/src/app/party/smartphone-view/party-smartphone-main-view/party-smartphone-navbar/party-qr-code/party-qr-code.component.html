@@ -1,0 +1,6 @@
+<div class="wrapper">
+  <qrcode [qrdata]="link" [width]="300"></qrcode>
+  <p>{{link}}</p>
+  <button suiButton (click)="close()" class="sui-space-top-large">{{ 'general.back' | transloco }}</button>
+</div>
+

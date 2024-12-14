@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { CarouselComponent, OwlOptions } from 'ngx-owl-carousel-o';
 import { SongOverviewDto } from '@singularity/api-interfaces';
 
@@ -26,7 +26,6 @@ export class SongCarouselComponent {
   public dragging = false;
 
   public onDrag(drag: any): void {
-    console.log(drag);
     this.dragging = drag.dragging;
   }
 

@@ -5,7 +5,7 @@ import { MicrophoneGuard } from './guards/microphone.guard';
 import { AudioContextGuard } from './guards/audio-context.guard';
 
 const routes: Routes = [
-  { path: ':id', component: SingPageComponent, canActivate: [MicrophoneGuard, AudioContextGuard] }
+  { path: ':id', component: SingPageComponent, canActivate: [MicrophoneGuard(), AudioContextGuard] }
 ];
 
 @NgModule({

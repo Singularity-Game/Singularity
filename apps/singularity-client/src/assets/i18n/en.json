@@ -164,6 +164,42 @@
     "activeOfflineModeWarning": "Offline mode is active. Some songs may not be displayed.",
     "turnOffOfflineMode": "Turn Off Offline Mode"
   },
+  "party": {
+    "createParty": {
+      "title": "Create Party",
+      "inputPlaceholder": "Name",
+      "button": "Let's Go"
+    },
+    "lobby": {
+      "title": "Waiting for Players...",
+      "description": "Scan the QR code to join the party. Choose songs and compete against others!",
+      "getReady": "Get Ready"
+    },
+    "smartphone": {
+      "wrongId": "This party does not exist.",
+      "joinParty": {
+        "joinPartyText1": "Join the party of ",
+        "joinPartyText2": "!",
+        "userNameDescription": "What's your name?",
+        "userNamePlaceholder": "Your name...",
+        "nextButton": "Next",
+        "selfie": "Take a Selfie!",
+        "triggerSelfie": "Take Picture",
+        "skip": "Skip",
+        "retry": "Retake Picture",
+        "join": "Join Party"
+      },
+      "home": {
+        "upNext": "Up next...",
+        "waiting": "Waiting for Players..."
+      },
+      "songList": {
+        "title": "Title",
+        "author": "Author",
+        "actions": "Actions"
+      }
+    }
+  },
   "shared": {
     "adminFeatureIcon": {
       "adminHint": "This section is visible only to administrators."

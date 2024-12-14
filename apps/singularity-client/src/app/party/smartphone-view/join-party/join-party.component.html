@@ -1,0 +1,22 @@
+<ng-container *ngIf="party$ | async; let party; else loading">
+  <ng-container *ngIf="party.value !== null; else noParty">
+    <h1 class="text-center">{{party.value.name}}</h1>
+    @if (userName === null) {
+      <singularity-join-party-set-username [party]="party.value" (username)="setUserName($event)"></singularity-join-party-set-username>
+    } @else if (profilePictureBase64 === null) {
+      <singularity-join-party-set-profile-picture (photoBase64)="setProfilePictureBase64($event)"></singularity-join-party-set-profile-picture>
+    } @else {
+      <singularity-join-party-ready [userName]="userName" [profilePictureBase64]="profilePictureBase64" (cancel)="cancel()" (join)="join(party.value.id)"></singularity-join-party-ready>
+    }
+  </ng-container>
+</ng-container>
+
+<ng-template #loading>
+  <div class="center">
+    <sui-loader></sui-loader>
+  </div>
+</ng-template>
+
+<ng-template #noParty>
+  <h1 class="text-center">{{ 'party.smartphone.wrongId' | transloco }}</h1>
+</ng-template>

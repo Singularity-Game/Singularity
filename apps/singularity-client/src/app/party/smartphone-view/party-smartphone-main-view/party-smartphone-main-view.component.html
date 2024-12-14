@@ -1,0 +1,6 @@
+<ng-container *ngIf="party$ | async; let party">
+  <ng-container *ngIf="participant$ | async; let participant">
+    <singularity-smartphone-navbar [party]="party" [participant]="participant"></singularity-smartphone-navbar>
+  </ng-container>
+</ng-container>
+<router-outlet></router-outlet>

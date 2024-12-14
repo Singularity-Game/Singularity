@@ -20,11 +20,13 @@ export class SuiGlobalColorService {
   }
 
   public setPrimaryColor(color: string): void {
-
+    const colors = this.colorsSubject.getValue();
+    this.colorsSubject.next([color, colors[1]]);
   }
 
   public setSecondaryColor(color: string): void {
-
+    const colors = this.colorsSubject.getValue();
+    this.colorsSubject.next([colors[0], color]);
   }
 
   public getColors$(): Observable<[string, string]> {

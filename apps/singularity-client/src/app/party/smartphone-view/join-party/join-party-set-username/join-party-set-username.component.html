@@ -1,0 +1,15 @@
+<p class="text-center">
+  {{ 'party.smartphone.joinParty.joinPartyText1' | transloco }}
+  <b>{{party?.creator}}</b>
+  {{ 'party.smartphone.joinParty.joinPartyText2' | transloco }}
+</p>
+
+<div class="center">
+  <p class="text-center">{{ 'party.smartphone.joinParty.userNameDescription' | transloco }}</p>
+  <sui-input-container>
+    <input suiInput [(ngModel)]="text" [placeholder]="'party.smartphone.joinParty.userNamePlaceholder' | transloco">
+  </sui-input-container>
+  <div class="text-center sui-space-top-large">
+    <button suiButton [disabled]="!text" (click)="next()">{{ 'party.smartphone.joinParty.nextButton' | transloco }}</button>
+  </div>
+</div>

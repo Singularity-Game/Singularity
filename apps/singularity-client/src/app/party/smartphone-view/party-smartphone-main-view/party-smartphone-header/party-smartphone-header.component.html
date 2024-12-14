@@ -1,0 +1,18 @@
+<ng-container *ngIf="currentSong$ | async; let currentSong">
+  <div class="cover-container">
+    <sui-fast-image [src]="'/api/party/' + party?.id + '/songs/' + currentSong.id + '/cover'"
+                    [blurrySrc]="'/api/party/' + party?.id + '/songs/' + currentSong.id + '/cover/small'"
+                    alt="Song Cover"></sui-fast-image>
+  </div>
+  <div class="cover-description">
+    <div class="cover-description-text">
+      <h2>{{ currentSong.name }}</h2>
+<!--      <p>Rotti vs Test</p>-->
+    </div>
+    <div class="cover-description-like-button-wrapper">
+<!--      <button class="like-button">-->
+<!--        <img src="/assets/icons/heart.svg" alt="like-button" />-->
+<!--      </button>-->
+    </div>
+  </div>
+</ng-container>

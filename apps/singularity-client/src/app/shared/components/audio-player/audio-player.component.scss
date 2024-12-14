@@ -2,6 +2,14 @@
   height: 300px;
   width: 100%;
   position: absolute;
+  z-index: 1;
   bottom: 0;
   background-image: linear-gradient(to top, black, black, transparent);
+}
+
+.video {
+  position: absolute;
+  height: 100vh;
+  left: 50%;
+  transform: translateX(-50%);
 }

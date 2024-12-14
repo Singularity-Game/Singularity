@@ -46,7 +46,6 @@ export class SongManagementService extends SongService {
   }
 
   public getSongUploadInfo$(txtFile: File): Observable<SongUploadInfo> {
-    console.log(txtFile);
     const formData = new FormData();
     formData.append('txtFile', txtFile);
 
