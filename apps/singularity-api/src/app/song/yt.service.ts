@@ -32,7 +32,7 @@ export class YtService {
 
   public async downloadVideo(id: string): Promise<SongFile> {
     const info = await ytdl.getInfo(id);
-    const format = ytdl.chooseFormat(info.formats, { quality: 'highestvideo', filter: 'audioandvideo' });
+    const format = ytdl.chooseFormat(info.formats, { quality: 'highestvideo', filter: 'videoonly' });
 
     const buffer = await this.download(info, format);
 
@@ -41,7 +41,7 @@ export class YtService {
 
   public async downloadAudo(id: string): Promise<SongFile> {
     const info = await ytdl.getInfo(id);
-    const format = ytdl.chooseFormat(info.formats, { quality: 'highest', filter: 'audioonly' });
+    const format = ytdl.chooseFormat(info.formats, { quality: 'highestaudio', filter: 'audioonly' });
 
     const buffer = await this.download(info, format);
 
