@@ -2,8 +2,11 @@ $header-height: 200px;
 
 .header {
   height: $header-height;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+  margin-top: calc(-1 * var(--padding));
+  margin-left: calc(-1 * var(--padding));
+  margin-right: calc(-1 * var(--padding));
 
   font-size: 25px;
 
@@ -16,8 +19,8 @@ canvas {
   position: absolute;
   width: 100%;
   height: $header-height;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
 }
 
 
