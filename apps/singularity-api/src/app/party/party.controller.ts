@@ -241,6 +241,7 @@ export class PartyController {
   }
 
   @Delete(':partyId/queue/:queueItemId')
+  @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(MapInterceptor(PartyQueueItem, PartyQueueItemDto))
   public async popQueueItem(@Param('partyId') partyId: string,
                             @Param('queueItemId') partyQueueItemId: string): Promise<void> {
