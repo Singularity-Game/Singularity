@@ -1,0 +1,24 @@
+.countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.player-1 {
+  color: #526ED3;
+}
+
+.player-2 {
+  color: #FFA3A3;
+}
+
+.sing {
+  background: black;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}

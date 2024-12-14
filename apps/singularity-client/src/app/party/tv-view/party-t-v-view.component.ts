@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PartyService } from '../party.service';
-import { filter, map, Observable, ReplaySubject, Subject, switchMap, takeUntil } from 'rxjs';
+import { filter, map, Observable, ReplaySubject, Subject, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs';
 import { Nullable, Optional, PartyDto, PartyQueueItemDto } from '@singularity/api-interfaces';
 
 @Component({
@@ -11,6 +11,9 @@ import { Nullable, Optional, PartyDto, PartyQueueItemDto } from '@singularity/ap
 export class PartyTVViewComponent implements OnInit, OnDestroy {
   public partySubject = new ReplaySubject<Optional<PartyDto>>(1);
   public upNextQueueItem$?: Observable<Nullable<PartyQueueItemDto>>;
+  public currentSong$?: Observable<Nullable<PartyQueueItemDto>>;
+
+  private readySubject = new Subject<void>();
 
   private destroySubject = new Subject<void>();
 
@@ -33,11 +36,15 @@ export class PartyTVViewComponent implements OnInit, OnDestroy {
           return null;
         }
 
-        console.log('test')
-
         return queue.find((queueItem: PartyQueueItemDto) => queueItem.ready) ?? null;
       })
     );
+
+    this.currentSong$ = this.readySubject.pipe(
+      withLatestFrom(this.upNextQueueItem$),
+      map((value: [void, Nullable<PartyQueueItemDto>]) => value[1] === null ? null : { ...value[1] }),
+      tap((value) => console.log('test', value))
+    )
   }
 
   public ngOnDestroy(): void {
@@ -48,5 +55,9 @@ export class PartyTVViewComponent implements OnInit, OnDestroy {
 
   public setParty(party: PartyDto): void {
     this.partySubject.next(new Optional(party));
+  }
+
+  public ready(): void {
+    this.readySubject.next();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Nullable, PartyDto, PartyQueueItemDto, SongOverviewDto } from '@singularity/api-interfaces';
 import { SongService } from '../../../shared/song.service';
 import { Observable, shareReplay, Subject, takeUntil, tap } from 'rxjs';
@@ -14,6 +14,8 @@ import { PartyService } from '../../party.service';
 export class PartyLobbyComponent implements OnInit, OnDestroy {
   @Input() party?: PartyDto;
   @Input() upNextQueueItem: Nullable<PartyQueueItemDto> = null;
+
+  @Output() ready = new EventEmitter<void>();
 
   public songs$?: Observable<SongOverviewDto[]>;
 
@@ -51,6 +53,8 @@ export class PartyLobbyComponent implements OnInit, OnDestroy {
   }
 
   public setNextSong(songs: SongOverviewDto[]): void {
+    this.ready.next();
+
     let currentIndex = this.index;
     while(currentIndex === this.index && songs.length > 1) {
       currentIndex = Math.floor(Math.random() * songs.length);

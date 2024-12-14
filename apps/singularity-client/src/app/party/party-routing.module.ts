@@ -11,9 +11,11 @@ import {
 import {
   PartySmartphoneHomeComponent
 } from './smartphone-view/party-smartphone-main-view/party-smartphone-home/party-smartphone-home.component';
+import { MicrophoneGuard } from '../sing/guards/microphone.guard';
+import { AudioContextGuard } from '../sing/guards/audio-context.guard';
 
 const routes: Routes = [
-  { path: '', component: PartyTVViewComponent, canActivate: [AuthenticationGuard] },
+  { path: '', component: PartyTVViewComponent, canActivate: [AuthenticationGuard, MicrophoneGuard, AudioContextGuard] },
   {
     path: ':id', component: PartySmartphoneViewComponent, children: [
       {

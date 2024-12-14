@@ -42,10 +42,12 @@ import {
 import { PartySongQueueItemComponent } from './smartphone-view/party-smartphone-main-view/party-smartphone-home/party-song-queue-item/party-song-queue-item.component';
 import { PartySongsNotReadyFilterPipe } from './pipes/party-songs-not-ready-filter.pipe';
 import { PartySongsReadyFilterPipe } from './pipes/party-songs-ready-filter.pipe';
+import { PartySingComponent } from './tv-view/party-sing/party-sing.component';
+import { SingModule } from '../sing/sing.module';
 
 @NgModule({
-  declarations: [CreatePartyComponent, PartyLobbyComponent, PartyTVViewComponent, PartySmartphoneViewComponent, JoinPartyComponent, PartySmartphoneHomeComponent, JoinPartySetUsernameComponent, JoinPartySetProfilePictureComponent, JoinPartyReadyComponent, PartySmartphoneNavbarComponent, PartyQrCodeComponent, PartySmartphoneHeaderComponent, PartySongSelectItemComponent, PartySmartphoneMainViewComponent, PartySongQueueItemComponent, PartySongsReadyFilterPipe, PartySongsNotReadyFilterPipe],
-  imports: [CommonModule, PartyRoutingModule, ReactiveFormsModule, SingularityUiModule, TranslocoModule, SharedModule, QRCodeModule, FormsModule],
+  declarations: [CreatePartyComponent, PartyLobbyComponent, PartyTVViewComponent, PartySmartphoneViewComponent, JoinPartyComponent, PartySmartphoneHomeComponent, JoinPartySetUsernameComponent, JoinPartySetProfilePictureComponent, JoinPartyReadyComponent, PartySmartphoneNavbarComponent, PartyQrCodeComponent, PartySmartphoneHeaderComponent, PartySongSelectItemComponent, PartySmartphoneMainViewComponent, PartySongQueueItemComponent, PartySongsReadyFilterPipe, PartySongsNotReadyFilterPipe, PartySingComponent],
+  imports: [CommonModule, PartyRoutingModule, ReactiveFormsModule, SingularityUiModule, TranslocoModule, SharedModule, QRCodeModule, FormsModule, SingModule],
   providers: [PartyService, PartyParticipantService, PartyParticipantGuard]
 })
 export class PartyModule {
