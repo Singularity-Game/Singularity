@@ -11,7 +11,7 @@ RUN apt-get update && \
 
 ENV SSL_VERSION=1.0.2o
 
-RUN curl https://www.openssl.org/source/openssl-$SSL_VERSION.tar.gz -O && \
+RUN wget https://github.com/openssl/openssl/releases/download/OpenSSL_1_0_2o/openssl-$SSL_VERSION.tar.gz && \
     tar -xzf openssl-$SSL_VERSION.tar.gz && \
     cd openssl-$SSL_VERSION && ./config && make depend && make install && \
     cd .. && rm -rf openssl-$SSL_VERSION*
@@ -34,6 +34,8 @@ RUN npm install
 RUN npm run build-backend && npm run build-frontend
 RUN cp -r dist/apps/singularity-client dist/apps/singularity-api/static
 
-FROM node:19.2.0
+FROM node:20.3.0
 COPY --from=build /usr/src/app/dist/apps/singularity-api /usr/src/app
-CMD node /usr/src/app/main.js
+WORKDIR /usr/src/app
+RUN npm install
+CMD node main.js
