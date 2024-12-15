@@ -28,7 +28,7 @@
     "@automapper/classes": "^8.7.7",
     "@automapper/core": "^8.7.7",
     "@automapper/nestjs": "^8.7.7",
-    "@distube/ytdl-core": "^4.15.3",
+    "@distube/ytdl-core": "^4.15.1",
     "@fastify/static": "^6.10.1",
     "@nestjs/axios": "^3.0.2",
     "@nestjs/common": "10.0.2",
