@@ -11,10 +11,10 @@ export class YtService {
   private readonly agent: Agent;
 
   constructor(configService: ConfigService) {
-    const proxy = configService.get('YOUTUBE_PROXY');
+    const cookie = configService.get('YOUTUBE_COOKIE');
 
-    if(proxy) {
-     this.agent = ytdl.createProxyAgent({ uri: proxy });
+    if(cookie) {
+     this.agent = ytdl.createAgent(JSON.parse(cookie));
     } else {
       this.agent = ytdl.createAgent();
     }
