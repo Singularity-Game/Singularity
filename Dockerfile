@@ -34,6 +34,8 @@ RUN npm install
 RUN npm run build-backend && npm run build-frontend
 RUN cp -r dist/apps/singularity-client dist/apps/singularity-api/static
 
-FROM node:19.2.0
+FROM node:20.3.0
 COPY --from=build /usr/src/app/dist/apps/singularity-api /usr/src/app
-CMD node /usr/src/app/main.js
+WORKDIR /usr/src/app
+RUN npm install
+CMD node main.js
