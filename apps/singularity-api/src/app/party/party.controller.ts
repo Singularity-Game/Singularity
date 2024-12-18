@@ -131,7 +131,7 @@ export class PartyController {
     const buffer = await this.songService.getSongCoverFile(+songId);
     const fileType = await fromBuffer(buffer);
     const downscaledBuffer = await sharp(buffer)
-      .resize(512, 512)
+      .resize(128, 128)
       .toBuffer();
 
     response.setHeader('Content-Type', fileType.mime);
