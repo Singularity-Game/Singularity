@@ -116,7 +116,7 @@ export class Party {
 
     // Remove the queueItem if there are no participants left
     if(queueItem.participants.length === 0) {
-      queue.splice(queue.indexOf(queueItem));
+      queue.splice(queue.indexOf(queueItem), 1);
     }
 
     this.queueSubject.next(queue);
