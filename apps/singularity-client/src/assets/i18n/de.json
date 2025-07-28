@@ -115,7 +115,14 @@
         "author": "Author",
         "year": "Jahr",
         "actions": "Aktionen",
-        "serverDownloadsSongs": "Der Server lädt gerade Songs herunter. Diese sind bald verfügbar."
+        "serverDownloadsSongs": "Der Server lädt gerade Songs herunter. Diese sind bald verfügbar.",
+        "autoIndexing": {
+          "header": "Songs Auto-Indizieren",
+          "description": "Automatisch das Song-Verzeichnis nach Ultrastar-Dateien durchsuchen und zur Datenbank hinzufügen.",
+          "startIndex": "Songs Indizieren",
+          "indexing": "Indiziere...",
+          "result": "{{indexed}} Songs indiziert, {{skipped}} übersprungen, {{errors}} Fehler."
+        }
       }
     },
     "users": {

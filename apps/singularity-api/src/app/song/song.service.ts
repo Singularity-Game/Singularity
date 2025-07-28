@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as fs from 'fs';
+import * as path from 'path';
 import { SongNote } from './models/song-note.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Song } from './models/song.entity';
@@ -28,46 +29,55 @@ export class SongService {
   public async getSongAudioFile(id: number): Promise<Buffer> {
     const song = await this.getSongById(id);
 
-    return this.getSongDirectory(song.artist, song.name)
-      .then((directory: string) => new Promise<Buffer>((resolve, reject) => {
-        fs.readFile(`${directory}/${song.audioFileName}`, (error: Error, data: Buffer) => {
-          if (error) {
-            reject(error);
-          }
+    // Handle both old format (filename only) and new format (relative path)
+    const audioPath = song.audioFileName.includes('/') 
+      ? this.getAbsoluteSongPath(song.audioFileName)
+      : await this.getSongDirectory(song.artist, song.name).then(dir => `${dir}/${song.audioFileName}`);
 
-          resolve(data);
-        });
-    }));
+    return new Promise<Buffer>((resolve, reject) => {
+      fs.readFile(audioPath, (error: Error, data: Buffer) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(data);
+      });
+    });
   }
 
   public async getSongVideoFile(id: number): Promise<Buffer> {
     const song = await this.getSongById(id);
 
-    return this.getSongDirectory(song.artist, song.name)
-      .then((directory: string) => new Promise<Buffer>((resolve, reject) => {
-        fs.readFile(`${directory}/${song.videoFileName}`, (error: Error, data: Buffer) => {
-          if (error) {
-            reject(error);
-          }
+    // Handle both old format (filename only) and new format (relative path)
+    const videoPath = song.videoFileName.includes('/') 
+      ? this.getAbsoluteSongPath(song.videoFileName)
+      : await this.getSongDirectory(song.artist, song.name).then(dir => `${dir}/${song.videoFileName}`);
 
-          resolve(data);
-        });
-      }));
+    return new Promise<Buffer>((resolve, reject) => {
+      fs.readFile(videoPath, (error: Error, data: Buffer) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(data);
+      });
+    });
   }
 
   public async getSongCoverFile(id: number): Promise<Buffer> {
     const song = await this.getSongById(id);
 
-    return this.getSongDirectory(song.artist, song.name)
-      .then((directory: string) => new Promise<Buffer>((resolve, reject) => {
-        fs.readFile(`${directory}/${song.coverFileName}`, (error: Error, data: Buffer) => {
-          if (error) {
-            reject(error);
-          }
+    // Handle both old format (filename only) and new format (relative path)
+    const coverPath = song.coverFileName.includes('/') 
+      ? this.getAbsoluteSongPath(song.coverFileName)
+      : await this.getSongDirectory(song.artist, song.name).then(dir => `${dir}/${song.coverFileName}`);
 
-          resolve(data);
-        });
-      }));
+    return new Promise<Buffer>((resolve, reject) => {
+      fs.readFile(coverPath, (error: Error, data: Buffer) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(data);
+      });
+    });
   }
 
   public async deleteSong(id: number): Promise<Song> {
@@ -240,5 +250,10 @@ export class SongService {
         }
       });
     });
+  }
+
+  private getAbsoluteSongPath(relativePath: string): string {
+    const baseDirectory = this.configService.get('SONG_DIRECTORY', 'songs');
+    return path.resolve(process.cwd(), baseDirectory, relativePath);
   }
 }
