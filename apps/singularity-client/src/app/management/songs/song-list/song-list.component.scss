@@ -1,0 +1,39 @@
+.indexing-section {
+  margin: 1rem 0 2rem 0;
+  padding: 1rem;
+  border: 1px solid var(--sui-border-color, #ddd);
+  border-radius: 8px;
+  background: var(--sui-background-color-light, #f9f9f9);
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+    color: var(--sui-text-color-secondary, #666);
+  }
+
+  .indexing-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    button {
+      align-self: flex-start;
+    }
+
+    .indexing-result {
+      p {
+        margin: 0;
+        padding: 0.5rem;
+        background: var(--sui-success-color-light, #d4edda);
+        border: 1px solid var(--sui-success-color, #28a745);
+        border-radius: 4px;
+        color: var(--sui-success-color-dark, #155724);
+      }
+    }
+  }
+}

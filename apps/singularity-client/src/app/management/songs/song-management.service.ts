@@ -60,4 +60,12 @@ export class SongManagementService extends SongService {
     return this.removeDownload$(id)
       .pipe(switchMap(() => this.api.delete$<SongDto>(`api/song/${id}`)))
   }
+
+  public indexSongs$(): Observable<{ indexed: number; skipped: number; errors: number }> {
+    return this.api.post$('api/song/index', {});
+  }
+
+  public getIndexingStatus$(): Observable<{ isIndexing: boolean }> {
+    return this.api.get$('api/song/index/status');
+  }
 }

@@ -14,6 +14,8 @@ export class SongListComponent implements OnInit, OnDestroy {
   public isAdmin$ = this.authenticationService.isAdmin$();
   public downloadingSongs$?: Observable<SongListDownloadInfo[]>;
   public songs: SongOverviewDto[] = [];
+  public isIndexing = false;
+  public indexingResult?: { indexed: number; skipped: number; errors: number };
 
   public songListDownloadState = SongListDownloadState;
 
@@ -41,6 +43,31 @@ export class SongListComponent implements OnInit, OnDestroy {
     }
 
     this.songs.splice(index, 1);
+  }
+
+  public startIndexing(): void {
+    if (this.isIndexing) {
+      return;
+    }
+
+    this.isIndexing = true;
+    this.indexingResult = undefined;
+
+    this.songManagementService.indexSongs$()
+      .pipe(takeUntil(this.destroySubject))
+      .subscribe({
+        next: (result) => {
+          this.indexingResult = result;
+          this.isIndexing = false;
+          // Refresh the song list if any songs were indexed
+          if (result.indexed > 0) {
+            this.setupSongs();
+          }
+        },
+        error: () => {
+          this.isIndexing = false;
+        }
+      });
   }
 
   private setupDownloadInfos(): void {
