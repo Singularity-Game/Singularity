@@ -1,4 +1,4 @@
-import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { map, Observable, of, shareReplay, Subject, switchMap, takeUntil } from 'rxjs';
 import { SongOverviewDto } from '@singularity/api-interfaces';
 import { SongService } from '../shared/song.service';
@@ -18,28 +18,14 @@ export class PlayComponent implements OnInit, OnDestroy {
   public searchTerm = '';
   public orderBy: { key: keyof SongOverviewDto, ascending: boolean } = { key: 'name', ascending: true };
   public carouselIndex = 0;
-  public isScrolled = false;
   public paused = false;
   public volume = +(this.settingsService.getLocalSetting(LocalSettings.MenuVolume) || '0');
+
+  public viewPortItems: SongOverviewDto[] = [];
 
   private destroySubject = new Subject<void>();
 
   @ViewChild(SongCarouselComponent) private carousel?: SongCarouselComponent;
-
-  @HostListener('window:scroll')
-  public onScroll(): void {
-    const verticalOffset = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-
-    if (verticalOffset === 0 && this.isScrolled) {
-      this.isScrolled = false;
-      return;
-    }
-
-    if (verticalOffset !== 0 && !this.isScrolled) {
-      this.isScrolled = true;
-      return;
-    }
-  }
 
   constructor(private readonly songService: SongService,
               private readonly settingsService: SettingsService,

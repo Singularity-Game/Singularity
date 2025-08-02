@@ -1,0 +1,5 @@
+@if (show) {
+  <ng-content></ng-content>
+} @else {
+  <div [style.width]="width + 'px'" [style.height]="height + 'px'" #placeholder></div>
+}

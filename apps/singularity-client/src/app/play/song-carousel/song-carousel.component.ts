@@ -21,7 +21,8 @@ export class SongCarouselComponent {
     fluidSpeed: true,
     autoWidth: true,
     items: window.innerWidth / 270,
-    dots: false
+    dots: false,
+    lazyLoad: true
   }
   public dragging = false;
 
