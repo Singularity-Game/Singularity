@@ -90,7 +90,7 @@ export class UltrastarParser {
 		songNote.startBeat = +lineArray[1] || 0;
 		songNote.lengthInBeats = +lineArray[2] || 0;
 		songNote.pitch = +lineArray[3] || 0;
-		songNote.text = lineArray.slice(4).join(" ").replace(/\r?\n/g, "").trim();
+		songNote.text = lineArray.slice(4).join(" ").replace(/\r?\n/g, "");
 
 		return songNote;
 	}
