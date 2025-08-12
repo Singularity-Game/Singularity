@@ -3,7 +3,6 @@
   padding: 1rem;
   border: 1px solid var(--sui-border-color, #ddd);
   border-radius: 8px;
-  background: var(--sui-background-color-light, #f9f9f9);
 
   h2 {
     margin-top: 0;
@@ -29,10 +28,9 @@
       p {
         margin: 0;
         padding: 0.5rem;
-        background: var(--sui-success-color-light, #d4edda);
         border: 1px solid var(--sui-success-color, #28a745);
         border-radius: 4px;
-        color: var(--sui-success-color-dark, #155724);
+        color: var(--sui-success-color, #28a745);
       }
     }
   }
