@@ -3,8 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Song } from './models/song.entity';
-import { SongNote } from './models/song-note.entity';
-import { SongNoteType } from '@singularity/api-interfaces';
+import { UltrastarParser } from './utils/ultrastar-parser';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -95,7 +94,7 @@ export class SongIndexingService implements OnModuleInit {
             // Check if this looks like an Ultrastar file by reading the first few lines
             try {
               const content = fs.readFileSync(fullPath, 'utf8');
-              if (this.isUltrastarFile(content)) {
+              if (UltrastarParser.isUltrastarFile(content)) {
                 txtFiles.push(fullPath);
               }
             } catch (error) {
@@ -112,17 +111,6 @@ export class SongIndexingService implements OnModuleInit {
     return txtFiles;
   }
 
-  /**
-   * Checks if a text file is an Ultrastar file by looking for characteristic metadata
-   */
-  private isUltrastarFile(content: string): boolean {
-    const lines = content.split('\n').slice(0, 20); // Check first 20 lines
-    return lines.some(line => 
-      line.startsWith('#TITLE:') || 
-      line.startsWith('#ARTIST:') || 
-      line.startsWith('#BPM:')
-    );
-  }
 
   /**
    * Indexes a single song from its .txt file
@@ -131,16 +119,13 @@ export class SongIndexingService implements OnModuleInit {
     const content = fs.readFileSync(txtFilePath, 'utf8');
     const songDir = path.dirname(txtFilePath);
 
-    // Extract metadata
-    const artist = this.getSongMetadata(content, '#ARTIST');
-    const title = this.getSongMetadata(content, '#TITLE');
-    const year = +this.getSongMetadata(content, '#YEAR') || 0;
-    const bpm = +(this.getSongMetadata(content, '#BPM').replace(',', '.')) || 120;
-    const gap = +this.getSongMetadata(content, '#GAP') || 0;
-    const start = +this.getSongMetadata(content, '#START') || 0;
-    const end = +this.getSongMetadata(content, '#END') || 0;
+    // Parse the Ultrastar file
+    const { metadata, notes, pointsPerBeat } = UltrastarParser.parse(content);
+    
+    const artist = metadata.artist;
+    const title = metadata.title;
 
-    if (!artist || !title) {
+    if (!metadata.artist || !metadata.title) {
       this.logger.warn(`Missing artist or title in ${txtFilePath}`);
       return null;
     }
@@ -164,17 +149,16 @@ export class SongIndexingService implements OnModuleInit {
     }
 
     // Create song entity
-    const songNotes = this.getSongNotes(content);
     const song = this.songRepository.create();
-    song.artist = artist;
-    song.name = title;
-    song.year = year;
-    song.bpm = bpm;
-    song.gap = gap;
-    song.start = start;
-    song.end = end;
-    song.notes = songNotes;
-    song.pointsPerBeat = this.getPointsPerBeat(songNotes);
+    song.artist = metadata.artist;
+    song.name = metadata.title;
+    song.year = metadata.year;
+    song.bpm = metadata.bpm;
+    song.gap = metadata.gap;
+    song.start = metadata.start;
+    song.end = metadata.end;
+    song.notes = notes;
+    song.pointsPerBeat = pointsPerBeat;
     
     // Store relative paths from the song directory
     const baseSongDir = this.getSongDirectoryPath();
@@ -199,9 +183,9 @@ export class SongIndexingService implements OnModuleInit {
 
     // Check for files referenced in the .txt file first
     const txtContent = fs.readFileSync(txtFilePath, 'utf8');
-    const audioRef = this.getSongMetadata(txtContent, '#MP3');
-    const videoRef = this.getSongMetadata(txtContent, '#VIDEO');
-    const coverRef = this.getSongMetadata(txtContent, '#COVER');
+    const audioRef = UltrastarParser.getMetadataValue(txtContent, '#MP3');
+    const videoRef = UltrastarParser.getMetadataValue(txtContent, '#VIDEO');
+    const coverRef = UltrastarParser.getMetadataValue(txtContent, '#COVER');
 
     // Look for referenced files
     if (audioRef) {
@@ -273,80 +257,6 @@ export class SongIndexingService implements OnModuleInit {
     return path.resolve(process.cwd(), baseDirectory);
   }
 
-  /**
-   * Extracts metadata from Ultrastar .txt content
-   */
-  private getSongMetadata(txt: string, metaDataKey: string): string {
-    const lines = txt.split('\n');
-    const metaDataLine = lines.find((line: string) => line.startsWith(metaDataKey));
-    if (!metaDataLine) return '';
-    
-    const metaDatas = metaDataLine.split(':');
-    return metaDatas.slice(1).join(':').trim();
-  }
-
-  /**
-   * Parses song notes from Ultrastar .txt content
-   */
-  private getSongNotes(txt: string): SongNote[] {
-    const lines = txt.split('\n');
-    return lines
-      .filter((line: string) => !line.startsWith('#') && line.trim().length > 0)
-      .map((line: string) => this.getSongNote(line))
-      .filter((songNote: SongNote | null) => songNote !== null);
-  }
-
-  /**
-   * Parses a single note line
-   */
-  private getSongNote(line: string): SongNote | null {
-    const songNote = new SongNote();
-    const lineArray = line.trim().split(' ');
-
-    if (lineArray.length < 2) return null;
-
-    switch (lineArray[0]) {
-      case ':':
-        songNote.type = SongNoteType.Regular;
-        break;
-      case '*':
-        songNote.type = SongNoteType.Golden;
-        break;
-      case 'F':
-        songNote.type = SongNoteType.Freestyle;
-        break;
-      case '-':
-        songNote.type = SongNoteType.LineBreak;
-        break;
-      case 'E':
-        return null;
-      default:
-        return null;
-    }
-
-    songNote.startBeat = +lineArray[1] || 0;
-    songNote.lengthInBeats = +lineArray[2] || 0;
-    songNote.pitch = +lineArray[3] || 0;
-    songNote.text = lineArray.slice(4).join(' ').replace(/\r?\n/g, '').trim();
-
-    return songNote;
-  }
-
-  /**
-   * Calculates points per beat for scoring
-   */
-  private getPointsPerBeat(songNotes: SongNote[]): number {
-    const songNotesWithoutLinebreaks = songNotes.filter(
-      (songNote: SongNote) => songNote.type !== SongNoteType.LineBreak
-    );
-    const beatCount = songNotesWithoutLinebreaks.reduce(
-      (previous: number, current: SongNote) =>
-        previous + current.lengthInBeats * (current.type === SongNoteType.Golden ? 2 : 1),
-      0
-    );
-
-    return beatCount > 0 ? 10000 / beatCount : 100;
-  }
 
   /**
    * Returns current indexing status
