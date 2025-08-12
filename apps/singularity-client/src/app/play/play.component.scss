@@ -8,7 +8,14 @@
 
 singularity-song-grid-item, {
   flex-basis: 250px;
+  display: inline-block;
   width: 250px;
+}
+
+.play-container {
+  scroll-snap-type: y mandatory;
+  height: 100vh;
+  overflow-y: scroll;
 }
 
 .video-container {
@@ -19,10 +26,7 @@ singularity-song-grid-item, {
   transition: 1000ms ease;
   overflow: hidden;
   position: relative;
-
-  &.collapsed {
-    height: 0;
-  }
+  scroll-snap-align: start;
 }
 
 .video {
@@ -38,7 +42,7 @@ a {
 }
 
 .search-container {
-  margin: 126px 25px 25px 25px;
+  padding: 126px 25px 25px 25px;
   display: flex;
   gap: 25px;
 }
@@ -49,10 +53,15 @@ a {
 
 .bottom-section {
   min-height: 100vh;
+  scroll-snap-align: start;
 }
 
 .select-option {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+virtual-scroller {
+  height: 100vh;
 }

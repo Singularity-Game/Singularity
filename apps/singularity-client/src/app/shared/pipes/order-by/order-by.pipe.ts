@@ -1,13 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Nullable } from '@singularity/api-interfaces';
 
 @Pipe({
   name: 'orderBy',
 })
 export class OrderByPipe implements PipeTransform {
-  transform<T>(values: Nullable<T[]>, orderByKey: keyof T, ascending: boolean = true): Nullable<T[]> {
+  transform<T>(values: T[], orderByKey: keyof T, ascending = true): T[] {
     if(values === null) {
-      return null;
+      return [];
     }
 
     if (ascending) {

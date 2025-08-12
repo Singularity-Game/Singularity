@@ -1,13 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Nullable } from '@singularity/api-interfaces';
 
 @Pipe({
   name: 'search',
 })
 export class SearchPipe implements PipeTransform {
-  transform<T>(values: Nullable<T[]>, searchKeys: string, searchTerm: string): Nullable<T[]> {
+  transform<T>(values: T[], searchKeys: string, searchTerm: string): T[] {
     if(values === null) {
-      return null;
+      return [];
     }
 
     const keys = searchKeys.split(',') as (keyof T)[];

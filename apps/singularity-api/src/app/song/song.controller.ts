@@ -18,11 +18,17 @@ import { memoryStorage } from 'multer';
 import { SongService } from './song.service';
 import { Song } from './models/song.entity';
 import { MapInterceptor } from '@automapper/nestjs';
-import { CreateSongDto, Nullable, SongDownloadInfo, SongDto, SongOverviewDto } from '@singularity/api-interfaces';
+import {
+  CreateSongDto,
+  Nullable,
+  SongDownloadInfo,
+  SongDto,
+  SongOverviewDto,
+  SongUploadInfo
+} from '@singularity/api-interfaces';
 import { fromBuffer } from 'file-type';
 import { AdminGuard } from '../user-management/guards/admin-guard';
 import { AuthGuard } from '@nestjs/passport';
-import { SongUploadInfo } from '@singularity/api-interfaces';
 import { SongFile } from './interfaces/song-file';
 import { SongDownloadService } from './song-download.service';
 import { SongIndexingService } from './song-indexing.service';
@@ -62,8 +68,11 @@ export class SongController {
   public async getSongCoverById(@Param('id') id: string, @Res() response: Response): Promise<void> {
     const buffer = await this.songService.getSongCoverFile(+id);
     const fileType = await fromBuffer(buffer);
+    const downscaledBuffer = await sharp(buffer)
+      .resize(250, 250)
+      .toBuffer();
     response.setHeader('Content-Type', fileType.mime);
-    response.end(buffer);
+    response.end(downscaledBuffer);
   }
 
   @Get(':id/cover/small')
