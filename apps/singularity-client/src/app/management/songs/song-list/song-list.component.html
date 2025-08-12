@@ -12,9 +12,9 @@
     
     <div class="indexing-controls">
       <button suiButton 
+              [loading]="isIndexing"
               [disabled]="isIndexing" 
               (click)="startIndexing()">
-        <sui-loader *ngIf="isIndexing" class="sui-space-right"></sui-loader>
         <img *ngIf="!isIndexing" class="sui-space-right" src="assets/icons/playlist-plus.svg" alt="index" />
         {{ (isIndexing ? 'management.songs.songList.autoIndexing.indexing' : 'management.songs.songList.autoIndexing.startIndex') | transloco }}
       </button>
