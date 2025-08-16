@@ -6,6 +6,27 @@
 </h1>
 
 <ng-container *ngIf="isAdmin$ | async">
+  <div class="indexing-section">
+    <h2>{{ 'management.songs.songList.autoIndexing.header' | transloco }}</h2>
+    <p>{{ 'management.songs.songList.autoIndexing.description' | transloco }}</p>
+    
+    <div class="indexing-controls">
+      <button suiButton 
+              [loading]="isIndexing"
+              [disabled]="isIndexing" 
+              (click)="startIndexing()">
+        <img *ngIf="!isIndexing" class="sui-space-right" src="assets/icons/playlist-plus.svg" alt="index" />
+        {{ (isIndexing ? 'management.songs.songList.autoIndexing.indexing' : 'management.songs.songList.autoIndexing.startIndex') | transloco }}
+      </button>
+      
+      <div *ngIf="indexingResult" class="indexing-result">
+        <p>{{ 'management.songs.songList.autoIndexing.result' | transloco: indexingResult }}</p>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="isAdmin$ | async">
   <ng-container *ngIf="downloadingSongs$ | async; let downloadingSongs">
     <ng-container *ngIf="downloadingSongs.length > 0">
       <p>{{ 'management.songs.songList.serverDownloadsSongs' | transloco }}</p>

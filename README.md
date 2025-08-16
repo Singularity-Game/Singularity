@@ -75,6 +75,7 @@ Introducing Singularity: Your browser's karaoke stage! Gather your friends for a
                SMTP_PASSWORD: <SMTP-PASSWORD>
                SMTP_FROM: <SMTP-FROM>
                SONG_DIRECTORY: songs
+               ENABLE_AUTO_INDEXING: true
              volumes:
               - singularity-songs:/usr/src/app/songs
              ports:

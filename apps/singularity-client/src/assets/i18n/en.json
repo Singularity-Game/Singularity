@@ -115,7 +115,14 @@
         "author": "Author",
         "year": "Year",
         "actions": "Actions",
-        "serverDownloadsSongs": "The server is currently downloading songs. They will be available soon."
+        "serverDownloadsSongs": "The server is currently downloading songs. They will be available soon.",
+        "autoIndexing": {
+          "header": "Auto-Index Songs",
+          "description": "Automatically scan your song directory for Ultrastar files and add them to the database.",
+          "startIndex": "Index Songs",
+          "indexing": "Indexing...",
+          "result": "Indexed {{indexed}} songs, skipped {{skipped}}, {{errors}} errors."
+        }
       }
     },
     "users": {

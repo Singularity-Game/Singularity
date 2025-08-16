@@ -11,11 +11,12 @@ import { YtService } from './yt.service';
 import { FanartService } from './fanart.service';
 import { HttpModule } from '@nestjs/axios';
 import { SongDownloadService } from './song-download.service';
+import { SongIndexingService } from './song-indexing.service';
 
 @Module({
   controllers: [SongController],
-  providers: [SongService, YtService, FanartService, SongDownloadService, SongProfile, SongNoteProfile],
+  providers: [SongService, YtService, FanartService, SongDownloadService, SongIndexingService, SongProfile, SongNoteProfile],
   imports: [TypeOrmModule.forFeature([Song, SongNote]), ConfigModule, HttpModule],
-  exports: [SongService, SongProfile]
+  exports: [SongService, SongIndexingService, SongProfile]
 })
 export class SongModule {}

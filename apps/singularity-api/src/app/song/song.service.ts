@@ -1,14 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as fs from 'fs';
-import { SongNote } from './models/song-note.entity';
+import * as path from 'path';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Song } from './models/song.entity';
 import { Repository } from 'typeorm';
-import { SongNoteType } from '@singularity/api-interfaces';
 import { ConfigService } from '@nestjs/config';
 import { SongAlreadyExistsError } from './errors/song-already-exists-error';
 import { SongSaveError } from './errors/song-save-error';
 import { SongFile } from './interfaces/song-file';
+import { UltrastarParser } from './utils/ultrastar-parser';
 
 @Injectable()
 export class SongService {
@@ -28,46 +28,55 @@ export class SongService {
   public async getSongAudioFile(id: number): Promise<Buffer> {
     const song = await this.getSongById(id);
 
-    return this.getSongDirectory(song.artist, song.name)
-      .then((directory: string) => new Promise<Buffer>((resolve, reject) => {
-        fs.readFile(`${directory}/${song.audioFileName}`, (error: Error, data: Buffer) => {
-          if (error) {
-            reject(error);
-          }
+    // Handle both old format (filename only) and new format (relative path)
+    const audioPath = song.audioFileName.includes('/') 
+      ? this.getAbsoluteSongPath(song.audioFileName)
+      : await this.getSongDirectory(song.artist, song.name).then(dir => `${dir}/${song.audioFileName}`);
 
-          resolve(data);
-        });
-    }));
+    return new Promise<Buffer>((resolve, reject) => {
+      fs.readFile(audioPath, (error: Error, data: Buffer) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(data);
+      });
+    });
   }
 
   public async getSongVideoFile(id: number): Promise<Buffer> {
     const song = await this.getSongById(id);
 
-    return this.getSongDirectory(song.artist, song.name)
-      .then((directory: string) => new Promise<Buffer>((resolve, reject) => {
-        fs.readFile(`${directory}/${song.videoFileName}`, (error: Error, data: Buffer) => {
-          if (error) {
-            reject(error);
-          }
+    // Handle both old format (filename only) and new format (relative path)
+    const videoPath = song.videoFileName.includes('/') 
+      ? this.getAbsoluteSongPath(song.videoFileName)
+      : await this.getSongDirectory(song.artist, song.name).then(dir => `${dir}/${song.videoFileName}`);
 
-          resolve(data);
-        });
-      }));
+    return new Promise<Buffer>((resolve, reject) => {
+      fs.readFile(videoPath, (error: Error, data: Buffer) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(data);
+      });
+    });
   }
 
   public async getSongCoverFile(id: number): Promise<Buffer> {
     const song = await this.getSongById(id);
 
-    return this.getSongDirectory(song.artist, song.name)
-      .then((directory: string) => new Promise<Buffer>((resolve, reject) => {
-        fs.readFile(`${directory}/${song.coverFileName}`, (error: Error, data: Buffer) => {
-          if (error) {
-            reject(error);
-          }
+    // Handle both old format (filename only) and new format (relative path)
+    const coverPath = song.coverFileName.includes('/') 
+      ? this.getAbsoluteSongPath(song.coverFileName)
+      : await this.getSongDirectory(song.artist, song.name).then(dir => `${dir}/${song.coverFileName}`);
 
-          resolve(data);
-        });
-      }));
+    return new Promise<Buffer>((resolve, reject) => {
+      fs.readFile(coverPath, (error: Error, data: Buffer) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(data);
+      });
+    });
   }
 
   public async deleteSong(id: number): Promise<Song> {
@@ -91,15 +100,15 @@ export class SongService {
                           songStart?: number,
                           songEnd?: number): Promise<Song> {
     const songText = txtFile.buffer.toString('utf8');
+    const { metadata, notes, pointsPerBeat } = UltrastarParser.parse(songText);
 
-
-    const artist = this.getSongMetadata(songText, '#ARTIST');
-    const title = this.getSongMetadata(songText, '#TITLE');
-    const year = +this.getSongMetadata(songText, '#YEAR') ?? 0;
-    const bpm = +(this.getSongMetadata(songText, '#BPM').replace(',', '.'));
-    const gap = +this.getSongMetadata(songText, '#GAP') ?? 0;
-    const start = songStart ?? +this.getSongMetadata(songText, '#START') ?? 0;
-    const end = songEnd ?? +this.getSongMetadata(songText, '#END') ?? 0;
+    const artist = metadata.artist;
+    const title = metadata.title;
+    const year = metadata.year;
+    const bpm = metadata.bpm;
+    const gap = metadata.gap;
+    const start = songStart ?? metadata.start;
+    const end = songEnd ?? metadata.end;
 
     if (await this.songRepository.exist({
       where: {
@@ -116,7 +125,6 @@ export class SongService {
       this.writeFile(directory, `${artist} - ${title}.${this.getFileType(videoFile)}`, videoFile.buffer);
       this.writeFile(directory, `${artist} - ${title}.${this.getFileType(coverFile)}`, coverFile.buffer);
 
-      const songNotes = this.getSongNotes(songText);
       const song = this.songRepository.create();
       song.artist = artist;
       song.name = title;
@@ -125,8 +133,8 @@ export class SongService {
       song.gap = gap;
       song.start = start;
       song.end = end;
-      song.notes = songNotes;
-      song.pointsPerBeat = this.getPointsPerBeat(songNotes);
+      song.notes = notes;
+      song.pointsPerBeat = pointsPerBeat;
       song.audioFileName = `${artist} - ${title}.${this.getFileType(audioFile)}`;
       song.videoFileName = `${artist} - ${title}.${this.getFileType(videoFile)}`;
       song.coverFileName = `${artist} - ${title}.${this.getFileType(coverFile)}`;
@@ -139,61 +147,6 @@ export class SongService {
 
   }
 
-  private getSongMetadata(txt: string, metaDataKey: string): string {
-    const lines = txt.split('\n');
-    const metaDataLine = lines.find((line: string) => line.startsWith(metaDataKey));
-    const metaDatas = metaDataLine?.split(':') ?? [];
-    return metaDatas.slice(1).join(':').trim();
-  }
-
-  private getSongNotes(txt: string): SongNote[] {
-    const lines = txt.split('\n');
-    return lines
-      .filter((line: string) => !line.startsWith('#'))
-      .map((line: string) => this.getSongNote(line))
-      .filter((songNote: SongNote | null) => songNote !== null);
-  }
-
-  private getSongNote(line: string): SongNote | null {
-    const songNote = new SongNote();
-
-    const lineArray = line.split(' ');
-
-    switch (lineArray[0]) {
-      case ':':
-        songNote.type = SongNoteType.Regular;
-        break;
-      case '*':
-        songNote.type = SongNoteType.Golden;
-        break;
-      case 'F':
-        songNote.type = SongNoteType.Freestyle;
-        break;
-      case '-':
-        songNote.type = SongNoteType.LineBreak;
-        break;
-      case 'E':
-        return null;
-      default:
-        throw new Error('Reached unexpected SongNoteType: ' + lineArray[0]);
-    }
-
-    songNote.startBeat = +lineArray[1] || 0;
-    songNote.lengthInBeats = +lineArray[2] || 0;
-    songNote.pitch = +lineArray[3] || 0;
-    songNote.text = lineArray.slice(4).join(' ').replace('\r', '').replace('\n', '');
-
-    return songNote;
-  }
-
-  private getPointsPerBeat(songNotes: SongNote[]): number {
-    const songNotesWithoutLinebreaks = songNotes.filter((songNote: SongNote) => songNote.type !== SongNoteType.LineBreak);
-    const beatCount = songNotesWithoutLinebreaks.reduce((previous: number, current: SongNote) =>
-      previous + current.lengthInBeats * (current.type === SongNoteType.Golden ? 2 : 1), // Golden Notes give us double points
-      0);
-
-    return 10000 / beatCount;
-  }
 
   private writeFile(path: string, fileName: string, buffer: Buffer | string): void {
     const stream = fs.createWriteStream(`${path}/${fileName}`);
@@ -240,5 +193,10 @@ export class SongService {
         }
       });
     });
+  }
+
+  private getAbsoluteSongPath(relativePath: string): string {
+    const baseDirectory = this.configService.get('SONG_DIRECTORY', 'songs');
+    return path.resolve(process.cwd(), baseDirectory, relativePath);
   }
 }

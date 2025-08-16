@@ -31,13 +31,15 @@ import { AdminGuard } from '../user-management/guards/admin-guard';
 import { AuthGuard } from '@nestjs/passport';
 import { SongFile } from './interfaces/song-file';
 import { SongDownloadService } from './song-download.service';
+import { SongIndexingService } from './song-indexing.service';
 import * as sharp from 'sharp';
 
 @Controller('song')
 export class SongController {
 
   constructor(private readonly songService: SongService,
-              private readonly songDownloadService: SongDownloadService) {
+              private readonly songDownloadService: SongDownloadService,
+              private readonly songIndexingService: SongIndexingService) {
   }
 
   @Get()
@@ -174,5 +176,17 @@ export class SongController {
   @UseInterceptors(MapInterceptor(Song, SongDto))
   public deleteSong(@Param('id') id: string): Promise<Song> {
     return this.songService.deleteSong(+id);
+  }
+
+  @Post('index')
+  @UseGuards(AdminGuard())
+  public async indexSongs(): Promise<{ indexed: number; skipped: number; errors: number }> {
+    return this.songIndexingService.indexSongs();
+  }
+
+  @Get('index/status')
+  @UseGuards(AdminGuard())
+  public getIndexingStatus(): { isIndexing: boolean } {
+    return this.songIndexingService.getIndexingStatus();
   }
 }
