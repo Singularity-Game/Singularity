@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'singularity-sing-page',
-  templateUrl: './sing-page.component.html',
-  styleUrls: ['./sing-page.component.scss'],
+    selector: 'singularity-sing-page',
+    templateUrl: './sing-page.component.html',
+    styleUrls: ['./sing-page.component.scss'],
+    standalone: false
 })
 export class SingPageComponent implements OnInit {
   public songId: number | null = null;

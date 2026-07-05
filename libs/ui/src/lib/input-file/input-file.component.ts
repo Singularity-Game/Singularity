@@ -2,16 +2,17 @@ import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'sui-input-file',
-  templateUrl: './input-file.component.html',
-  styleUrl: './input-file.component.scss',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputFileComponent),
-      multi: true
-    }
-  ]
+    selector: 'sui-input-file',
+    templateUrl: './input-file.component.html',
+    styleUrl: './input-file.component.scss',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => InputFileComponent),
+            multi: true
+        }
+    ],
+    standalone: false
 })
 export class InputFileComponent implements ControlValueAccessor {
 

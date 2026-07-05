@@ -23,9 +23,10 @@ import { LocalSettings } from '../../shared/settings/local-settings';
 import { ModalService } from '@singularity/ui';
 
 @Component({
-  selector: 'singularity-sing',
-  templateUrl: './sing.component.html',
-  styleUrls: ['./sing.component.scss'],
+    selector: 'singularity-sing',
+    templateUrl: './sing.component.html',
+    styleUrls: ['./sing.component.scss'],
+    standalone: false
 })
 export class SingComponent implements AfterViewInit, OnDestroy {
   @Input() public songId?: number;

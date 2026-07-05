@@ -8,9 +8,10 @@ import { TranslocoService } from '@ngneat/transloco';
 import { ToastService } from '@singularity/ui';
 
 @Component({
-  selector: 'singularity-reset-password',
-  templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.scss']
+    selector: 'singularity-reset-password',
+    templateUrl: './reset-password.component.html',
+    styleUrls: ['./reset-password.component.scss'],
+    standalone: false
 })
 export class ResetPasswordComponent implements OnDestroy {
   public readonly resetPasswordForm = new FormGroup<ResetPasswordForm>({

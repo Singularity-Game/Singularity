@@ -3,9 +3,10 @@ import { AuthenticationService } from '../shared/authentication.service';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'singularity-management',
-  templateUrl: './management.component.html',
-  styleUrls: ['./management.component.scss'],
+    selector: 'singularity-management',
+    templateUrl: './management.component.html',
+    styleUrls: ['./management.component.scss'],
+    standalone: false
 })
 export class ManagementComponent implements OnInit {
   public isAdmin$?: Observable<boolean>;

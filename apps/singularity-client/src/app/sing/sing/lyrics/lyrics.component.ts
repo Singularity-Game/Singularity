@@ -3,9 +3,10 @@ import { SongDto, SongNoteDto, SongNoteType } from '@singularity/api-interfaces'
 import { findLastIndex } from '../../../shared/helpers/find-last-index';
 
 @Component({
-  selector: 'singularity-lyrics',
-  templateUrl: './lyrics.component.html',
-  styleUrls: ['./lyrics.component.scss'],
+    selector: 'singularity-lyrics',
+    templateUrl: './lyrics.component.html',
+    styleUrls: ['./lyrics.component.scss'],
+    standalone: false
 })
 export class LyricsComponent implements OnInit {
   @Input() public set song(song: SongDto | null) {

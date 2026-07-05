@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { PartyQueueItemDto } from '@singularity/api-interfaces';
 
 @Pipe({
-  name: 'partySongsNotReadyFilter'
+    name: 'partySongsNotReadyFilter',
+    standalone: false
 })
 export class PartySongsNotReadyFilterPipe implements PipeTransform {
 

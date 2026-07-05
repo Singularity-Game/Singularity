@@ -15,9 +15,10 @@ import {
 import { Nullable, Optional, PartyDto, PartyQueueItemDto } from '@singularity/api-interfaces';
 
 @Component({
-  selector: 'singularity-party-tv-view',
-  templateUrl: './party-t-v-view.component.html',
-  styleUrl: './party-t-v-view.component.scss'
+    selector: 'singularity-party-tv-view',
+    templateUrl: './party-t-v-view.component.html',
+    styleUrl: './party-t-v-view.component.scss',
+    standalone: false
 })
 export class PartyTVViewComponent implements OnInit, OnDestroy {
   public partySubject = new ReplaySubject<Optional<PartyDto>>(1);

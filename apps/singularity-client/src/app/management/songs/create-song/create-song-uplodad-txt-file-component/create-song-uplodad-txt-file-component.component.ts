@@ -4,9 +4,10 @@ import { filter, forkJoin, map, Observable, of, Subject, switchMap, tap } from '
 import { SongManagementService } from '../../song-management.service';
 
 @Component({
-  selector: 'singularity-create-song-uplodad-txt-file-component',
-  templateUrl: './create-song-uplodad-txt-file-component.component.html',
-  styleUrls: ['./create-song-uplodad-txt-file-component.component.scss']
+    selector: 'singularity-create-song-uplodad-txt-file-component',
+    templateUrl: './create-song-uplodad-txt-file-component.component.html',
+    styleUrls: ['./create-song-uplodad-txt-file-component.component.scss'],
+    standalone: false
 })
 export class CreateSongUplodadTxtFileComponentComponent implements OnInit {
   public txtFileSubject = new Subject<Nullable<File>>();

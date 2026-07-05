@@ -6,9 +6,10 @@ import { AuthenticationService } from '../../../shared/authentication.service';
 import { SongListDownloadInfo, SongListDownloadState } from './song-list-download-info';
 
 @Component({
-  selector: 'singularity-song-list',
-  templateUrl: './song-list.component.html',
-  styleUrls: ['./song-list.component.scss']
+    selector: 'singularity-song-list',
+    templateUrl: './song-list.component.html',
+    styleUrls: ['./song-list.component.scss'],
+    standalone: false
 })
 export class SongListComponent implements OnInit, OnDestroy {
   public isAdmin$ = this.authenticationService.isAdmin$();

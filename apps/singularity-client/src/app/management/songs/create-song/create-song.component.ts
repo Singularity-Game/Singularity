@@ -10,9 +10,10 @@ import { Nullable, SongDto } from '@singularity/api-interfaces';
 import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
-  selector: 'singularity-create-song',
-  templateUrl: './create-song.component.html',
-  styleUrls: ['./create-song.component.scss']
+    selector: 'singularity-create-song',
+    templateUrl: './create-song.component.html',
+    styleUrls: ['./create-song.component.scss'],
+    standalone: false
 })
 export class CreateSongComponent implements OnDestroy {
 

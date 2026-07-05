@@ -1,9 +1,10 @@
 import { Component, ElementRef, HostListener, Input } from '@angular/core';
 
 @Component({
-  selector: 'sui-dropdown',
-  templateUrl: './dropdown.component.html',
-  styleUrl: './dropdown.component.scss'
+    selector: 'sui-dropdown',
+    templateUrl: './dropdown.component.html',
+    styleUrl: './dropdown.component.scss',
+    standalone: false
 })
 export class DropdownComponent {
   @Input() size: 's' | 'l' = 'l';

@@ -5,9 +5,10 @@ import { PartyQrCodeComponent } from './party-qr-code/party-qr-code.component';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'singularity-smartphone-navbar',
-  templateUrl: './party-smartphone-navbar.component.html',
-  styleUrl: './party-smartphone-navbar.component.scss'
+    selector: 'singularity-smartphone-navbar',
+    templateUrl: './party-smartphone-navbar.component.html',
+    styleUrl: './party-smartphone-navbar.component.scss',
+    standalone: false
 })
 export class PartySmartphoneNavbarComponent {
   @Input() party?: PartyDto;

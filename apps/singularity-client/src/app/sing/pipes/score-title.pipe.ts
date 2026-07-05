@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
 
 @Pipe({
-  name: 'scoreTitle'
+    name: 'scoreTitle',
+    standalone: false
 })
 export class ScoreTitlePipe implements PipeTransform {
 

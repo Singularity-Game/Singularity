@@ -1,6 +1,7 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: '[suiProgress]'
+    selector: '[suiProgress]',
+    standalone: false
 })
 export class ProgressDirective {}

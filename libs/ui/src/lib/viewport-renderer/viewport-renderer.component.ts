@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'sui-viewport-renderer',
-  templateUrl: './viewport-renderer.component.html',
-  styleUrl: './viewport-renderer.component.scss'
+    selector: 'sui-viewport-renderer',
+    templateUrl: './viewport-renderer.component.html',
+    styleUrl: './viewport-renderer.component.scss',
+    standalone: false
 })
 export class ViewportRendererComponent implements AfterViewInit, OnDestroy {
   @Input() public width = 0;

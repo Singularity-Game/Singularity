@@ -3,9 +3,10 @@ import { ModalContext } from './modal-context';
 import { NEVER, Observable } from 'rxjs';
 
 @Component({
-  selector: 'sui-modal',
-  templateUrl: './modal.component.html',
-  styleUrl: './modal.component.scss'
+    selector: 'sui-modal',
+    templateUrl: './modal.component.html',
+    styleUrl: './modal.component.scss',
+    standalone: false
 })
 export class ModalComponent<ResultType, DataType> implements OnInit {
   @Input() public component?: Type<unknown>;

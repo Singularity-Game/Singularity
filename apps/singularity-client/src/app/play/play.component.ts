@@ -8,9 +8,10 @@ import { SuiGlobalColorService } from '@singularity/ui';
 import { SongCarouselComponent } from './song-carousel/song-carousel.component';
 
 @Component({
-  selector: 'singularity-play',
-  templateUrl: './play.component.html',
-  styleUrls: ['./play.component.scss']
+    selector: 'singularity-play',
+    templateUrl: './play.component.html',
+    styleUrls: ['./play.component.scss'],
+    standalone: false
 })
 export class PlayComponent implements OnInit, OnDestroy {
   public songs$?: Observable<SongOverviewDto[]>;

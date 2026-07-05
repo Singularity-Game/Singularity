@@ -6,9 +6,10 @@ import { SongService } from '../../shared/song.service';
 import { take } from 'rxjs';
 
 @Component({
-  selector: 'singularity-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss'],
+    selector: 'singularity-settings',
+    templateUrl: './settings.component.html',
+    styleUrls: ['./settings.component.scss'],
+    standalone: false
 })
 export class SettingsComponent {
   private cachedMicrophoneLatency: Nullable<number> = null;

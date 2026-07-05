@@ -1,10 +1,11 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'sui-card3d',
-  templateUrl: './card3d.component.html',
-  styleUrls: ['./card3d.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'sui-card3d',
+    templateUrl: './card3d.component.html',
+    styleUrls: ['./card3d.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class Card3dComponent implements AfterViewInit {
   @ViewChild('card') card?: ElementRef<HTMLDivElement>;

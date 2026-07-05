@@ -6,9 +6,10 @@ import { Nullable, UserDto } from '@singularity/api-interfaces';
 import { environment } from '../../../../environments/environment';
 
 @Component({
-  selector: 'singularity-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+    selector: 'singularity-navbar',
+    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.scss'],
+    standalone: false
 })
 export class NavbarComponent implements OnInit {
 

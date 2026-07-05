@@ -3,10 +3,11 @@ import { PartyDto, PartyParticipantDto, SongOverviewDto } from '@singularity/api
 import { PartyService } from '../../../../party.service';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: '[singularity-party-song-select-item]',
-  templateUrl: './party-song-select-item.component.html',
-  styleUrl: './party-song-select-item.component.scss'
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: '[singularity-party-song-select-item]',
+    templateUrl: './party-song-select-item.component.html',
+    styleUrl: './party-song-select-item.component.scss',
+    standalone: false
 })
 export class PartySongSelectItemComponent {
   @Input() party?: PartyDto;

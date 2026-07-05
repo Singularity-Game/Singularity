@@ -6,9 +6,10 @@ import { ModalService } from '@singularity/ui';
 import { UserEditDialogComponent } from '../user-edit-dialog/user-edit-dialog.component';
 
 @Component({
-  selector: 'singularity-users',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+    selector: 'singularity-users',
+    templateUrl: './user-list.component.html',
+    styleUrls: ['./user-list.component.css'],
+    standalone: false
 })
 export class UserListComponent implements OnInit, OnDestroy {
   public users$ = new BehaviorSubject<UserDto[]>([]);

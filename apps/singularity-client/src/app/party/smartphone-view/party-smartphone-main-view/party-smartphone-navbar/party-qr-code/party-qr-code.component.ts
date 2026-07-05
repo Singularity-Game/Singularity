@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { ModalContext } from '@singularity/ui';
 
 @Component({
-  selector: 'singularity-party-qr-code',
-  templateUrl: './party-qr-code.component.html',
-  styleUrl: './party-qr-code.component.scss'
+    selector: 'singularity-party-qr-code',
+    templateUrl: './party-qr-code.component.html',
+    styleUrl: './party-qr-code.component.scss',
+    standalone: false
 })
 export class PartyQrCodeComponent {
   public link = `${window.location.origin}/party/${this.modalContext.data}`;

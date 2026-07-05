@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'singularity-join-party-ready',
-  templateUrl: './join-party-ready.component.html',
-  styleUrl: './join-party-ready.component.scss'
+    selector: 'singularity-join-party-ready',
+    templateUrl: './join-party-ready.component.html',
+    styleUrl: './join-party-ready.component.scss',
+    standalone: false
 })
 export class JoinPartyReadyComponent {
 

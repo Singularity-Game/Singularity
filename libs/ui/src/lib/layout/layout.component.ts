@@ -3,9 +3,10 @@ import { SuiGlobalColorService } from '../sui-global-color/sui-global-color.serv
 import { ToastService } from '../toast/toast.service';
 
 @Component({
-  selector: 'sui-layout',
-  templateUrl: './layout.component.html',
-  styleUrl: './layout.component.scss'
+    selector: 'sui-layout',
+    templateUrl: './layout.component.html',
+    styleUrl: './layout.component.scss',
+    standalone: false
 })
 export class LayoutComponent {
 

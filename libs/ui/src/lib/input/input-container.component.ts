@@ -1,9 +1,10 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'sui-input-container',
-  templateUrl: './input-container.component.html',
-  styleUrl: './input-container.component.scss'
+    selector: 'sui-input-container',
+    templateUrl: './input-container.component.html',
+    styleUrl: './input-container.component.scss',
+    standalone: false
 })
 export class InputContainerComponent {
 

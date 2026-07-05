@@ -10,9 +10,10 @@ import { PromptDialogComponent } from '../../../shared/components/prompt-dialog/
 import { AuthenticationService } from '../../../shared/authentication.service';
 
 @Component({
-  selector: 'singularity-user-edit-dialog',
-  templateUrl: './user-edit-dialog.component.html',
-  styleUrl: './user-edit-dialog.component.scss'
+    selector: 'singularity-user-edit-dialog',
+    templateUrl: './user-edit-dialog.component.html',
+    styleUrl: './user-edit-dialog.component.scss',
+    standalone: false
 })
 export class UserEditDialogComponent implements OnInit, OnDestroy {
   public userForm = new FormGroup<EditUserForm>({

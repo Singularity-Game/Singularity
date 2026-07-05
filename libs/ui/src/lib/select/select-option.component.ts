@@ -3,9 +3,10 @@ import { SelectComponent } from './select.component';
 import { Nullable } from '@singularity/api-interfaces';
 
 @Component({
-  selector: 'sui-select-option',
-  templateUrl: './select-option.component.html',
-  styleUrl: './select-option.component.scss'
+    selector: 'sui-select-option',
+    templateUrl: './select-option.component.html',
+    styleUrl: './select-option.component.scss',
+    standalone: false
 })
 export class SelectOptionComponent {
   @Input() public value: unknown;

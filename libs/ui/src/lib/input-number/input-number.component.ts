@@ -2,16 +2,17 @@ import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'sui-input-number',
-  templateUrl: './input-number.component.html',
-  styleUrl: './input-number.component.scss',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputNumberComponent),
-      multi: true
-    }
-  ]
+    selector: 'sui-input-number',
+    templateUrl: './input-number.component.html',
+    styleUrl: './input-number.component.scss',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => InputNumberComponent),
+            multi: true
+        }
+    ],
+    standalone: false
 })
 export class InputNumberComponent implements ControlValueAccessor {
   public value = 0;

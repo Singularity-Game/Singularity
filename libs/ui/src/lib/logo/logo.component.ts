@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { SuiGlobalColorService } from '../sui-global-color/sui-global-color.service';
 
 @Component({
-  selector: 'sui-logo',
-  templateUrl: './logo.component.html',
-  styleUrl: './logo.component.scss'
+    selector: 'sui-logo',
+    templateUrl: './logo.component.html',
+    styleUrl: './logo.component.scss',
+    standalone: false
 })
 export class LogoComponent {
 

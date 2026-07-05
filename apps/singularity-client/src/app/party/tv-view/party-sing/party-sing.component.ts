@@ -4,9 +4,10 @@ import { PartyService } from '../../party.service';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'singularity-party-sing',
-  templateUrl: './party-sing.component.html',
-  styleUrl: './party-sing.component.scss'
+    selector: 'singularity-party-sing',
+    templateUrl: './party-sing.component.html',
+    styleUrl: './party-sing.component.scss',
+    standalone: false
 })
 export class PartySingComponent implements OnInit, OnDestroy {
   @Input() set queueItem(queueItem: PartyQueueItemDto) {

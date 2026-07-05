@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'sui-toast',
-  templateUrl: './toast.component.html',
-  styleUrl: './toast.component.scss'
+    selector: 'sui-toast',
+    templateUrl: './toast.component.html',
+    styleUrl: './toast.component.scss',
+    standalone: false
 })
 export class ToastComponent {
   @Input() title = '';

@@ -9,10 +9,11 @@ import { ModalService } from '@singularity/ui';
 import { PromptDialogComponent } from '../../../../shared/components/prompt-dialog/prompt-dialog.component';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'tr[singularity-song-list-item]',
-  templateUrl: './song-list-item.component.html',
-  styleUrls: ['./song-list-item.component.scss']
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'tr[singularity-song-list-item]',
+    templateUrl: './song-list-item.component.html',
+    styleUrls: ['./song-list-item.component.scss'],
+    standalone: false
 })
 export class SongListItemComponent implements OnInit, OnDestroy {
   @Input() public song?: SongOverviewDto;

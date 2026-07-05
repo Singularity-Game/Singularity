@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: '[suiButton]',
-  templateUrl: './button.component.html',
-  styleUrl: './button.component.scss'
+    selector: '[suiButton]',
+    templateUrl: './button.component.html',
+    styleUrl: './button.component.scss',
+    standalone: false
 })
 export class ButtonComponent {
   @Input() size: 'xs' | 's' | 'l' = 'l';

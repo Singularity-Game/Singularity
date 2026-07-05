@@ -2,9 +2,10 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, Output, 
 import { Nullable } from '@singularity/api-interfaces';
 
 @Component({
-  selector: 'singularity-join-party-set-profile-picture',
-  templateUrl: './join-party-set-profile-picture.component.html',
-  styleUrl: './join-party-set-profile-picture.component.scss'
+    selector: 'singularity-join-party-set-profile-picture',
+    templateUrl: './join-party-set-profile-picture.component.html',
+    styleUrl: './join-party-set-profile-picture.component.scss',
+    standalone: false
 })
 export class JoinPartySetProfilePictureComponent implements AfterViewInit, OnDestroy {
   @ViewChild('video') videoElement?: ElementRef<HTMLVideoElement>;

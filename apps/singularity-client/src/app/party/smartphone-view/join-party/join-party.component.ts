@@ -5,9 +5,10 @@ import { Nullable, Optional, PartyDto } from '@singularity/api-interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'singularity-join-party',
-  templateUrl: './join-party.component.html',
-  styleUrl: './join-party.component.scss'
+    selector: 'singularity-join-party',
+    templateUrl: './join-party.component.html',
+    styleUrl: './join-party.component.scss',
+    standalone: false
 })
 export class JoinPartyComponent implements OnInit, OnDestroy {
   public party$?: Observable<Optional<PartyDto>>;

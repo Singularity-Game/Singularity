@@ -7,9 +7,10 @@ import { Nullable } from '@singularity/api-interfaces';
 import { ModalContext } from '@singularity/ui';
 
 @Component({
-  selector: 'singularity-microphone-selection-dialog',
-  templateUrl: './microphone-selection-dialog.component.html',
-  styleUrls: ['./microphone-selection-dialog.component.scss'],
+    selector: 'singularity-microphone-selection-dialog',
+    templateUrl: './microphone-selection-dialog.component.html',
+    styleUrls: ['./microphone-selection-dialog.component.scss'],
+    standalone: false
 })
 export class MicrophoneSelectionDialogComponent implements OnInit, OnDestroy {
   public formArray = new FormArray<FormControl<Nullable<MicrophoneWithMeter>>>([

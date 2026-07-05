@@ -1,7 +1,8 @@
 import { AfterViewInit, Directive, ElementRef, OnInit } from '@angular/core';
 
 @Directive({
-  selector: '[suiSlider]'
+    selector: '[suiSlider]',
+    standalone: false
 })
 export class SliderDirective implements AfterViewInit {
 

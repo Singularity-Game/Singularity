@@ -1,9 +1,10 @@
 import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'sui-mouse-timeout',
-  templateUrl: './mouse-timeout.component.html',
-  styleUrl: './mouse-timeout.component.scss'
+    selector: 'sui-mouse-timeout',
+    templateUrl: './mouse-timeout.component.html',
+    styleUrl: './mouse-timeout.component.scss',
+    standalone: false
 })
 export class MouseTimeoutComponent {
   private mouseTimeout?: NodeJS.Timeout;

@@ -10,9 +10,10 @@ import { TranslocoService } from '@ngneat/transloco';
 import { ModalService } from '@singularity/ui';
 
 @Component({
-  selector: 'singularity-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+    selector: 'singularity-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    standalone: false
 })
 export class LoginComponent implements OnDestroy {
 

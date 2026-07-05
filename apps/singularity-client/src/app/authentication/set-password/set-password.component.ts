@@ -9,9 +9,10 @@ import { TranslocoService } from '@ngneat/transloco';
 import { ToastService } from '@singularity/ui';
 
 @Component({
-  selector: 'singularity-set-password',
-  templateUrl: './set-password.component.html',
-  styleUrls: ['./set-password.component.scss']
+    selector: 'singularity-set-password',
+    templateUrl: './set-password.component.html',
+    styleUrls: ['./set-password.component.scss'],
+    standalone: false
 })
 export class SetPasswordComponent implements OnInit, OnDestroy {
   public setPasswordForm = new FormGroup<SetPasswordForm>({

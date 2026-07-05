@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'sui-loader',
-  templateUrl: './loader.component.html',
-  styleUrl: './loader.component.scss'
+    selector: 'sui-loader',
+    templateUrl: './loader.component.html',
+    styleUrl: './loader.component.scss',
+    standalone: false
 })
 export class LoaderComponent {
 

@@ -12,7 +12,8 @@ import { Nullable } from '@singularity/api-interfaces';
 import { TooltipComponent } from './tooltip.component';
 
 @Directive({
-  selector: '[suiTooltip]'
+    selector: '[suiTooltip]',
+    standalone: false
 })
 export class TooltipDirective {
   @Input() suiTooltip?: TemplateRef<unknown>;

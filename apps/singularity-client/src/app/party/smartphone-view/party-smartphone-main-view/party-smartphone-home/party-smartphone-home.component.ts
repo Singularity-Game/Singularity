@@ -6,9 +6,10 @@ import { PartyService } from '../../../party.service';
 import { PartyParticipantService } from '../../../party-participant.service';
 
 @Component({
-  selector: 'singularity-party-song-select',
-  templateUrl: './party-smartphone-home.component.html',
-  styleUrl: './party-smartphone-home.component.scss'
+    selector: 'singularity-party-song-select',
+    templateUrl: './party-smartphone-home.component.html',
+    styleUrl: './party-smartphone-home.component.scss',
+    standalone: false
 })
 export class PartySmartphoneHomeComponent implements OnInit {
   public songs$?: Observable<SongOverviewDto[]>;

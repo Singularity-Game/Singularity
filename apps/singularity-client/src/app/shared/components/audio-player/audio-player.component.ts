@@ -4,9 +4,10 @@ import { SongService } from '../../song.service';
 import { combineLatest, map, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'singularity-audio-player',
-  templateUrl: './audio-player.component.html',
-  styleUrl: './audio-player.component.scss'
+    selector: 'singularity-audio-player',
+    templateUrl: './audio-player.component.html',
+    styleUrl: './audio-player.component.scss',
+    standalone: false
 })
 export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
   @Input() public songs: SongOverviewDto[] = [];

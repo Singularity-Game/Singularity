@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Nullable, PartyDto } from '@singularity/api-interfaces';
 
 @Component({
-  selector: 'singularity-join-party-set-username',
-  templateUrl: './join-party-set-username.component.html',
-  styleUrl: './join-party-set-username.component.scss'
+    selector: 'singularity-join-party-set-username',
+    templateUrl: './join-party-set-username.component.html',
+    styleUrl: './join-party-set-username.component.scss',
+    standalone: false
 })
 export class JoinPartySetUsernameComponent {
   @Input() party?: Nullable<PartyDto>;

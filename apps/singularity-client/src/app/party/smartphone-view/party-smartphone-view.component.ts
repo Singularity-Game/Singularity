@@ -7,9 +7,10 @@ import { SuiGlobalColorService } from '@singularity/ui';
 import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
-  selector: 'singularity-party-smartphone-view',
-  templateUrl: './party-smartphone-view.component.html',
-  styleUrl: './party-smartphone-view.component.scss'
+    selector: 'singularity-party-smartphone-view',
+    templateUrl: './party-smartphone-view.component.html',
+    styleUrl: './party-smartphone-view.component.scss',
+    standalone: false
 })
 export class PartySmartphoneViewComponent implements OnInit {
   public isParticipant$?: Observable<Optional<boolean>>;

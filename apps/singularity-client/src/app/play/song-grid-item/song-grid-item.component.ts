@@ -5,10 +5,11 @@ import { SongService } from '../../shared/song.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'singularity-song-grid-item',
-  templateUrl: './song-grid-item.component.html',
-  styleUrls: ['./song-grid-item.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'singularity-song-grid-item',
+    templateUrl: './song-grid-item.component.html',
+    styleUrls: ['./song-grid-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SongGridItemComponent implements OnInit {
   @Input() song?: SongOverviewDto;

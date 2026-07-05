@@ -8,10 +8,11 @@ import { UserEditDialogComponent } from '../../user-edit-dialog/user-edit-dialog
 import { PromptDialogComponent } from '../../../../shared/components/prompt-dialog/prompt-dialog.component';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'tr[singularity-user-list-item]',
-  templateUrl: './user-list-item.component.html',
-  styleUrls: ['./user-list-item.component.css']
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'tr[singularity-user-list-item]',
+    templateUrl: './user-list-item.component.html',
+    styleUrls: ['./user-list-item.component.css'],
+    standalone: false
 })
 export class UserListItemComponent implements OnDestroy {
   @Input() user?: UserDto;

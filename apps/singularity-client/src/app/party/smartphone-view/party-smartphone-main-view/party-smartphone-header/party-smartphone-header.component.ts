@@ -5,9 +5,10 @@ import { Observable, tap } from 'rxjs';
 import { PartyService } from '../../../party.service';
 
 @Component({
-  selector: 'singularity-party-smartphone-header',
-  templateUrl: './party-smartphone-header.component.html',
-  styleUrl: './party-smartphone-header.component.scss'
+    selector: 'singularity-party-smartphone-header',
+    templateUrl: './party-smartphone-header.component.html',
+    styleUrl: './party-smartphone-header.component.scss',
+    standalone: false
 })
 export class PartySmartphoneHeaderComponent implements OnInit {
   @Input() party?: PartyDto;

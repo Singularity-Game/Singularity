@@ -11,9 +11,10 @@ import { SettingsService } from '../../../shared/settings/settings.service';
 import { LocalSettings } from '../../../shared/settings/local-settings';
 
 @Component({
-  selector: 'singularity-vocal-grid',
-  templateUrl: './vocal-grid.component.html',
-  styleUrls: ['./vocal-grid.component.scss'],
+    selector: 'singularity-vocal-grid',
+    templateUrl: './vocal-grid.component.html',
+    styleUrls: ['./vocal-grid.component.scss'],
+    standalone: false
 })
 export class VocalGridComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input()

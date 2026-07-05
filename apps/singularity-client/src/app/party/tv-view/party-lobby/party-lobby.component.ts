@@ -7,9 +7,10 @@ import { SettingsService } from '../../../shared/settings/settings.service';
 import { PartyService } from '../../party.service';
 
 @Component({
-  selector: "singularity-party-lobby",
-  templateUrl: "./party-lobby.component.html",
-  styleUrl: "./party-lobby.component.scss"
+    selector: "singularity-party-lobby",
+    templateUrl: "./party-lobby.component.html",
+    styleUrl: "./party-lobby.component.scss",
+    standalone: false
 })
 export class PartyLobbyComponent implements OnInit, OnDestroy {
   @Input() party?: PartyDto;

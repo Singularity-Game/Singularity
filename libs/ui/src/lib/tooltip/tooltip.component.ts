@@ -3,9 +3,10 @@ import { gsap } from 'gsap';
 import { Nullable } from '@singularity/api-interfaces';
 
 @Component({
-  selector: 'sui-tooltip',
-  templateUrl: './tooltip.component.html',
-  styleUrl: './tooltip.component.scss'
+    selector: 'sui-tooltip',
+    templateUrl: './tooltip.component.html',
+    styleUrl: './tooltip.component.scss',
+    standalone: false
 })
 export class TooltipComponent implements AfterViewInit {
   private to: Nullable<gsap.QuickToFunc> = null;

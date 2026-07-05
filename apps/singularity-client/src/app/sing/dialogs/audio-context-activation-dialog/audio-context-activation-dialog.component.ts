@@ -3,9 +3,10 @@ import * as Tone from 'tone';
 import { ModalContext } from '@singularity/ui';
 
 @Component({
-  selector: 'singularity-audio-context-activation-dialog',
-  templateUrl: './audio-context-activation-dialog.component.html',
-  styleUrls: ['./audio-context-activation-dialog.component.scss'],
+    selector: 'singularity-audio-context-activation-dialog',
+    templateUrl: './audio-context-activation-dialog.component.html',
+    styleUrls: ['./audio-context-activation-dialog.component.scss'],
+    standalone: false
 })
 export class AudioContextActivationDialogComponent {
   constructor(private readonly modalContext: ModalContext<boolean, null>) {

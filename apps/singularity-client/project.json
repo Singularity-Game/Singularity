@@ -72,10 +72,10 @@
       "executor": "@angular-builders/custom-webpack:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "singularity-client:build:production"
+          "buildTarget": "singularity-client:build:production"
         },
         "development": {
-          "browserTarget": "singularity-client:build:development"
+          "buildTarget": "singularity-client:build:development"
         }
       },
       "defaultConfiguration": "development",

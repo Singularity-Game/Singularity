@@ -1,9 +1,10 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'sui-blurry-background-blob',
-  templateUrl: './blurry-background-blob.component.html',
-  styleUrl: './blurry-background-blob.component.scss'
+    selector: 'sui-blurry-background-blob',
+    templateUrl: './blurry-background-blob.component.html',
+    styleUrl: './blurry-background-blob.component.scss',
+    standalone: false
 })
 export class BlurryBackgroundBlobComponent {
 

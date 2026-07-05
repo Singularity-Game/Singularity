@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Nullable } from '@singularity/api-interfaces';
 
 @Pipe({
-  name: 'noComma',
+    name: 'noComma',
+    standalone: false
 })
 export class NoCommaPipe implements PipeTransform {
   transform(val: Nullable<string>): string {

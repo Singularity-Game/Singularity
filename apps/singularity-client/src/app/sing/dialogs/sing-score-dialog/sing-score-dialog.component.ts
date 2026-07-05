@@ -4,9 +4,10 @@ import JSConfetti from 'js-confetti';
 import { ModalContext } from '@singularity/ui';
 
 @Component({
-  selector: 'singularity-sing-score-dialog',
-  templateUrl: './sing-score-dialog.component.html',
-  styleUrls: ['./sing-score-dialog.component.scss']
+    selector: 'singularity-sing-score-dialog',
+    templateUrl: './sing-score-dialog.component.html',
+    styleUrls: ['./sing-score-dialog.component.scss'],
+    standalone: false
 })
 export class SingScoreDialogComponent implements AfterViewInit {
 

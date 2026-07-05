@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ModalContext } from '@singularity/ui';
 
 @Component({
-  selector: 'singularity-prompt-dialog',
-  templateUrl: './prompt-dialog.component.html',
-  styleUrl: './prompt-dialog.component.scss'
+    selector: 'singularity-prompt-dialog',
+    templateUrl: './prompt-dialog.component.html',
+    styleUrl: './prompt-dialog.component.scss',
+    standalone: false
 })
 export class PromptDialogComponent implements OnInit {
 
