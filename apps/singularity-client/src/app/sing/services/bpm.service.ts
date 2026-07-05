@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { delay, Observable, Subject, take } from 'rxjs';
-import * as Tone from 'tone'
 import { SettingsService } from '../../shared/settings/settings.service';
 import { LocalSettings } from '../../shared/settings/local-settings';
+import * as Tone from 'tone';
 
 @Injectable({providedIn: 'root'})
 export class BpmService {
@@ -13,14 +13,14 @@ export class BpmService {
   private startSubject = new Subject<void>();
   private stopSubject = new Subject<void>();
   constructor(private readonly settingsService: SettingsService) {
-    Tone.Transport.scheduleRepeat(() => {
+    Tone.getTransport().scheduleRepeat(() => {
       this.beatSubject.next(this.currentBeat);
       this.currentBeat++;
     }, '16n');
   }
 
   public setBPM(bpm: number, delay: number): void {
-    Tone.Transport.bpm.value = bpm;
+    Tone.getTransport().bpm.value = bpm;
     this.delay = delay;
   }
 
@@ -31,7 +31,7 @@ export class BpmService {
 
     this.startSubject.next();
     this.currentBeat = 0;
-    Tone.Transport.start(`+${this.delay / 1000}`);
+    Tone.getTransport().start(`+${this.delay / 1000}`);
     this.running = true;
   }
 
@@ -41,7 +41,7 @@ export class BpmService {
     }
 
     this.stopSubject.next();
-    Tone.Transport.stop();
+    Tone.getTransport().stop();
     this.running = false;
   }
 
