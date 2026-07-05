@@ -34,7 +34,7 @@ export class VocalGridComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private readonly bpmService: BpmService, private readonly settingsService: SettingsService) {
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   public onResize(): void {
     this.setDimensions();
   }
