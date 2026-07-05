@@ -8,7 +8,9 @@
   </div>
   <div class="navbar-buttons">
     <button suiButton routerLink="/play">{{ 'shared.navbar.play' | transloco }}</button>
-    <button suiButton routerLink="/party" *ngIf="partyEnabled">{{ 'shared.navbar.party' | transloco }}</button>
+    @if (partyEnabled) {
+      <button suiButton routerLink="/party">{{ 'shared.navbar.party' | transloco }}</button>
+    }
     <ng-content></ng-content>
   </div>
   <div class="navbar-right">
@@ -19,6 +21,7 @@
     </sui-dropdown>
   </div>
 </div>
-<div class="margin" *ngIf="!transparent">
-
-</div>
+@if (!transparent) {
+  <div class="margin">
+  </div>
+}

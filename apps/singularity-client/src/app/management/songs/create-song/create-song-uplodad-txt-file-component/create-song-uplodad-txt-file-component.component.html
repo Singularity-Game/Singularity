@@ -1,18 +1,22 @@
 <h2>{{ 'management.songs.createSong.createSongUploadTxtFile.txtFile' | transloco }}</h2>
 <p>{{ 'management.songs.createSong.createSongUploadTxtFile.txtFileInfo' | transloco }}</p>
-<sui-input-container *ngIf="!(txtFileSubject | async)">
-  <input suiInput (change)="txtFileChanged($event)" [disabled]="isLoading" type="file" accept=".txt">
-</sui-input-container>
-<sui-files *ngIf="(txtFileSubject | async); let file" [files]="[file]" [loading]="isLoading"
-           (removed)="remove()"></sui-files>
+@if (!(txtFileSubject | async)) {
+  <sui-input-container>
+    <input suiInput (change)="txtFileChanged($event)" [disabled]="isLoading" type="file" accept=".txt">
+  </sui-input-container>
+}
+@if ((txtFileSubject | async); as file) {
+  <sui-files [files]="[file]" [loading]="isLoading"
+  (removed)="remove()"></sui-files>
+}
 
 
-<ng-container *ngIf="songUploadInfo$ | async; let songUploadInfo">
-  <ng-container *ngIf="songUploadInfo.isVideoDownloadable && !isManualUpload">
+@if (songUploadInfo$ | async; as songUploadInfo) {
+  @if (songUploadInfo.isVideoDownloadable && !isManualUpload) {
     <h2>{{ 'management.songs.createSong.createSongUploadTxtFile.downloadable' | transloco }}</h2>
     <div class="flex">
       <iframe class="flex-item"
-              [src]="'https://www.youtube-nocookie.com/embed/' + songUploadInfo.videoInfo?.id | safe"></iframe>
+      [src]="'https://www.youtube-nocookie.com/embed/' + songUploadInfo.videoInfo?.id | safe"></iframe>
     </div>
-  </ng-container>
-</ng-container>
+  }
+}

@@ -1,5 +1,5 @@
-<ng-container *ngIf="party$ | async; let party; else loading">
-  <ng-container *ngIf="party.value !== null; else noParty">
+@if (party$ | async; as party) {
+  @if (party.value !== null) {
     <h1 class="text-center">{{party.value.name}}</h1>
     @if (userName === null) {
       <singularity-join-party-set-username [party]="party.value" (username)="setUserName($event)"></singularity-join-party-set-username>
@@ -8,15 +8,13 @@
     } @else {
       <singularity-join-party-ready [userName]="userName" [profilePictureBase64]="profilePictureBase64" (cancel)="cancel()" (join)="join(party.value.id)"></singularity-join-party-ready>
     }
-  </ng-container>
-</ng-container>
-
-<ng-template #loading>
+  } @else {
+    <h1 class="text-center">{{ 'party.smartphone.wrongId' | transloco }}</h1>
+  }
+} @else {
   <div class="center">
     <sui-loader></sui-loader>
   </div>
-</ng-template>
+}
 
-<ng-template #noParty>
-  <h1 class="text-center">{{ 'party.smartphone.wrongId' | transloco }}</h1>
-</ng-template>
+

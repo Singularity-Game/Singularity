@@ -1,60 +1,69 @@
 <h1>{{ 'management.songs.songList.header' | transloco }}
-  <button class="sui-right" suiButton size="s" routerLink="new" *ngIf="isAdmin$ | async">
-    <img class="sui-space-right" src="assets/icons/plus-circle.svg" alt="add" />
-    {{ 'management.songs.songList.newSong' | transloco }}
-  </button>
+  @if (isAdmin$ | async) {
+    <button class="sui-right" suiButton size="s" routerLink="new">
+      <img class="sui-space-right" src="assets/icons/plus-circle.svg" alt="add" />
+      {{ 'management.songs.songList.newSong' | transloco }}
+    </button>
+  }
 </h1>
 
-<ng-container *ngIf="isAdmin$ | async">
+@if (isAdmin$ | async) {
   <div class="indexing-section">
     <h2>{{ 'management.songs.songList.autoIndexing.header' | transloco }}</h2>
     <p>{{ 'management.songs.songList.autoIndexing.description' | transloco }}</p>
-    
     <div class="indexing-controls">
-      <button suiButton 
-              [loading]="isIndexing"
-              [disabled]="isIndexing" 
-              (click)="startIndexing()">
-        <img *ngIf="!isIndexing" class="sui-space-right" src="assets/icons/playlist-plus.svg" alt="index" />
+      <button suiButton
+        [loading]="isIndexing"
+        [disabled]="isIndexing"
+        (click)="startIndexing()">
+        @if (!isIndexing) {
+          <img class="sui-space-right" src="assets/icons/playlist-plus.svg" alt="index" />
+        }
         {{ (isIndexing ? 'management.songs.songList.autoIndexing.indexing' : 'management.songs.songList.autoIndexing.startIndex') | transloco }}
       </button>
-      
-      <div *ngIf="indexingResult" class="indexing-result">
-        <p>{{ 'management.songs.songList.autoIndexing.result' | transloco: indexingResult }}</p>
-      </div>
+      @if (indexingResult) {
+        <div class="indexing-result">
+          <p>{{ 'management.songs.songList.autoIndexing.result' | transloco: indexingResult }}</p>
+        </div>
+      }
     </div>
   </div>
-</ng-container>
+}
 
-<ng-container *ngIf="isAdmin$ | async">
-  <ng-container *ngIf="downloadingSongs$ | async; let downloadingSongs">
-    <ng-container *ngIf="downloadingSongs.length > 0">
+@if (isAdmin$ | async) {
+  @if (downloadingSongs$ | async; as downloadingSongs) {
+    @if (downloadingSongs.length > 0) {
       <p>{{ 'management.songs.songList.serverDownloadsSongs' | transloco }}</p>
       @for (song of downloadingSongs; track song.title) {
         <p class="flex">
-          <sui-loader *ngIf="song.state === songListDownloadState.loading"></sui-loader>
-          <img src="/assets/icons/check-circle.svg" alt="check" class="icon" width="24" height="24"
-               *ngIf="song.state === songListDownloadState.finished" />
+          @if (song.state === songListDownloadState.loading) {
+            <sui-loader></sui-loader>
+          }
+          @if (song.state === songListDownloadState.finished) {
+            <img src="/assets/icons/check-circle.svg" alt="check" class="icon" width="24" height="24"
+              />
+          }
           <span>{{ song.artist }} - {{ song.title }}</span>
         </p>
       }
-    </ng-container>
-  </ng-container>
-</ng-container>
+    }
+  }
+}
 
 <table class="sui-table">
   <tbody>
-  <tr>
-    <th></th>
-    <th></th>
-    <th>{{ 'management.songs.songList.title' | transloco }}</th>
-    <th>{{ 'management.songs.songList.author' | transloco }}</th>
-    <th>{{ 'management.songs.songList.year' | transloco }}</th>
-    <th>{{ 'management.songs.songList.actions' | transloco }}</th>
-  </tr>
-  <tr singularity-song-list-item
-      *ngFor="let song of songs"
-      [song]="song"
+    <tr>
+      <th></th>
+      <th></th>
+      <th>{{ 'management.songs.songList.title' | transloco }}</th>
+      <th>{{ 'management.songs.songList.author' | transloco }}</th>
+      <th>{{ 'management.songs.songList.year' | transloco }}</th>
+      <th>{{ 'management.songs.songList.actions' | transloco }}</th>
+    </tr>
+    @for (song of songs; track song) {
+      <tr singularity-song-list-item
+        [song]="song"
       (deleted)="removeSong(song.id)"></tr>
+    }
   </tbody>
 </table>

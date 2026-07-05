@@ -60,7 +60,7 @@
       "executor": "@nx/js:node",
       "options": {
         "buildTarget": "singularity-api:build",
-        "runtimeArgs": ["--watch"]
+        "watch": false
       }
     },
     "lint": {

@@ -65,8 +65,8 @@ export class YtService {
   private async download(info: ytdl.videoInfo, format: ytdl.videoFormat): Promise<Buffer> {
     return new Promise((resolve, reject) => {
       const stream = ytdl(info.videoDetails.video_url, { format: format, agent: this.agent })
-      const chunks: Buffer[] = [];
-      stream.on('data', (chunk: Buffer) => chunks.push(chunk));
+      const chunks: Uint8Array[] = [];
+      stream.on('data', (chunk: Uint8Array) => chunks.push(chunk));
       stream.on('end', () => resolve(Buffer.concat(chunks)));
       stream.on('error', (error: Error) => {
         reject(error);

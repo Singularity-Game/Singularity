@@ -1,6 +1,8 @@
 <div class="tooltip" [style.left]="left + 'px'" [style.top]="top + 'px'" #tooltipElement>
   <span>
-    <ng-container [ngTemplateOutlet]="tooltip" *ngIf="tooltip"></ng-container>
+    @if (tooltip) {
+      <ng-container [ngTemplateOutlet]="tooltip"></ng-container>
+    }
   </span>
   <span class="bottom-glow"></span>
 </div>

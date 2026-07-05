@@ -91,7 +91,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/singularity-client"],
       "options": {
-        "jestConfig": "apps/singularity-client/jest.config.ts"
+        "jestConfig": "apps/singularity-client/jest.config.ts",
+        "tsConfig": "apps/singularity-client/tsconfig.spec.json"
       }
     }
   }

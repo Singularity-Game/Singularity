@@ -3,11 +3,19 @@
   <video class="video" [class.invisible]="photoTaken" #video></video>
   <canvas class="video" [class.invisible]="!photoTaken" #canvas></canvas>
   <div class="text-center sui-space-top-large">
-    <button suiButton (click)="takePicture()" *ngIf="!photoTaken">{{ 'party.smartphone.joinParty.triggerSelfie' | transloco }}</button>
-    <button suiButton (click)="continue()" *ngIf="photoTaken">{{ 'party.smartphone.joinParty.nextButton' | transloco }}</button>
+    @if (!photoTaken) {
+      <button suiButton (click)="takePicture()">{{ 'party.smartphone.joinParty.triggerSelfie' | transloco }}</button>
+    }
+    @if (photoTaken) {
+      <button suiButton (click)="continue()">{{ 'party.smartphone.joinParty.nextButton' | transloco }}</button>
+    }
   </div>
   <div class="text-center sui-space-top-large">
-    <button suiButton *ngIf="!photoTaken" (click)="skip()">{{ 'party.smartphone.joinParty.skip' | transloco }}</button>
-    <button suiButton *ngIf="photoTaken" (click)="retakePicture()">{{ 'party.smartphone.joinParty.retry' | transloco }}</button>
+    @if (!photoTaken) {
+      <button suiButton (click)="skip()">{{ 'party.smartphone.joinParty.skip' | transloco }}</button>
+    }
+    @if (photoTaken) {
+      <button suiButton (click)="retakePicture()">{{ 'party.smartphone.joinParty.retry' | transloco }}</button>
+    }
   </div>
 </div>

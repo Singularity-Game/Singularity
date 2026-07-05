@@ -1,8 +1,14 @@
 <td>
   <div class="flex icon-td">
-    <img src="assets/icons/shield.svg" alt="admin" [suiTooltip]="adminHint" *ngIf="user?.isAdmin" />
-    <img src="assets/icons/check.svg" alt="active" [suiTooltip]="activeHint" *ngIf="user?.active" />
-    <img src="assets/icons/x.svg" alt="inactive" [suiTooltip]="inactiveHint" *ngIf="!user?.active" />
+    @if (user?.isAdmin) {
+      <img src="assets/icons/shield.svg" alt="admin" [suiTooltip]="adminHint" />
+    }
+    @if (user?.active) {
+      <img src="assets/icons/check.svg" alt="active" [suiTooltip]="activeHint" />
+    }
+    @if (!user?.active) {
+      <img src="assets/icons/x.svg" alt="inactive" [suiTooltip]="inactiveHint" />
+    }
   </div>
 </td>
 <td>{{ user?.username }}</td>
@@ -14,7 +20,7 @@
     size="s"
     [suiTooltip]="editHint"
     (click)="editUser()"
-  >
+    >
     <img class="icon" src="assets/icons/edit.svg" width="20" alt="edit">
   </button>
   <button
@@ -23,7 +29,7 @@
     size="s"
     (click)="deleteUser()"
     [suiTooltip]="deleteHint"
-  >
+    >
     <img class="icon" src="assets/icons/delete.svg" width="20" alt="delete">
   </button>
 </td>

@@ -1,13 +1,12 @@
-
-const { NxWebpackPlugin } = require('@nx/webpack');
 const { join } = require('path');
+const { NxAppWebpackPlugin } = require('@nx/webpack/app-plugin');
 
 module.exports = {
   output: {
     path: join(__dirname, '../../dist/apps/singularity-api'),
   },
   plugins: [
-    new NxWebpackPlugin({
+    new NxAppWebpackPlugin({
       target: 'node',
       compiler: 'tsc',
       main: './src/main.ts',

@@ -7,14 +7,15 @@
 </h1>
 <table class='sui-table'>
   <tbody>
-  <tr>
-    <th></th>
-    <th>{{ 'general.username' | transloco }}</th>
-    <th>{{ 'general.email' | transloco }}</th>
-    <th>{{ 'management.users.userList.actions' | transloco }}</th>
-  </tr>
-  <tr singularity-user-list-item
-      *ngFor='let user of users$ | async'
-      [user]='user'
+    <tr>
+      <th></th>
+      <th>{{ 'general.username' | transloco }}</th>
+      <th>{{ 'general.email' | transloco }}</th>
+      <th>{{ 'management.users.userList.actions' | transloco }}</th>
+    </tr>
+    @for (user of users$ | async; track user) {
+      <tr singularity-user-list-item
+        [user]='user'
       (deleted)='deleteUser(user)'></tr>
-</table>
+    }
+  </table>

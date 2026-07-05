@@ -14,97 +14,105 @@
     min="0"
     max="100"
     [(ngModel)]="menuVolume"
-  />
-  <p class="flex-1">
-    {{ 'management.settings.localSettings.menuVolume.description' | transloco }}
-  </p>
-</div>
-
-<div class="flex space-top align-center">
-  <p class="settings-title">
-    {{ 'management.settings.localSettings.gameVolume.header' | transloco }}
-  </p>
-  <input
-    class="flex-1"
-    size="m"
-    suiSlider
-    type="range"
-    min="0"
-    max="100"
-    [(ngModel)]="gameVolume"
-  />
-  <p class="flex-1">
-    {{ 'management.settings.localSettings.gameVolume.description' | transloco }}
-  </p>
-</div>
-
-<div class="flex space-top align-center">
-  <p class="settings-title">
-    {{ 'management.settings.localSettings.microphoneLatency.header' | transloco }}
-  </p>
-  <sui-input-number class="flex-1" [(ngModel)]="microphoneLatency"></sui-input-number>
-  <p class="flex-1">
-    {{ 'management.settings.localSettings.microphoneLatency.description' | transloco }}
-  </p>
-</div>
-
-<div class="flex space-top align-center">
-  <p class="settings-title">
-    {{ 'management.settings.localSettings.offlineMode.header' | transloco }}
-  </p>
-  <div class="flex-1">
-    <sui-select [(ngModel)]="offlineMode" *ngIf="('management.settings.localSettings.offlineMode.online' | transloco) && ('management.settings.localSettings.offlineMode.offline' | transloco)">
-      <sui-select-option [value]="false">
-        <span>{{ 'management.settings.localSettings.offlineMode.online' | transloco }}</span>
-      </sui-select-option>
-      <sui-select-option [value]="true">
-        <span>{{ 'management.settings.localSettings.offlineMode.offline' | transloco }}</span>
-      </sui-select-option>
-    </sui-select>
-  </div>
-  <p class="flex-1">
-    {{ 'management.settings.localSettings.offlineMode.description' | transloco }}
-  </p>
-</div>
-<div class="flex space-top align-center">
-  <p class="settings-title">
-    {{ 'management.settings.localSettings.localStorage.header' | transloco }}
-  </p>
-  <div class="flex-1">
-    <progress
-      *ngIf="storageSpaceProgress !== null"
-      suiProgress
-      max="100"
-      [value]="storageSpaceProgress"
-    ></progress>
-    <progress
-      *ngIf="storageSpaceProgress === null"
-      suiProgress
-      max="100"
-    ></progress>
-    <p *ngIf="totalStorageSpace !== null && usedStorageSpace !== null" class="storage-space-text">
-      {{ usedStorageSpace / 1000000000 | number }} Gb / {{ totalStorageSpace / 1000000000 | number }}
-      Gb {{ 'management.settings.localSettings.localStorage.used' | transloco }}
-    </p>
-    <p *ngIf="totalStorageSpace === null || usedStorageSpace === null" class="storage-space-text">
-      {{ 'management.settings.localSettings.localStorage.calculating' | transloco }}
+    />
+    <p class="flex-1">
+      {{ 'management.settings.localSettings.menuVolume.description' | transloco }}
     </p>
   </div>
-  <p class="flex-1">
-    {{ 'management.settings.localSettings.localStorage.description' | transloco }}
-  </p>
-</div>
 
-<div class="flex space-top align-center">
-  <p class="settings-title">
-    {{ 'management.settings.localSettings.emptyLocalStorage.header' | transloco }}
-  </p>
-  <div class="flex-1">
-    <button suiButton class="storage-clear-button"
-            (click)="clearSongs()">{{ 'management.settings.localSettings.emptyLocalStorage.button' | transloco }}
-    </button>
-  </div>
-  <p class="flex-1">
-    {{ 'management.settings.localSettings.emptyLocalStorage.description' | transloco }}
-  </p>
-</div>
+  <div class="flex space-top align-center">
+    <p class="settings-title">
+      {{ 'management.settings.localSettings.gameVolume.header' | transloco }}
+    </p>
+    <input
+      class="flex-1"
+      size="m"
+      suiSlider
+      type="range"
+      min="0"
+      max="100"
+      [(ngModel)]="gameVolume"
+      />
+      <p class="flex-1">
+        {{ 'management.settings.localSettings.gameVolume.description' | transloco }}
+      </p>
+    </div>
+
+    <div class="flex space-top align-center">
+      <p class="settings-title">
+        {{ 'management.settings.localSettings.microphoneLatency.header' | transloco }}
+      </p>
+      <sui-input-number class="flex-1" [(ngModel)]="microphoneLatency"></sui-input-number>
+      <p class="flex-1">
+        {{ 'management.settings.localSettings.microphoneLatency.description' | transloco }}
+      </p>
+    </div>
+
+    <div class="flex space-top align-center">
+      <p class="settings-title">
+        {{ 'management.settings.localSettings.offlineMode.header' | transloco }}
+      </p>
+      <div class="flex-1">
+        @if (('management.settings.localSettings.offlineMode.online' | transloco) && ('management.settings.localSettings.offlineMode.offline' | transloco)) {
+          <sui-select [(ngModel)]="offlineMode">
+            <sui-select-option [value]="false">
+              <span>{{ 'management.settings.localSettings.offlineMode.online' | transloco }}</span>
+            </sui-select-option>
+            <sui-select-option [value]="true">
+              <span>{{ 'management.settings.localSettings.offlineMode.offline' | transloco }}</span>
+            </sui-select-option>
+          </sui-select>
+        }
+      </div>
+      <p class="flex-1">
+        {{ 'management.settings.localSettings.offlineMode.description' | transloco }}
+      </p>
+    </div>
+    <div class="flex space-top align-center">
+      <p class="settings-title">
+        {{ 'management.settings.localSettings.localStorage.header' | transloco }}
+      </p>
+      <div class="flex-1">
+        @if (storageSpaceProgress !== null) {
+          <progress
+            suiProgress
+            max="100"
+            [value]="storageSpaceProgress"
+          ></progress>
+        }
+        @if (storageSpaceProgress === null) {
+          <progress
+            suiProgress
+            max="100"
+          ></progress>
+        }
+        @if (totalStorageSpace !== null && usedStorageSpace !== null) {
+          <p class="storage-space-text">
+            {{ usedStorageSpace / 1000000000 | number }} Gb / {{ totalStorageSpace / 1000000000 | number }}
+            Gb {{ 'management.settings.localSettings.localStorage.used' | transloco }}
+          </p>
+        }
+        @if (totalStorageSpace === null || usedStorageSpace === null) {
+          <p class="storage-space-text">
+            {{ 'management.settings.localSettings.localStorage.calculating' | transloco }}
+          </p>
+        }
+      </div>
+      <p class="flex-1">
+        {{ 'management.settings.localSettings.localStorage.description' | transloco }}
+      </p>
+    </div>
+
+    <div class="flex space-top align-center">
+      <p class="settings-title">
+        {{ 'management.settings.localSettings.emptyLocalStorage.header' | transloco }}
+      </p>
+      <div class="flex-1">
+        <button suiButton class="storage-clear-button"
+          (click)="clearSongs()">{{ 'management.settings.localSettings.emptyLocalStorage.button' | transloco }}
+        </button>
+      </div>
+      <p class="flex-1">
+        {{ 'management.settings.localSettings.emptyLocalStorage.description' | transloco }}
+      </p>
+    </div>

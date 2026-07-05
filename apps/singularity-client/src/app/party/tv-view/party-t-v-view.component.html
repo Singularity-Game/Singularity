@@ -1,19 +1,17 @@
-<ng-container *ngIf="partySubject | async; let party; else loading">
+@if (partySubject | async; as party) {
   @if(party.value) {
-    <ng-container *ngIf="currentSong$ | async; let currentSong; else lobby">
+    @if (currentSong$ | async; as currentSong) {
       <singularity-party-sing [queueItem]="currentSong" (ready)="ready()"></singularity-party-sing>
-    </ng-container>
-    <ng-template #lobby>
+    } @else {
       <singularity-party-lobby [party]="party.value!" [upNextQueueItem]="upNextQueueItem$ | async" (ready)="ready()"></singularity-party-lobby>
-    </ng-template>
+    }
   } @else {
     <singularity-create-party (party)="setParty($event)"></singularity-create-party>
   }
-</ng-container>
-
-
-<ng-template #loading>
+} @else {
   <div class="center">
     <sui-loader></sui-loader>
   </div>
-</ng-template>
+}
+
+

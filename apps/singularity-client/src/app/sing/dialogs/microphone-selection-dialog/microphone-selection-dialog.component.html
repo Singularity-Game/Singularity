@@ -1,38 +1,43 @@
 <h1>{{ 'sing.microphoneSelectionDialog.header' | transloco }}</h1>
-<ng-container *ngIf="devices$ | async; let devices; else loading">
-  <ng-container *ngFor="let formControl of formArray.controls; let i = index">
+@if (devices$ | async; as devices) {
+  @for (formControl of formArray.controls; track formControl; let i = $index) {
     <sui-select [formControl]="formControl" class="sui-space-top">
-      <sui-select-option *ngFor="let device of devices" [value]="device" [valueContent]="device?.device?.label ?? null">
-        <div class="flex" *ngIf="device !== null">
-          <p class="analyser-text">{{device.device.label}}</p>
-          <progress
-            suiProgress
-            class="analyser-bar"
-            max="10"
-            [value]="device.meter$ | async"
-          ></progress>
-        </div>
-        <div *ngIf="device === null">
-          {{ 'sing.microphoneSelectionDialog.noPlayer' | transloco }}
-        </div>
-      </sui-select-option>
+      @for (device of devices; track device) {
+        <sui-select-option [value]="device" [valueContent]="device?.device?.label ?? null">
+          @if (device !== null) {
+            <div class="flex">
+              <p class="analyser-text">{{device.device.label}}</p>
+              <progress
+                suiProgress
+                class="analyser-bar"
+                max="10"
+                [value]="device.meter$ | async"
+              ></progress>
+            </div>
+          }
+          @if (device === null) {
+            <div>
+              {{ 'sing.microphoneSelectionDialog.noPlayer' | transloco }}
+            </div>
+          }
+        </sui-select-option>
+      }
     </sui-select>
-  </ng-container>
-</ng-container>
-
-<button suiButton
-        class="sui-space-top-large"
-        [disabled]="formArray.length < modalContext.data.minCount + 1 || formArray.length > modalContext.data.maxCount + 1"
-        (click)="submit()">{{ 'sing.microphoneSelectionDialog.submit' | transloco }}</button>
-<button suiButton
-        appearance="warn"
-        class="sui-space-top-large"
-        (click)="abort()">{{ 'general.cancel' | transloco }}</button>
-
-<ng-template #loading>
+  }
+} @else {
   <progress
     suiProgress
     max="100"
     class="progress"
   ></progress>
-</ng-template>
+}
+
+<button suiButton
+  class="sui-space-top-large"
+  [disabled]="formArray.length < modalContext.data.minCount + 1 || formArray.length > modalContext.data.maxCount + 1"
+(click)="submit()">{{ 'sing.microphoneSelectionDialog.submit' | transloco }}</button>
+<button suiButton
+  appearance="warn"
+  class="sui-space-top-large"
+(click)="abort()">{{ 'general.cancel' | transloco }}</button>
+

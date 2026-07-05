@@ -1,2 +1,4 @@
 <video class="video" #video></video>
-<div class="video-fade" *ngIf="showFade"></div>
+@if (showFade) {
+  <div class="video-fade"></div>
+}

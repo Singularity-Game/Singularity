@@ -1,4 +1,4 @@
-import { ObjectStoreMeta } from 'ngx-indexed-db/lib/ngx-indexed-db.meta';
+import { ObjectStoreMeta } from "ngx-indexed-db"
 
 export const SONGS_INDEXED_DB_SCHEMA: ObjectStoreMeta = {
   store: 'songs',

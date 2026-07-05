@@ -3,48 +3,41 @@
 </td>
 <td>
   <div class="flex no-gap download-icon-td">
-    <img src="/assets/icons/download.svg" class="downloaded icon" alt="downloaded" [suiTooltip]="downloadedHint" *ngIf="isDownloaded$ | async" />
-    <sui-loader *ngIf="isDownloading || isCheckingDownload"></sui-loader>
+    @if (isDownloaded$ | async) {
+      <img src="/assets/icons/download.svg" class="downloaded icon" alt="downloaded" [suiTooltip]="downloadedHint" />
+    }
+    @if (isDownloading || isCheckingDownload) {
+      <sui-loader></sui-loader>
+    }
   </div>
 </td>
 <td>{{song?.name}}</td>
 <td>{{song?.artist}}</td>
 <td>{{song?.year}}</td>
 <td>
+  <button
+    suiButton
+    size="s"
+    [isIcon]="true"
+    type="button"
+    (click)="start()"
+    [suiTooltip]="playHint"
+    >
+    <img class="icon" src="assets/icons/play-stroke.svg" width="20" alt="play">
+  </button>
+  @if ((isDownloaded$ | async) === false) {
     <button
       suiButton
       size="s"
-      [isIcon]="true"
       type="button"
-      (click)="start()"
-      [suiTooltip]="playHint"
-    >
-      <img class="icon" src="assets/icons/play-stroke.svg" width="20" alt="play">
+      [isIcon]="true"
+      (click)="download()"
+      [disabled]="isDownloading || isCheckingDownload"
+      [suiTooltip]="downloadButtonHint"
+      >
+      <img class="icon" src="assets/icons/download.svg" width="20" alt="download">
     </button>
-  <button
-    *ngIf="(isDownloaded$ | async) === false else notDownloaded"
-    suiButton
-    size="s"
-    type="button"
-    [isIcon]="true"
-    (click)="download()"
-    [disabled]="isDownloading || isCheckingDownload"
-    [suiTooltip]="downloadButtonHint"
-  >
-    <img class="icon" src="assets/icons/download.svg" width="20" alt="download">
-  </button>
-  <button
-    *ngIf="isAdmin$ | async"
-    suiButton
-    size="s"
-    type="button"
-    [isIcon]="true"
-    (click)="delete()"
-    [suiTooltip]="deleteHint"
-  >
-    <img class="icon" src="assets/icons/delete.svg" width="20" alt="delete">
-  </button>
-  <ng-template #notDownloaded>
+  } @else {
     <button
       suiButton
       size="s"
@@ -53,10 +46,22 @@
       (click)="removeDownload()"
       [disabled]="isCheckingDownload"
       [suiTooltip]="removeDownloadButtonHint"
-    >
+      >
       <img class="icon" src="assets/icons/delete-circle.svg" width="20" alt="delete">
     </button>
-  </ng-template>
+  }
+  @if (isAdmin$ | async) {
+    <button
+      suiButton
+      size="s"
+      type="button"
+      [isIcon]="true"
+      (click)="delete()"
+      [suiTooltip]="deleteHint"
+      >
+      <img class="icon" src="assets/icons/delete.svg" width="20" alt="delete">
+    </button>
+  }
 </td>
 
 <ng-template #downloadedHint>
