@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
-    selector: '[suiButton]',
-    templateUrl: './button.component.html',
-    styleUrl: './button.component.scss',
-    standalone: false
+  selector: '[suiButton]',
+  templateUrl: './button.component.html',
+  styleUrl: './button.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class ButtonComponent {
   @Input() size: 'xs' | 's' | 'l' = 'l';

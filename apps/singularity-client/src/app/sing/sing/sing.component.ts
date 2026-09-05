@@ -1,5 +1,5 @@
 import {
-  AfterViewInit,
+  AfterViewInit, ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
@@ -23,10 +23,11 @@ import { LocalSettings } from '../../shared/settings/local-settings';
 import { ModalService } from '@singularity/ui';
 
 @Component({
-    selector: 'singularity-sing',
-    templateUrl: './sing.component.html',
-    styleUrls: ['./sing.component.scss'],
-    standalone: false
+  selector: 'singularity-sing',
+  templateUrl: './sing.component.html',
+  styleUrls: ['./sing.component.scss'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SingComponent implements AfterViewInit, OnDestroy {
   @Input() public songId?: number;
@@ -46,7 +47,8 @@ export class SingComponent implements AfterViewInit, OnDestroy {
               private readonly bpmService: BpmService,
               private readonly settingsService: SettingsService,
               private readonly singerFactory: SingerFactory,
-              private readonly modalService: ModalService) { }
+              private readonly modalService: ModalService) {
+  }
 
   @HostListener('document:keydown', ['$event'])
   public handleKeyboardEvent(event: KeyboardEvent): void {
@@ -134,7 +136,7 @@ export class SingComponent implements AfterViewInit, OnDestroy {
   }
 
   private setupSingers(): void {
-    if(!this.song) {
+    if (!this.song) {
       return;
     }
 
@@ -155,21 +157,21 @@ export class SingComponent implements AfterViewInit, OnDestroy {
         delay(2000),
         switchMap(([beat, scores]: [number, number[]]) => {
           return this.modalService.open$(SingScoreDialogComponent, {
-              singers: this.singers,
-              scores: scores,
+            singers: this.singers,
+            scores: scores,
           })
         }),
         takeUntil(this.destroySubject)
       ).subscribe(() => {
-        if (!this.audioPlayer) {
-          return;
-        }
+      if (!this.audioPlayer) {
+        return;
+      }
 
-        if (this.audioPlayer.paused) {
-          this.stopSong(true);
-        } else {
-          this.audioPlayer.onended = () => this.stopSong(true);
-        }
+      if (this.audioPlayer.paused) {
+        this.stopSong(true);
+      } else {
+        this.audioPlayer.onended = () => this.stopSong(true);
+      }
     });
   }
 }

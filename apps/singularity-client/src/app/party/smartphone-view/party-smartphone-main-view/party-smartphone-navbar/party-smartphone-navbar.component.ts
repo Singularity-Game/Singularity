@@ -1,14 +1,15 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { PartyDto, PartyParticipantDto } from '@singularity/api-interfaces';
 import { ModalService } from '@singularity/ui';
 import { PartyQrCodeComponent } from './party-qr-code/party-qr-code.component';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-    selector: 'singularity-smartphone-navbar',
-    templateUrl: './party-smartphone-navbar.component.html',
-    styleUrl: './party-smartphone-navbar.component.scss',
-    standalone: false
+  selector: 'singularity-smartphone-navbar',
+  templateUrl: './party-smartphone-navbar.component.html',
+  styleUrl: './party-smartphone-navbar.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class PartySmartphoneNavbarComponent {
   @Input() party?: PartyDto;

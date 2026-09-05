@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { PartyParticipantService } from '../party-participant.service';
 import { map, Observable } from 'rxjs';
 import { Optional } from '@singularity/api-interfaces';
 import { ActivatedRoute } from '@angular/router';
 import { SuiGlobalColorService } from '@singularity/ui';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'singularity-party-smartphone-view',
-    templateUrl: './party-smartphone-view.component.html',
-    styleUrl: './party-smartphone-view.component.scss',
-    standalone: false
+  selector: 'singularity-party-smartphone-view',
+  templateUrl: './party-smartphone-view.component.html',
+  styleUrl: './party-smartphone-view.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class PartySmartphoneViewComponent implements OnInit {
   public isParticipant$?: Observable<Optional<boolean>>;

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { asyncScheduler, BehaviorSubject, catchError, map, Observable, scheduled, shareReplay, tap } from 'rxjs';
 import { Md5 } from 'ts-md5';
@@ -8,11 +8,10 @@ import { Nullable, UserDto } from '@singularity/api-interfaces';
   providedIn: 'root'
 })
 export class AuthenticationService {
+  private readonly http = inject(HttpClient);
 
   private user$ = this.http.get<UserDto>('/api/user/me').pipe(shareReplay(1));
   private authenticated = true;
-
-  constructor(private readonly http: HttpClient) { }
 
   public login$(username: string, password: string): Observable<boolean> {
     return this.http.post('/api/user/login', {

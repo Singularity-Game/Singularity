@@ -34,7 +34,7 @@ export class MicrophoneService {
         switchMap(() => {
           const promise = navigator.mediaDevices.getUserMedia({
             audio: {
-              deviceId: deviceId
+              deviceId: { exact: deviceId }
             }
           });
 

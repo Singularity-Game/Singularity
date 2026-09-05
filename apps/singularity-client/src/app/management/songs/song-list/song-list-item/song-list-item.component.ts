@@ -1,21 +1,37 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
 import { SongOverviewDto } from '@singularity/api-interfaces';
 import { SongManagementService } from '../../song-management.service';
 import { filter, map, Observable, of, shareReplay, Subject, switchMap, take, takeUntil, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../../../shared/authentication.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ModalService } from '@singularity/ui';
 import { PromptDialogComponent } from '../../../../shared/components/prompt-dialog/prompt-dialog.component';
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
-    selector: 'tr[singularity-song-list-item]',
-    templateUrl: './song-list-item.component.html',
-    styleUrls: ['./song-list-item.component.scss'],
-    standalone: false
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: 'tr[singularity-song-list-item]',
+  templateUrl: './song-list-item.component.html',
+  styleUrls: ['./song-list-item.component.scss'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SongListItemComponent implements OnInit, OnDestroy {
+  private readonly songManagementService = inject(SongManagementService);
+  private readonly modalService = inject(ModalService);
+  private readonly authenticationService = inject(AuthenticationService);
+  private readonly router = inject(Router);
+  private readonly transloco = inject(TranslocoService)
+
   @Input() public song?: SongOverviewDto;
 
   @Output() public deleted = new EventEmitter<void>();
@@ -28,13 +44,6 @@ export class SongListItemComponent implements OnInit, OnDestroy {
   public isCheckingDownload = true;
 
   private readonly destroySubject = new Subject<void>();
-
-  constructor(private readonly songManagementService: SongManagementService,
-              private readonly modalService: ModalService,
-              private readonly authenticationService: AuthenticationService,
-              private readonly router: Router,
-              private readonly transloco: TranslocoService) {
-  }
 
   public ngOnInit(): void {
     if (!this.song) {
@@ -51,7 +60,7 @@ export class SongListItemComponent implements OnInit, OnDestroy {
     this.cover$ = this.isDownloaded$
       .pipe(
         switchMap((downloaded: boolean) => {
-          if(!this.song?.id) {
+          if (!this.song?.id) {
             return of('');
           }
 

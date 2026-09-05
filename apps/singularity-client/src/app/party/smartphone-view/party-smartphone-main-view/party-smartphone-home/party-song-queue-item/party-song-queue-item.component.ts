@@ -1,14 +1,15 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
 import { PartyDto, PartyParticipantDto, PartyQueueItemDto } from '@singularity/api-interfaces';
 import { PartyService } from '../../../../party.service';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
-    selector: '[singularity-party-song-queue-item]',
-    templateUrl: './party-song-queue-item.component.html',
-    styleUrl: './party-song-queue-item.component.scss',
-    standalone: false
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: '[singularity-party-song-queue-item]',
+  templateUrl: './party-song-queue-item.component.html',
+  styleUrl: './party-song-queue-item.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class PartySongQueueItemComponent implements OnDestroy {
   @Input() party?: PartyDto;
@@ -26,7 +27,7 @@ export class PartySongQueueItemComponent implements OnDestroy {
   }
 
   public join(): void {
-    if(!this.party || !this.queueItem || !this.participant) {
+    if (!this.party || !this.queueItem || !this.participant) {
       return;
     }
 
@@ -36,7 +37,7 @@ export class PartySongQueueItemComponent implements OnDestroy {
   }
 
   public leave(): void {
-    if(!this.party || !this.queueItem || !this.participant) {
+    if (!this.party || !this.queueItem || !this.participant) {
       return;
     }
 

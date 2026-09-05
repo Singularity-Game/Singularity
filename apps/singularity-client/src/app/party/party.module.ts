@@ -4,7 +4,7 @@ import { PartyRoutingModule } from './party-routing.module';
 import { CreatePartyComponent } from './tv-view/create-party/create-party.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SingularityUiModule } from '@singularity/ui';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoModule } from '@jsverse/transloco';
 import { PartyService } from './party.service';
 import { PartyLobbyComponent } from './tv-view/party-lobby/party-lobby.component';
 import { PartyTVViewComponent } from './tv-view/party-t-v-view.component';

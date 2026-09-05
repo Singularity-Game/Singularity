@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreatePartyForm } from './create-party-form';
 import { Nullable, PartyDto } from '@singularity/api-interfaces';
@@ -6,10 +6,11 @@ import { PartyService } from '../../party.service';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-    selector: 'singularity-create-party',
-    templateUrl: './create-party.component.html',
-    styleUrls: ['./create-party.component.scss'],
-    standalone: false
+  selector: 'singularity-create-party',
+  templateUrl: './create-party.component.html',
+  styleUrls: ['./create-party.component.scss'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class CreatePartyComponent implements OnDestroy {
   @Output() party = new EventEmitter<PartyDto>();
@@ -31,7 +32,7 @@ export class CreatePartyComponent implements OnDestroy {
   }
 
   public createParty() {
-    if(this.form.invalid) {
+    if (this.form.invalid) {
       return;
     }
 

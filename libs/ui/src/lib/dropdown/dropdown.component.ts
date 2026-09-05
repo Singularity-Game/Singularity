@@ -1,10 +1,11 @@
-import { Component, ElementRef, HostListener, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input } from '@angular/core';
 
 @Component({
-    selector: 'sui-dropdown',
-    templateUrl: './dropdown.component.html',
-    styleUrl: './dropdown.component.scss',
-    standalone: false
+  selector: 'sui-dropdown',
+  templateUrl: './dropdown.component.html',
+  styleUrl: './dropdown.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class DropdownComponent {
   @Input() size: 's' | 'l' = 'l';
@@ -18,7 +19,7 @@ export class DropdownComponent {
       return;
     }
 
-    if(this.expanded) {
+    if (this.expanded) {
       this.toggleExpand();
     }
   }

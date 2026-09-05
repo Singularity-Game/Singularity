@@ -1,12 +1,22 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import { gsap } from 'gsap';
 import { Nullable } from '@singularity/api-interfaces';
 
 @Component({
-    selector: 'sui-tooltip',
-    templateUrl: './tooltip.component.html',
-    styleUrl: './tooltip.component.scss',
-    standalone: false
+  selector: 'sui-tooltip',
+  templateUrl: './tooltip.component.html',
+  styleUrl: './tooltip.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TooltipComponent implements AfterViewInit {
   private to: Nullable<gsap.QuickToFunc> = null;
@@ -15,8 +25,9 @@ export class TooltipComponent implements AfterViewInit {
   @Input() public left = 0;
   @Input() public top = 0;
 
-  @Input() public set tilt(tilt: number) {
-    if(!this.tooltipElement) {
+  @Input()
+  public set tilt(tilt: number) {
+    if (!this.tooltipElement) {
       return;
     }
 
@@ -30,7 +41,7 @@ export class TooltipComponent implements AfterViewInit {
   @ViewChild('tooltipElement') private tooltipElement?: ElementRef<HTMLDivElement>;
 
   public ngAfterViewInit() {
-    if(!this.tooltipElement) {
+    if (!this.tooltipElement) {
       return;
     }
 
@@ -50,7 +61,7 @@ export class TooltipComponent implements AfterViewInit {
   }
 
   public out() {
-    if(!this.tooltipElement) {
+    if (!this.tooltipElement) {
       return;
     }
 

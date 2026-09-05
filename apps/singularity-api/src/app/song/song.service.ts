@@ -9,6 +9,8 @@ import { SongAlreadyExistsError } from './errors/song-already-exists-error';
 import { SongSaveError } from './errors/song-save-error';
 import { SongFile } from './interfaces/song-file';
 import { UltrastarParser } from './utils/ultrastar-parser';
+import ErrnoException = NodeJS.ErrnoException;
+import { Nullable } from '@singularity/api-interfaces';
 
 @Injectable()
 export class SongService {
@@ -29,12 +31,12 @@ export class SongService {
     const song = await this.getSongById(id);
 
     // Handle both old format (filename only) and new format (relative path)
-    const audioPath = song.audioFileName.includes('/') 
+    const audioPath = song.audioFileName.includes('/')
       ? this.getAbsoluteSongPath(song.audioFileName)
       : await this.getSongDirectory(song.artist, song.name).then(dir => `${dir}/${song.audioFileName}`);
 
     return new Promise<Buffer>((resolve, reject) => {
-      fs.readFile(audioPath, (error: Error, data: Buffer) => {
+      fs.readFile(audioPath, (error: Nullable<ErrnoException>, data: Buffer) => {
         if (error) {
           reject(error);
         }
@@ -47,12 +49,12 @@ export class SongService {
     const song = await this.getSongById(id);
 
     // Handle both old format (filename only) and new format (relative path)
-    const videoPath = song.videoFileName.includes('/') 
+    const videoPath = song.videoFileName.includes('/')
       ? this.getAbsoluteSongPath(song.videoFileName)
       : await this.getSongDirectory(song.artist, song.name).then(dir => `${dir}/${song.videoFileName}`);
 
     return new Promise<Buffer>((resolve, reject) => {
-      fs.readFile(videoPath, (error: Error, data: Buffer) => {
+      fs.readFile(videoPath, (error: Nullable<ErrnoException>, data: Buffer) => {
         if (error) {
           reject(error);
         }
@@ -65,12 +67,12 @@ export class SongService {
     const song = await this.getSongById(id);
 
     // Handle both old format (filename only) and new format (relative path)
-    const coverPath = song.coverFileName.includes('/') 
+    const coverPath = song.coverFileName.includes('/')
       ? this.getAbsoluteSongPath(song.coverFileName)
       : await this.getSongDirectory(song.artist, song.name).then(dir => `${dir}/${song.coverFileName}`);
 
     return new Promise<Buffer>((resolve, reject) => {
-      fs.readFile(coverPath, (error: Error, data: Buffer) => {
+      fs.readFile(coverPath, (error: Nullable<ErrnoException>, data: Buffer) => {
         if (error) {
           reject(error);
         }
@@ -110,7 +112,7 @@ export class SongService {
     const start = songStart ?? metadata.start;
     const end = songEnd ?? metadata.end;
 
-    if (await this.songRepository.exist({
+    if (await this.songRepository.exists({
       where: {
         artist: artist,
         name: title
@@ -164,9 +166,9 @@ export class SongService {
 
     return new Promise<string>((resolve: (directory: string) => void, reject: (error: Error) => void) => {
       const dirName = `${__dirname}/${baseDirectory}/${artist} - ${title}`;
-      fs.stat(dirName, (statError: Error) => {
+      fs.stat(dirName, (statError: Nullable<ErrnoException>) => {
         if (statError) {
-          fs.mkdir(dirName, (mkDirError: Error) => {
+          fs.mkdir(dirName, (mkDirError: Nullable<ErrnoException>) => {
             if (mkDirError) {
               reject(mkDirError);
               return;
@@ -185,7 +187,7 @@ export class SongService {
 
     return new Promise<string>((resolve: (directory: string) => void, reject: (error: Error) => void) => {
       const dirName = `${__dirname}/${baseDirectory}/${artist} - ${title}`;
-      fs.stat(dirName, (statError: Error) => {
+      fs.stat(dirName, (statError: Nullable<ErrnoException>) => {
         if (statError) {
           reject(statError);
         } else {

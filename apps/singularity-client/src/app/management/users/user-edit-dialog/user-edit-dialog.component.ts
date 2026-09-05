@@ -1,19 +1,20 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EditUserForm } from './edit-user-form';
 import { catchError, filter, Subject, switchMap, takeUntil, tap, throwError } from 'rxjs';
 import { Nullable, UserDto } from '@singularity/api-interfaces';
 import { UserService } from '../user.service';
 import { ModalContext, ModalService } from '@singularity/ui';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { PromptDialogComponent } from '../../../shared/components/prompt-dialog/prompt-dialog.component';
 import { AuthenticationService } from '../../../shared/authentication.service';
 
 @Component({
-    selector: 'singularity-user-edit-dialog',
-    templateUrl: './user-edit-dialog.component.html',
-    styleUrl: './user-edit-dialog.component.scss',
-    standalone: false
+  selector: 'singularity-user-edit-dialog',
+  templateUrl: './user-edit-dialog.component.html',
+  styleUrl: './user-edit-dialog.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class UserEditDialogComponent implements OnInit, OnDestroy {
   public userForm = new FormGroup<EditUserForm>({

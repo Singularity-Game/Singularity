@@ -9,7 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SetPasswordComponent } from './set-password/set-password.component';
 import { NoAccountInfoDialogComponent } from './login/no-account-info-dialog/no-account-info-dialog.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoModule } from '@jsverse/transloco';
 import { SingularityUiModule } from '@singularity/ui';
 
 @NgModule({

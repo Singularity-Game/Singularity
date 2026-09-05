@@ -5,14 +5,14 @@ import { UUID } from '@singularity/api-interfaces';
 @Entity()
 export class CreatePasswordTokenEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @ManyToOne(() => User,{ eager: true, onDelete: 'CASCADE' })
-  user: User;
+  user!: User;
 
   @Column({ type: 'varchar', unique: true })
-  token: string;
+  token!: string;
 
   @Column({ type: 'date' })
-  validUntil: Date;
+  validUntil!: Date;
 }

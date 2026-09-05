@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
-    selector: 'sui-toast',
-    templateUrl: './toast.component.html',
-    styleUrl: './toast.component.scss',
-    standalone: false
+  selector: 'sui-toast',
+  templateUrl: './toast.component.html',
+  styleUrl: './toast.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class ToastComponent {
   @Input() title = '';

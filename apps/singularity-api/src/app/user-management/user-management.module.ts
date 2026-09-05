@@ -8,12 +8,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { UserController } from './user.controller';
 import { LocalStrategy } from './strategies/local.strategy';
-import { UserProfile } from './automapper-profiles/user.profile';
+import { UserMapper } from './mapper/user-mapper.service';
 import { CreatePasswordTokenEntity } from './models/create-password-token.entity';
 import { MailModule } from '../mail/mail.module';
 
 @Module({
-  providers: [UserManagementService, AuthenticationService, JwtStrategy, LocalStrategy, UserProfile],
+  providers: [UserManagementService, AuthenticationService, JwtStrategy, LocalStrategy, UserMapper],
   imports: [
     TypeOrmModule.forFeature([User, CreatePasswordTokenEntity]),
     JwtModule.registerAsync({

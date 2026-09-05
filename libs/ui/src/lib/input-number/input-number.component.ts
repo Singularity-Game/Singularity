@@ -1,18 +1,19 @@
-import { Component, forwardRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-    selector: 'sui-input-number',
-    templateUrl: './input-number.component.html',
-    styleUrl: './input-number.component.scss',
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => InputNumberComponent),
-            multi: true
-        }
-    ],
-    standalone: false
+  selector: 'sui-input-number',
+  templateUrl: './input-number.component.html',
+  styleUrl: './input-number.component.scss',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputNumberComponent),
+      multi: true
+    }
+  ],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class InputNumberComponent implements ControlValueAccessor {
   public value = 0;
@@ -31,7 +32,7 @@ export class InputNumberComponent implements ControlValueAccessor {
 
   public setValue(value: number): void {
     this.value = value;
-    if(this.onChange) {
+    if (this.onChange) {
       this.onChange(this.value);
     }
   }

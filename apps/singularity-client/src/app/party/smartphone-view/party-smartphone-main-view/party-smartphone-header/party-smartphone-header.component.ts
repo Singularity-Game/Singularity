@@ -1,14 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { PartyDto, SongOverviewDto } from '@singularity/api-interfaces';
 import { SuiGlobalColorService } from '@singularity/ui';
 import { Observable, tap } from 'rxjs';
 import { PartyService } from '../../../party.service';
 
 @Component({
-    selector: 'singularity-party-smartphone-header',
-    templateUrl: './party-smartphone-header.component.html',
-    styleUrl: './party-smartphone-header.component.scss',
-    standalone: false
+  selector: 'singularity-party-smartphone-header',
+  templateUrl: './party-smartphone-header.component.html',
+  styleUrl: './party-smartphone-header.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class PartySmartphoneHeaderComponent implements OnInit {
   @Input() party?: PartyDto;
@@ -20,7 +21,7 @@ export class PartySmartphoneHeaderComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    if(!this.party) {
+    if (!this.party) {
       return;
     }
 

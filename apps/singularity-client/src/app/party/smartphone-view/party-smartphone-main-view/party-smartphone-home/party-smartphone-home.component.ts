@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { filter, map, Observable } from 'rxjs';
 import { PartyDto, PartyParticipantDto, PartyQueueItemDto, SongOverviewDto } from '@singularity/api-interfaces';
 import { ActivatedRoute } from '@angular/router';
@@ -6,10 +6,11 @@ import { PartyService } from '../../../party.service';
 import { PartyParticipantService } from '../../../party-participant.service';
 
 @Component({
-    selector: 'singularity-party-song-select',
-    templateUrl: './party-smartphone-home.component.html',
-    styleUrl: './party-smartphone-home.component.scss',
-    standalone: false
+  selector: 'singularity-party-song-select',
+  templateUrl: './party-smartphone-home.component.html',
+  styleUrl: './party-smartphone-home.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class PartySmartphoneHomeComponent implements OnInit {
   public songs$?: Observable<SongOverviewDto[]>;

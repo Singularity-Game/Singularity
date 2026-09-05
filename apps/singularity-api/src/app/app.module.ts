@@ -4,14 +4,13 @@ import { join } from 'path';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { environment } from '../environments/environment';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { importEntitites } from './import-entities';
-import { importMigrations } from './import-migrations';
-import { AutomapperModule } from '@automapper/nestjs';
-import { classes } from '@automapper/classes';
 import { UserManagementModule } from './user-management/user-management.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { PartyModule } from './party/party.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { importEntitites } from './import-entities';
+import { importMigrations } from './import-migrations';
+import mysql from 'mysql2';
 
 @Module({
   imports: [
@@ -36,6 +35,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 
         return {
           type: 'mariadb',
+          driver: mysql,
           host: configService.get('DB_HOST'),
           port: configService.get('DB_PORT'),
           username: configService.get('DB_USERNAME'),
@@ -47,9 +47,6 @@ import { ScheduleModule } from '@nestjs/schedule';
         }
       },
       inject: [ConfigService],
-    }),
-    AutomapperModule.forRoot({
-      strategyInitializer: classes()
     }),
     ScheduleModule.forRoot(),
     SongModule,

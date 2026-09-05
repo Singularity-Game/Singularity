@@ -33,12 +33,12 @@ export class MailService {
     const from = this.configService.get('SMTP_FROM');
     const template = await this.mailTemplateRepository.findOne({ where: { type: MailType.CreatePassword } });
 
-    const mailText = this.setMailTemplateTextVars(template.textTemplate, {
+    const mailText = this.setMailTemplateTextVars(template?.textTemplate ?? null, {
       url: url,
       username: username
     });
 
-    const mailHtml = this.setMailTemplateTextVars(template.htmlTemplate, {
+    const mailHtml = this.setMailTemplateTextVars(template?.htmlTemplate ?? null, {
       url: url,
       username: username
     })
@@ -46,9 +46,9 @@ export class MailService {
     await this.transporter.sendMail({
       to: email,
       from: from,
-      subject: template.subject,
-      text: mailText,
-      html: mailHtml,
+      subject: template?.subject ?? '',
+      text: mailText ?? '',
+      html: mailHtml ?? '',
     });
 
     return true;
@@ -59,12 +59,12 @@ export class MailService {
     const from = this.configService.get('SMTP_FROM');
     const template = await this.mailTemplateRepository.findOne({ where: { type: MailType.ResetPassword } });
 
-    const mailText = this.setMailTemplateTextVars(template.textTemplate, {
+    const mailText = this.setMailTemplateTextVars(template?.textTemplate ?? null, {
       url: url,
       username: user.username
     });
 
-    const mailHtml = this.setMailTemplateTextVars(template.htmlTemplate, {
+    const mailHtml = this.setMailTemplateTextVars(template?.htmlTemplate ?? null, {
       url: url,
       username: user.username
     })
@@ -72,9 +72,9 @@ export class MailService {
     await this.transporter.sendMail({
       to: user.email,
       from: from,
-      subject: template.subject,
-      text: mailText,
-      html: mailHtml,
+      subject: template?.subject ?? '',
+      text: mailText ?? '',
+      html: mailHtml ?? '',
     });
 
     return true;
@@ -86,7 +86,7 @@ export class MailService {
     }
 
     Object.keys(vars).forEach((key: string) => {
-      text = text.replace(`{{${key}}}`, vars[key])
+      text = text!.replace(`{{${key}}}`, vars[key])
     });
 
     return text;

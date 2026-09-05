@@ -1,17 +1,18 @@
-import { Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ResetPasswordForm } from './reset-password-form';
 import { AuthenticationService } from '../../shared/authentication.service';
 import { Router } from '@angular/router';
 import { asyncScheduler, catchError, scheduled, Subject, takeUntil } from 'rxjs';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ToastService } from '@singularity/ui';
 
 @Component({
-    selector: 'singularity-reset-password',
-    templateUrl: './reset-password.component.html',
-    styleUrls: ['./reset-password.component.scss'],
-    standalone: false
+  selector: 'singularity-reset-password',
+  templateUrl: './reset-password.component.html',
+  styleUrls: ['./reset-password.component.scss'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class ResetPasswordComponent implements OnDestroy {
   public readonly resetPasswordForm = new FormGroup<ResetPasswordForm>({

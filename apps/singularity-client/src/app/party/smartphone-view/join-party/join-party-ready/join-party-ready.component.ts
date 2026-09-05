@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-    selector: 'singularity-join-party-ready',
-    templateUrl: './join-party-ready.component.html',
-    styleUrl: './join-party-ready.component.scss',
-    standalone: false
+  selector: 'singularity-join-party-ready',
+  templateUrl: './join-party-ready.component.html',
+  styleUrl: './join-party-ready.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class JoinPartyReadyComponent {
 

@@ -1,18 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SetPasswordForm } from './set-password-form';
 import { AuthenticationService } from '../../shared/authentication.service';
 import { Nullable } from '@singularity/api-interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 import { asyncScheduler, catchError, scheduled, Subject, takeUntil } from 'rxjs';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ToastService } from '@singularity/ui';
 
 @Component({
-    selector: 'singularity-set-password',
-    templateUrl: './set-password.component.html',
-    styleUrls: ['./set-password.component.scss'],
-    standalone: false
+  selector: 'singularity-set-password',
+  templateUrl: './set-password.component.html',
+  styleUrls: ['./set-password.component.scss'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SetPasswordComponent implements OnInit, OnDestroy {
   public setPasswordForm = new FormGroup<SetPasswordForm>({

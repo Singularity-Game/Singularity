@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { UserDto } from '@singularity/api-interfaces';
 import { UserService } from '../user.service';
@@ -6,10 +6,11 @@ import { ModalService } from '@singularity/ui';
 import { UserEditDialogComponent } from '../user-edit-dialog/user-edit-dialog.component';
 
 @Component({
-    selector: 'singularity-users',
-    templateUrl: './user-list.component.html',
-    styleUrls: ['./user-list.component.css'],
-    standalone: false
+  selector: 'singularity-users',
+  templateUrl: './user-list.component.html',
+  styleUrls: ['./user-list.component.css'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class UserListComponent implements OnInit, OnDestroy {
   public users$ = new BehaviorSubject<UserDto[]>([]);

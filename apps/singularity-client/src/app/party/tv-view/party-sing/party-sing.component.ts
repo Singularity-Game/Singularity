@@ -1,13 +1,14 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { PartyQueueItemDto } from '@singularity/api-interfaces';
 import { PartyService } from '../../party.service';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-    selector: 'singularity-party-sing',
-    templateUrl: './party-sing.component.html',
-    styleUrl: './party-sing.component.scss',
-    standalone: false
+  selector: 'singularity-party-sing',
+  templateUrl: './party-sing.component.html',
+  styleUrl: './party-sing.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class PartySingComponent implements OnInit, OnDestroy {
   @Input() set queueItem(queueItem: PartyQueueItemDto) {
@@ -41,7 +42,7 @@ export class PartySingComponent implements OnInit, OnDestroy {
   }
 
   private initSong(): void {
-    if(!this.partyQueueItem) {
+    if (!this.partyQueueItem) {
       return;
     }
 

@@ -1,12 +1,13 @@
-import { Component, Injector, Input, OnInit, Type } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Injector, Input, OnInit, Type } from '@angular/core';
 import { ModalContext } from './modal-context';
 import { NEVER, Observable } from 'rxjs';
 
 @Component({
-    selector: 'sui-modal',
-    templateUrl: './modal.component.html',
-    styleUrl: './modal.component.scss',
-    standalone: false
+  selector: 'sui-modal',
+  templateUrl: './modal.component.html',
+  styleUrl: './modal.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class ModalComponent<ResultType, DataType> implements OnInit {
   @Input() public component?: Type<unknown>;

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { MicrophoneService } from '../../services/microphone.service';
 import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { FormArray, FormControl } from '@angular/forms';
@@ -7,10 +7,11 @@ import { Nullable } from '@singularity/api-interfaces';
 import { ModalContext } from '@singularity/ui';
 
 @Component({
-    selector: 'singularity-microphone-selection-dialog',
-    templateUrl: './microphone-selection-dialog.component.html',
-    styleUrls: ['./microphone-selection-dialog.component.scss'],
-    standalone: false
+  selector: 'singularity-microphone-selection-dialog',
+  templateUrl: './microphone-selection-dialog.component.html',
+  styleUrls: ['./microphone-selection-dialog.component.scss'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class MicrophoneSelectionDialogComponent implements OnInit, OnDestroy {
   public formArray = new FormArray<FormControl<Nullable<MicrophoneWithMeter>>>([
@@ -20,7 +21,7 @@ export class MicrophoneSelectionDialogComponent implements OnInit, OnDestroy {
 
   public destroySubject = new Subject<void>();
 
-  constructor(public readonly modalContext: ModalContext<boolean, {minCount: number, maxCount: number}>,
+  constructor(public readonly modalContext: ModalContext<boolean, { minCount: number, maxCount: number }>,
               private readonly microphoneService: MicrophoneService) {
   }
 

@@ -1,13 +1,14 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Nullable, SongUploadInfo } from '@singularity/api-interfaces';
 import { filter, forkJoin, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
 import { SongManagementService } from '../../song-management.service';
 
 @Component({
-    selector: 'singularity-create-song-uplodad-txt-file-component',
-    templateUrl: './create-song-uplodad-txt-file-component.component.html',
-    styleUrls: ['./create-song-uplodad-txt-file-component.component.scss'],
-    standalone: false
+  selector: 'singularity-create-song-uplodad-txt-file-component',
+  templateUrl: './create-song-uplodad-txt-file-component.component.html',
+  styleUrls: ['./create-song-uplodad-txt-file-component.component.scss'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class CreateSongUplodadTxtFileComponentComponent implements OnInit {
   public txtFileSubject = new Subject<Nullable<File>>();
@@ -25,7 +26,10 @@ export class CreateSongUplodadTxtFileComponentComponent implements OnInit {
     this.songUploadInfo$ = this.txtFileSubject.asObservable().pipe(
       filter((file: Nullable<File>) => file != null),
       tap(() => this.isLoading = true),
-      switchMap((file: Nullable<File>) => forkJoin({file: of(file), info: this.songManagementService.getSongUploadInfo$(file as File)})),
+      switchMap((file: Nullable<File>) => forkJoin({
+        file: of(file),
+        info: this.songManagementService.getSongUploadInfo$(file as File)
+      })),
       tap(() => this.isLoading = false),
       tap(({file, info}) => {
         if (!info.isVideoDownloadable) {
@@ -43,7 +47,7 @@ export class CreateSongUplodadTxtFileComponentComponent implements OnInit {
   }
 
   public triggerAutomaticUpload(file: Nullable<File>): void {
-    if(!file) {
+    if (!file) {
       return;
     }
 
@@ -52,7 +56,7 @@ export class CreateSongUplodadTxtFileComponentComponent implements OnInit {
   }
 
   public triggerManualUpload(file: Nullable<File>): void {
-    if(!file) {
+    if (!file) {
       return;
     }
 

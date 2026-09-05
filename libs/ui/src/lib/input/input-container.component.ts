@@ -1,10 +1,11 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
 
 @Component({
-    selector: 'sui-input-container',
-    templateUrl: './input-container.component.html',
-    styleUrl: './input-container.component.scss',
-    standalone: false
+  selector: 'sui-input-container',
+  templateUrl: './input-container.component.html',
+  styleUrl: './input-container.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class InputContainerComponent {
 
@@ -27,11 +28,11 @@ export class InputContainerComponent {
   }
 
   public handleMouseMove(event: MouseEvent): void {
-    if(!this.inputContainer) {
+    if (!this.inputContainer) {
       return;
     }
 
-    const { left, top } = this.inputContainer.nativeElement.getBoundingClientRect();
+    const {left, top} = this.inputContainer.nativeElement.getBoundingClientRect();
 
     this.mouseX = event.clientX - left;
     this.mouseY = event.clientY - top;

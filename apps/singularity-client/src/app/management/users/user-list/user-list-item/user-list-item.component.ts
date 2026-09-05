@@ -1,18 +1,19 @@
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { UserDto } from '@singularity/api-interfaces';
 import { catchError, filter, Subject, switchMap, takeUntil, throwError } from 'rxjs';
 import { UserService } from '../../user.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ModalService, ToastService } from '@singularity/ui';
 import { UserEditDialogComponent } from '../../user-edit-dialog/user-edit-dialog.component';
 import { PromptDialogComponent } from '../../../../shared/components/prompt-dialog/prompt-dialog.component';
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
-    selector: 'tr[singularity-user-list-item]',
-    templateUrl: './user-list-item.component.html',
-    styleUrls: ['./user-list-item.component.css'],
-    standalone: false
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: 'tr[singularity-user-list-item]',
+  templateUrl: './user-list-item.component.html',
+  styleUrls: ['./user-list-item.component.css'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class UserListItemComponent implements OnDestroy {
   @Input() user?: UserDto;

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/singularity-api/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "webpackConfigPath": "apps/singularity-api/webpack.config.js",
+    "tsConfigPath": "apps/singularity-api/tsconfig.build.json",
+    "outDir": "dist/apps/singularity-api",
+    "assets": [
+      {
+        "include": "assets/**/*",
+        "outDir": "dist/apps/singularity-api"
+      },
+      {
+        "include": "config/**/*",
+        "outDir": "dist/apps/singularity-api"
+      }
+    ]
+  }
+}

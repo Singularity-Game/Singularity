@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginRequestForm } from './login-request-form';
 import { AuthenticationService } from '../../shared/authentication.service';
@@ -6,14 +6,15 @@ import { Router } from '@angular/router';
 import { NoAccountInfoDialogComponent } from './no-account-info-dialog/no-account-info-dialog.component';
 import { Subject, takeUntil } from 'rxjs';
 import { Nullable } from '@singularity/api-interfaces';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ModalService } from '@singularity/ui';
 
 @Component({
-    selector: 'singularity-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    standalone: false
+  selector: 'singularity-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class LoginComponent implements OnDestroy {
 
@@ -30,7 +31,8 @@ export class LoginComponent implements OnDestroy {
   constructor(private readonly authenticationService: AuthenticationService,
               private readonly router: Router,
               private readonly modalService: ModalService,
-              private readonly transloco: TranslocoService) {}
+              private readonly transloco: TranslocoService) {
+  }
 
   public ngOnDestroy(): void {
     this.destroySubject.next();

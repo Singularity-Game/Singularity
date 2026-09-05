@@ -1,18 +1,19 @@
-import { Component, forwardRef, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-    selector: 'sui-input-file',
-    templateUrl: './input-file.component.html',
-    styleUrl: './input-file.component.scss',
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => InputFileComponent),
-            multi: true
-        }
-    ],
-    standalone: false
+  selector: 'sui-input-file',
+  templateUrl: './input-file.component.html',
+  styleUrl: './input-file.component.scss',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputFileComponent),
+      multi: true
+    }
+  ],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class InputFileComponent implements ControlValueAccessor {
 
@@ -24,7 +25,7 @@ export class InputFileComponent implements ControlValueAccessor {
   public onTouched?: () => void;
 
   public changeFile(event: any) {
-    if(!this.onChange) {
+    if (!this.onChange) {
       return;
     }
 

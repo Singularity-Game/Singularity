@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { SongManagementService } from '../song-management.service';
 import { map, Observable, pairwise, startWith, Subject, switchMap, takeUntil, tap, timer } from 'rxjs';
 import { SongDownloadInfo, SongOverviewDto } from '@singularity/api-interfaces';
@@ -6,12 +6,16 @@ import { AuthenticationService } from '../../../shared/authentication.service';
 import { SongListDownloadInfo, SongListDownloadState } from './song-list-download-info';
 
 @Component({
-    selector: 'singularity-song-list',
-    templateUrl: './song-list.component.html',
-    styleUrls: ['./song-list.component.scss'],
-    standalone: false
+  selector: 'singularity-song-list',
+  templateUrl: './song-list.component.html',
+  styleUrls: ['./song-list.component.scss'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SongListComponent implements OnInit, OnDestroy {
+  private readonly authenticationService = inject(AuthenticationService);
+  private readonly songManagementService = inject(SongManagementService);
+
   public isAdmin$ = this.authenticationService.isAdmin$();
   public downloadingSongs$?: Observable<SongListDownloadInfo[]>;
   public songs: SongOverviewDto[] = [];
@@ -21,10 +25,6 @@ export class SongListComponent implements OnInit, OnDestroy {
   public songListDownloadState = SongListDownloadState;
 
   private destroySubject = new Subject<void>();
-
-  constructor(private readonly songManagementService: SongManagementService,
-              private readonly authenticationService: AuthenticationService) {
-  }
 
   public ngOnInit(): void {
     this.setupSongs();

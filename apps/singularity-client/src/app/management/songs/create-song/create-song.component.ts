@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CreateSongForm } from './create-song-form';
 import { catchError, filter, map, Subject, takeUntil, tap, throwError } from 'rxjs';
@@ -7,13 +7,14 @@ import { SongManagementService } from '../song-management.service';
 import { Router } from '@angular/router';
 import { LoadProgress } from '../../../shared/types/load-progress';
 import { Nullable, SongDto } from '@singularity/api-interfaces';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'singularity-create-song',
-    templateUrl: './create-song.component.html',
-    styleUrls: ['./create-song.component.scss'],
-    standalone: false
+  selector: 'singularity-create-song',
+  templateUrl: './create-song.component.html',
+  styleUrls: ['./create-song.component.scss'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class CreateSongComponent implements OnDestroy {
 

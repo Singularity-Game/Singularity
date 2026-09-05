@@ -4,13 +4,6 @@ import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxIndexedDBModule } from 'ngx-indexed-db';
-import {
-  SONG_AUDIOS_INDEXED_DB_SCHEMA,
-  SONG_COVERS_INDEXED_DB_SCHEMA,
-  SONG_VIDEOS_INDEXED_DB_SCHEMA,
-  SONGS_INDEXED_DB_SCHEMA
-} from './shared/indexd-db-schemas/songs';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { UnauthorizedInterceptor } from './interceptors/unauthorized.interceptor';
 import { TranslocoRootModule } from './transloco-root.module';
@@ -24,16 +17,7 @@ const serviceWorkerScript =
   'ngsw-worker.js' : 'safety-worker.js';
 
 @NgModule({ declarations: [AppComponent],
-    bootstrap: [AppComponent], imports: [NgxIndexedDBModule.forRoot({
-            name: 'SingularityDb',
-            version: 1,
-            objectStoresMeta: [
-                SONGS_INDEXED_DB_SCHEMA,
-                SONG_COVERS_INDEXED_DB_SCHEMA,
-                SONG_VIDEOS_INDEXED_DB_SCHEMA,
-                SONG_AUDIOS_INDEXED_DB_SCHEMA
-            ]
-        }),
+    bootstrap: [AppComponent], imports: [
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
@@ -52,7 +36,7 @@ const serviceWorkerScript =
             useClass: UnauthorizedInterceptor,
             multi: true
         },
-        provideHttpClient(withInterceptorsFromDi())
+        provideHttpClient(withInterceptorsFromDi()),
     ] })
 export class AppModule {
 }

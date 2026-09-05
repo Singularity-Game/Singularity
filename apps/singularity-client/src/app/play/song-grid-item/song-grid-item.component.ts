@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
     templateUrl: './song-grid-item.component.html',
     styleUrls: ['./song-grid-item.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class SongGridItemComponent implements OnInit {
   @Input() song?: SongOverviewDto;

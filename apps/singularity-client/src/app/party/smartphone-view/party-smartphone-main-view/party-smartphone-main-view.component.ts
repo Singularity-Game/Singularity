@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { filter, Observable } from 'rxjs';
 import { PartyDto, PartyParticipantDto } from '@singularity/api-interfaces';
 import { ActivatedRoute } from '@angular/router';
@@ -6,10 +6,11 @@ import { PartyService } from '../../party.service';
 import { PartyParticipantService } from '../../party-participant.service';
 
 @Component({
-    selector: 'singularity-party-smartphone-main-view',
-    templateUrl: './party-smartphone-main-view.component.html',
-    styleUrl: './party-smartphone-main-view.component.scss',
-    standalone: false
+  selector: 'singularity-party-smartphone-main-view',
+  templateUrl: './party-smartphone-main-view.component.html',
+  styleUrl: './party-smartphone-main-view.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class PartySmartphoneMainViewComponent implements OnInit {
   public party$?: Observable<PartyDto>;

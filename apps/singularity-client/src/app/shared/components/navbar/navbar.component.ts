@@ -1,4 +1,4 @@
-import { Component, Input, isDevMode, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, isDevMode, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../authentication.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -6,10 +6,11 @@ import { Nullable, UserDto } from '@singularity/api-interfaces';
 import { environment } from '../../../../environments/environment';
 
 @Component({
-    selector: 'singularity-navbar',
-    templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.scss'],
-    standalone: false
+  selector: 'singularity-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class NavbarComponent implements OnInit {
 

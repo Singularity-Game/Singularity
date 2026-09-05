@@ -6,7 +6,7 @@ import { UserListComponent } from './user-list/user-list.component';
 import { UserListItemComponent } from './user-list/user-list-item/user-list-item.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoModule } from '@jsverse/transloco';
 import { SingularityUiModule } from '@singularity/ui';
 import { UserEditDialogComponent } from './user-edit-dialog/user-edit-dialog.component';
 

@@ -1,4 +1,4 @@
-FROM node:20.3.0 as build
+FROM node:26.7.0 as build
 
 WORKDIR /usr/src/app
 
@@ -31,11 +31,12 @@ COPY . .
 
 RUN npm install
 
-RUN npm run build-backend && npm run build-frontend
-RUN cp -r dist/apps/singularity-client dist/apps/singularity-api/static
+RUN npm run build-api && npm run build-client
+RUN cp -r dist/apps/singularity-client/browser dist/apps/singularity-api/static
 
-FROM node:20.3.0
+FROM node:26.7.0
 COPY --from=build /usr/src/app/dist/apps/singularity-api /usr/src/app
+COPY --from=build /usr/src/app/package.json /usr/src/app/package.json
 WORKDIR /usr/src/app
-RUN npm install
+RUN npm install --ignore-scripts
 CMD node main.js

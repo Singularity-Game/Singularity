@@ -1,10 +1,19 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  ViewChild
+} from '@angular/core';
 
 @Component({
-    selector: 'sui-viewport-renderer',
-    templateUrl: './viewport-renderer.component.html',
-    styleUrl: './viewport-renderer.component.scss',
-    standalone: false
+  selector: 'sui-viewport-renderer',
+  templateUrl: './viewport-renderer.component.html',
+  styleUrl: './viewport-renderer.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class ViewportRendererComponent implements AfterViewInit, OnDestroy {
   @Input() public width = 0;

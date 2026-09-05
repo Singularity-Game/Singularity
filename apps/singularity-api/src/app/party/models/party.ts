@@ -1,19 +1,13 @@
 import { User } from '../../user-management/models/user.entity';
-import { AutoMap } from '@automapper/classes';
 import { Song } from '../../song/models/song.entity';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { PartyParticipant } from './party-participant';
 import { PartyQueueItem } from './party-queue-item';
-import { UUID } from '@singularity/api-interfaces';
+import { Nullable, UUID } from '@singularity/api-interfaces';
 
 export class Party {
-  @AutoMap()
   public readonly id: string;
-
-  @AutoMap()
   public readonly name: string;
-
-  @AutoMap()
   public readonly creator: User;
 
   private lastInteraction: Date;
@@ -35,10 +29,10 @@ export class Party {
     this.participants.push(participant);
   }
 
-  public getParticipantById(participantId: string): PartyParticipant {
+  public getParticipantById(participantId: string): Nullable<PartyParticipant> {
     this.lastInteraction = new Date();
 
-    return this.participants.find((participant: PartyParticipant) => participant.id === participantId);
+    return this.participants.find((participant: PartyParticipant) => participant.id === participantId) ?? null;
   }
 
   public setCurrentSong(song: Song): void {

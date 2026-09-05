@@ -1,13 +1,14 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { PartyDto, PartyParticipantDto, SongOverviewDto } from '@singularity/api-interfaces';
 import { PartyService } from '../../../../party.service';
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
-    selector: '[singularity-party-song-select-item]',
-    templateUrl: './party-song-select-item.component.html',
-    styleUrl: './party-song-select-item.component.scss',
-    standalone: false
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: '[singularity-party-song-select-item]',
+  templateUrl: './party-song-select-item.component.html',
+  styleUrl: './party-song-select-item.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class PartySongSelectItemComponent {
   @Input() party?: PartyDto;
@@ -18,7 +19,7 @@ export class PartySongSelectItemComponent {
   }
 
   public addSong(): void {
-    if(!this.party || !this.song || !this.participant) {
+    if (!this.party || !this.song || !this.participant) {
       return;
     }
 

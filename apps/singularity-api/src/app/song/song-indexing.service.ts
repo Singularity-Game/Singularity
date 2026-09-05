@@ -59,14 +59,14 @@ export class SongIndexingService implements OnModuleInit {
           } else {
             stats.skipped++;
           }
-        } catch (error) {
+        } catch (error: any) {
           stats.errors++;
           this.logger.error(`Failed to index ${txtFile}: ${error.message}`);
         }
       }
 
       this.logger.log(`Indexing complete. Indexed: ${stats.indexed}, Skipped: ${stats.skipped}, Errors: ${stats.errors}`);
-    } catch (error) {
+    } catch (error: any) {
       this.logger.error(`Indexing failed: ${error.message}`);
     } finally {
       this.isIndexing = false;
@@ -97,12 +97,12 @@ export class SongIndexingService implements OnModuleInit {
               if (UltrastarParser.isUltrastarFile(content)) {
                 txtFiles.push(fullPath);
               }
-            } catch (error) {
+            } catch (error: any) {
               this.logger.warn(`Could not read file ${fullPath}: ${error.message}`);
             }
           }
         }
-      } catch (error) {
+      } catch (error: any) {
         this.logger.warn(`Could not scan directory ${currentDir}: ${error.message}`);
       }
     };
@@ -121,7 +121,7 @@ export class SongIndexingService implements OnModuleInit {
 
     // Parse the Ultrastar file
     const { metadata, notes, pointsPerBeat } = UltrastarParser.parse(content);
-    
+
     const artist = metadata.artist;
     const title = metadata.title;
 
@@ -159,7 +159,7 @@ export class SongIndexingService implements OnModuleInit {
     song.end = metadata.end;
     song.notes = notes;
     song.pointsPerBeat = pointsPerBeat;
-    
+
     // Store relative paths from the song directory
     const baseSongDir = this.getSongDirectoryPath();
     song.audioFileName = path.relative(baseSongDir, mediaFiles.audio);
@@ -219,7 +219,7 @@ export class SongIndexingService implements OnModuleInit {
 
       // Audio files
       if (!result.audio && audioExtensions.includes(ext)) {
-        if (fileBasename.toLowerCase() === txtBasename.toLowerCase() || 
+        if (fileBasename.toLowerCase() === txtBasename.toLowerCase() ||
             file.toLowerCase().includes('audio') ||
             audioExtensions.includes(ext)) {
           result.audio = filePath;
@@ -228,7 +228,7 @@ export class SongIndexingService implements OnModuleInit {
 
       // Video files
       if (!result.video && videoExtensions.includes(ext)) {
-        if (fileBasename.toLowerCase() === txtBasename.toLowerCase() || 
+        if (fileBasename.toLowerCase() === txtBasename.toLowerCase() ||
             file.toLowerCase().includes('video') ||
             videoExtensions.includes(ext)) {
           result.video = filePath;
@@ -237,7 +237,7 @@ export class SongIndexingService implements OnModuleInit {
 
       // Cover files
       if (!result.cover && coverExtensions.includes(ext)) {
-        if (fileBasename.toLowerCase() === txtBasename.toLowerCase() || 
+        if (fileBasename.toLowerCase() === txtBasename.toLowerCase() ||
             file.toLowerCase().includes('cover') ||
             file.toLowerCase().includes('background') ||
             coverExtensions.includes(ext)) {

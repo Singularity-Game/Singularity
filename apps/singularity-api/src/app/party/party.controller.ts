@@ -1,22 +1,25 @@
 import {
   BadRequestException,
   Body,
-  Controller, Delete,
+  Controller,
+  Delete,
   Get,
   Param,
-  Post, Put,
+  Post,
+  Put,
   Req,
   Res,
   Sse,
-  UseGuards,
-  UseInterceptors
+  UseGuards
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import type { Response } from 'express';
 import {
   CreatePartyDto,
   CurrentSongDto,
-  JoinPartyDto, JoinPartyQueueItemDto,
+  JoinPartyDto,
+  JoinPartyQueueItemDto,
   PartyDto,
+  PartyParticipantDto,
   PartyQueueItemDto,
   SongOverviewDto
 } from '@singularity/api-interfaces';
@@ -24,43 +27,54 @@ import { AuthGuard } from '@nestjs/passport';
 import { PartyService } from './party.service';
 import { Party } from './models/party';
 import { User } from '../user-management/models/user.entity';
-import { InjectMapper, MapInterceptor, MapPipe } from '@automapper/nestjs';
 import { PartyParticipant } from './models/party-participant';
 import { SongService } from '../song/song.service';
 import { Song } from '../song/models/song.entity';
-import { fromBuffer } from 'file-type';
-import * as sharp from 'sharp';
+import sharp from 'sharp';
 import { map, Observable } from 'rxjs';
-import { Mapper } from '@automapper/core';
 import { PartyQueueItem } from './models/party-queue-item';
+import { PartyMapper } from './mapper/party-mapper.service';
+import { PartyParticipantMapper } from './mapper/party-participant-mapper.service';
+import { SongMapper } from '../song/mapper/song-mapper.service';
+import { PartyQueueItemMapper } from './mapper/party-queue-item-mapper.service';
+import type { RequestWithUser } from '../user-management/types/request-with-user';
+import { fileTypeFromBuffer } from 'file-type';
 
 @Controller('party')
 export class PartyController {
 
   constructor(private readonly partyService: PartyService,
               private readonly songService: SongService,
-              @InjectMapper() private readonly mapper: Mapper) {
+              private readonly partyMapper: PartyMapper,
+              private readonly partyParticipantMapper: PartyParticipantMapper,
+              private readonly partyQueueItemMapper: PartyQueueItemMapper,
+              private readonly songMapper: SongMapper) {
   }
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
-  @UseInterceptors(MapInterceptor(Party, PartyDto))
-  public createParty(@Req() request: Request, @Body() createPartyDto: CreatePartyDto): Party {
+  public createParty(@Req() request: RequestWithUser, @Body() createPartyDto: CreatePartyDto): PartyDto {
     const party = new Party(createPartyDto.name, request.user as User);
 
-    return this.partyService.createParty(party);
+    const createdParty = this.partyService.createParty(party);
+    return this.partyMapper.mapToDto(createdParty);
   }
 
   @Get('my')
   @UseGuards(AuthGuard('jwt'))
-  @UseInterceptors(MapInterceptor(Party, PartyDto))
-  public getMyParty(@Req() request: Request): Party {
-    return this.partyService.getPartyByUser(request.user as User);
+  public getMyParty(@Req() request: RequestWithUser): PartyDto {
+    const party = this.partyService.getPartyByUser(request.user as User);
+
+    if (!party) {
+      throw new Error('Party not found')
+    }
+
+    return this.partyMapper.mapToDto(party);
   }
 
   @Post('my/current-song')
   @UseGuards(AuthGuard('jwt'))
-  public async setCurrentSong(@Req() request: Request, @Body() currentSong: CurrentSongDto): Promise<void> {
+  public async setCurrentSong(@Req() request: RequestWithUser, @Body() currentSong: CurrentSongDto): Promise<void> {
     const party = this.partyService.getPartyByUser(request.user as User);
 
     if (!party) {
@@ -77,24 +91,35 @@ export class PartyController {
   }
 
   @Get(':id')
-  @UseInterceptors(MapInterceptor(Party, PartyDto))
-  public getPartyById(@Param('id') id: string): Party {
-    return this.partyService.getPartyById(id);
+  public getPartyById(@Param('id') id: string): PartyDto {
+    const party = this.partyService.getPartyById(id);
+
+    if (!party) {
+      throw new Error('Party not found')
+    }
+
+    return this.partyMapper.mapToDto(party);
   }
 
   @Get(':partyId/participant/:participantId')
-  public getPartyParticipant(@Param('partyId') partyId: string, @Param('participantId') participantId: string): PartyParticipant {
+  public getPartyParticipant(@Param('partyId') partyId: string, @Param('participantId') participantId: string): PartyParticipantDto {
     const party = this.partyService.getPartyById(partyId);
 
     if (!party) {
       throw new BadRequestException('There is no Party with the given id');
     }
 
-    return party.getParticipantById(participantId);
+    const partyParticipant = party.getParticipantById(participantId);
+
+    if (!partyParticipant) {
+      throw new BadRequestException('There is no PartyParticipant with the given id');
+    }
+
+    return this.partyParticipantMapper.mapToDto(partyParticipant);
   }
 
   @Post(':partyId/join')
-  public joinParty(@Param('partyId') partyId: string, @Body() joinPartyDto: JoinPartyDto): PartyParticipant {
+  public joinParty(@Param('partyId') partyId: string, @Body() joinPartyDto: JoinPartyDto): PartyParticipantDto {
     const participant = new PartyParticipant(joinPartyDto.name, joinPartyDto.profilePictureBase64);
     const party = this.partyService.getPartyById(partyId);
 
@@ -104,23 +129,22 @@ export class PartyController {
 
     party.join(participant);
 
-    return participant;
+    return this.partyParticipantMapper.mapToDto(participant);
   }
 
   @Get(':partyId/songs')
-  @UseInterceptors(MapInterceptor(Song, SongOverviewDto, { isArray: true }))
-  public getSongs(@Param('partyId') partyId: string): Promise<Song[]> | Song[] {
+  public async getSongs(@Param('partyId') partyId: string): Promise<SongOverviewDto[]> {
     const party = this.partyService.getPartyById(partyId);
 
     if (!party) {
       return [];
     }
 
-    return this.songService.getAllSongs();
+    const songs = await this.songService.getAllSongs();
+    return songs.map(song => this.songMapper.mapToSongOverviewDto(song));
   }
 
   @Get(':partyId/songs/:songId/cover')
-  @UseInterceptors(MapInterceptor(Song, SongOverviewDto, { isArray: true }))
   public async getSongCoverById(@Param('partyId') partyId: string, @Param('songId') songId: string, @Res() response: Response): Promise<void> {
     const party = this.partyService.getPartyById(partyId);
 
@@ -129,12 +153,12 @@ export class PartyController {
     }
 
     const buffer = await this.songService.getSongCoverFile(+songId);
-    const fileType = await fromBuffer(buffer);
+    const fileType = await fileTypeFromBuffer(buffer);
     const downscaledBuffer = await sharp(buffer)
       .resize(128, 128)
       .toBuffer();
 
-    response.setHeader('Content-Type', fileType.mime);
+    response.setHeader('Content-Type', fileType?.mime ?? '');
     response.end(downscaledBuffer);
   }
 
@@ -147,11 +171,11 @@ export class PartyController {
     }
 
     const buffer = await this.songService.getSongCoverFile(+songId);
-    const fileType = await fromBuffer(buffer);
+    const fileType = await fileTypeFromBuffer(buffer);
     const downscaledBuffer = await sharp(buffer)
       .resize(20, 20)
       .toBuffer();
-    response.setHeader('Content-Type', fileType.mime);
+    response.setHeader('Content-Type', fileType?.mime ?? '');
     response.end(downscaledBuffer);
   }
 
@@ -165,13 +189,13 @@ export class PartyController {
 
     return party.getCurrentSong$()
       .pipe(
-        map((value: Song) => this.mapper.map(value, Song, SongOverviewDto)),
+        map((value: Song) => this.songMapper.mapToSongOverviewDto(value)),
         map((value: SongOverviewDto) => ({ data: value }) as MessageEvent)
       );
   }
 
   @Sse(':partyId/queue')
-  public getPartyQueue$(@Param('partyId') partyId: string): Observable<MessageEvent<PartyQueueItem[]>> {
+  public getPartyQueue$(@Param('partyId') partyId: string): Observable<MessageEvent<PartyQueueItemDto[]>> {
     const party = this.partyService.getPartyById(partyId);
 
     if (!party) {
@@ -180,14 +204,13 @@ export class PartyController {
 
     return party.getQueue$()
       .pipe(
-        map((value: PartyQueueItem[]) => this.mapper.mapArray(value, PartyQueueItem, PartyQueueItemDto)),
+        map((value: PartyQueueItem[]) => value.map(queueItem => this.partyQueueItemMapper.mapToDto(queueItem))),
         map((value: PartyQueueItemDto[]) => ({ data: value }) as MessageEvent)
       );
   }
 
   @Post(':partyId/queue')
-  @UseInterceptors(MapInterceptor(PartyQueueItem, PartyQueueItemDto))
-  public async addQueueItem(@Param('partyId') partyId: string, @Body(MapPipe(PartyQueueItemDto, PartyQueueItem)) partyQueueItem: PartyQueueItem): Promise<PartyQueueItem> {
+  public async addQueueItem(@Param('partyId') partyId: string, partyQueueItem: PartyQueueItemDto): Promise<PartyQueueItemDto> {
     const party = this.partyService.getPartyById(partyId);
     const song = await this.songService.getSongById(partyQueueItem.song.id);
 
@@ -198,12 +221,11 @@ export class PartyController {
     const newPartyQueueItem = new PartyQueueItem(song, [partyQueueItem.participants[0]]);
 
     party.queueSong(newPartyQueueItem);
-    return newPartyQueueItem;
+    return this.partyQueueItemMapper.mapToDto(newPartyQueueItem);
   }
 
   @Put(':partyId/queue/:queueItemId')
-  @UseInterceptors(MapInterceptor(PartyQueueItem, PartyQueueItemDto))
-  public async joinQueueItem(@Param('partyId') partyId: string, @Param('queueItemId') partyQueueItemId: string, @Body() joinPartyQueueItemDto: JoinPartyQueueItemDto): Promise<PartyQueueItem> {
+  public async joinQueueItem(@Param('partyId') partyId: string, @Param('queueItemId') partyQueueItemId: string, @Body() joinPartyQueueItemDto: JoinPartyQueueItemDto): Promise<PartyQueueItemDto> {
     const party = this.partyService.getPartyById(partyId);
 
     if (!party) {
@@ -216,15 +238,15 @@ export class PartyController {
       throw new BadRequestException('There is no Participant with the given id');
     }
 
-    return party.joinQueuedSong(partyQueueItemId, participant);
+    const partyQueueItem = party.joinQueuedSong(partyQueueItemId, participant);
+    return this.partyQueueItemMapper.mapToDto(partyQueueItem);
   }
 
   @Delete(':partyId/queue/:queueItemId/participants/:participantId')
-  @UseInterceptors(MapInterceptor(PartyQueueItem, PartyQueueItemDto))
   public async leaveQueueITem(
     @Param('partyId') partyId: string,
     @Param('queueItemId') partyQueueItemId: string,
-    @Param('participantId') partyParticipantId: string): Promise<PartyQueueItem> {
+    @Param('participantId') partyParticipantId: string): Promise<PartyQueueItemDto> {
     const party = this.partyService.getPartyById(partyId);
 
     if (!party) {
@@ -237,12 +259,12 @@ export class PartyController {
       throw new BadRequestException('There is no Participant with the given id');
     }
 
-    return party.leaveQueuedSong(partyQueueItemId, participant);
+    const partyQueueItem = party.leaveQueuedSong(partyQueueItemId, participant);
+    return this.partyQueueItemMapper.mapToDto(partyQueueItem);
   }
 
   @Delete(':partyId/queue/:queueItemId')
   @UseGuards(AuthGuard('jwt'))
-  @UseInterceptors(MapInterceptor(PartyQueueItem, PartyQueueItemDto))
   public async popQueueItem(@Param('partyId') partyId: string,
                             @Param('queueItemId') partyQueueItemId: string): Promise<void> {
     const party = this.partyService.getPartyById(partyId);

@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
 import { SearchPipe } from './pipes/search/search.pipe';
 import { OrderByPipe } from './pipes/order-by/order-by.pipe';
 import { AdminFeatureIconComponent } from './components/admin-feature-icon/admin-feature-icon.component';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoModule } from '@jsverse/transloco';
 import { SingularityUiModule } from '@singularity/ui';
 import { SafePipe } from './pipes/safe/safe.pipe';
 import { PromptDialogComponent } from './components/prompt-dialog/prompt-dialog.component';

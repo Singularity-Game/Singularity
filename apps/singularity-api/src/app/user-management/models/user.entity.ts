@@ -1,33 +1,25 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { AutoMap } from '@automapper/classes';
-import { UUID } from '@singularity/api-interfaces';
 
 @Entity()
 export class User {
-  @AutoMap()
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
-  @AutoMap()
   @Column({ type: 'varchar', nullable: false, unique: true })
-  username: string;
+  username!: string;
 
-  @AutoMap()
   @Column({ type: 'varchar', nullable: false, unique: true })
-  email: string;
-
-  @AutoMap()
-  @Column({ type: 'varchar', nullable: true })
-  profilePictureBase64: string;
+  email!: string;
 
   @Column({ type: 'varchar', nullable: true })
-  hashedPassword: string;
+  profilePictureBase64!: string;
 
-  @AutoMap()
-  @Column({ type: 'boolean', nullable: false })
-  active: boolean;
+  @Column({ type: 'varchar', nullable: true })
+  hashedPassword!: string;
 
-  @AutoMap()
   @Column({ type: 'boolean', nullable: false })
-  isAdmin: boolean;
+  active!: boolean;
+
+  @Column({ type: 'boolean', nullable: false })
+  isAdmin!: boolean;
 }

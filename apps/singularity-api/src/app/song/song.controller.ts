@@ -12,12 +12,11 @@ import {
   UseInterceptors
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
-import { Express, Response } from 'express';
+import type { Response } from 'express';
 import 'multer';
 import { memoryStorage } from 'multer';
 import { SongService } from './song.service';
 import { Song } from './models/song.entity';
-import { MapInterceptor } from '@automapper/nestjs';
 import {
   CreateSongDto,
   Nullable,
@@ -26,27 +25,29 @@ import {
   SongOverviewDto,
   SongUploadInfo
 } from '@singularity/api-interfaces';
-import { fromBuffer } from 'file-type';
 import { AdminGuard } from '../user-management/guards/admin-guard';
 import { AuthGuard } from '@nestjs/passport';
 import { SongFile } from './interfaces/song-file';
 import { SongDownloadService } from './song-download.service';
 import { SongIndexingService } from './song-indexing.service';
-import * as sharp from 'sharp';
+import sharp from 'sharp';
+import { SongMapper } from './mapper/song-mapper.service';
+import { fileTypeFromBuffer } from 'file-type';
 
 @Controller('song')
 export class SongController {
 
   constructor(private readonly songService: SongService,
               private readonly songDownloadService: SongDownloadService,
-              private readonly songIndexingService: SongIndexingService) {
+              private readonly songIndexingService: SongIndexingService,
+              private readonly songMapper: SongMapper) {
   }
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  @UseInterceptors(MapInterceptor(Song, SongOverviewDto, { isArray: true }))
-  public getAllSongs(): Promise<Song[]> {
-    return this.songService.getAllSongs();
+  public async getAllSongs(): Promise<SongOverviewDto[]> {
+    const songs = await this.songService.getAllSongs();
+    return songs.map(song => this.songMapper.mapToSongOverviewDto(song));
   }
 
   @Get('downloading-songs')
@@ -58,20 +59,20 @@ export class SongController {
 
   @Get(':id')
   @UseGuards(AuthGuard('jwt'))
-  @UseInterceptors(MapInterceptor(Song, SongDto))
-  public getSongById(@Param('id') id: string): Promise<Song> {
-    return this.songService.getSongById(+id, true);
+  public async getSongById(@Param('id') id: string): Promise<SongDto> {
+    const song = await this.songService.getSongById(+id, true);
+    return this.songMapper.mapToDto(song);
   }
 
   @Get(':id/cover')
   @UseGuards(AuthGuard('jwt'))
   public async getSongCoverById(@Param('id') id: string, @Res() response: Response): Promise<void> {
     const buffer = await this.songService.getSongCoverFile(+id);
-    const fileType = await fromBuffer(buffer);
+    const fileType = await fileTypeFromBuffer(buffer);
     const downscaledBuffer = await sharp(buffer)
       .resize(250, 250)
       .toBuffer();
-    response.setHeader('Content-Type', fileType.mime);
+    response.setHeader('Content-Type', fileType?.mime ?? '');
     response.end(downscaledBuffer);
   }
 
@@ -79,11 +80,11 @@ export class SongController {
   @UseGuards(AuthGuard('jwt'))
   public async getSmallSongCoverById(@Param('id') id: string, @Res() response: Response): Promise<void> {
     const buffer = await this.songService.getSongCoverFile(+id);
-    const fileType = await fromBuffer(buffer);
+    const fileType = await fileTypeFromBuffer(buffer);
     const downscaledBuffer = await sharp(buffer)
       .resize(20, 20)
       .toBuffer();
-    response.setHeader('Content-Type', fileType.mime);
+    response.setHeader('Content-Type', fileType?.mime ?? '');
     response.end(downscaledBuffer);
   }
 
@@ -91,8 +92,8 @@ export class SongController {
   @UseGuards(AuthGuard('jwt'))
   public async getSongVideoById(@Param('id') id: string, @Res() response: Response): Promise<void> {
     const buffer = await this.songService.getSongVideoFile(+id);
-    const fileType = await fromBuffer(buffer);
-    response.setHeader('Content-Type', fileType.mime);
+    const fileType = await fileTypeFromBuffer(buffer);
+    response.setHeader('Content-Type', fileType?.mime ?? '');
     response.end(buffer);
   }
 
@@ -100,8 +101,8 @@ export class SongController {
   @UseGuards(AuthGuard('jwt'))
   public async getSongVideoStreamById(@Param('id') id: string, @Res() response: Response): Promise<void> {
     const buffer = await this.songService.getSongVideoFile(+id);
-    const fileType = await fromBuffer(buffer);
-    response.setHeader('Content-Type', fileType.mime);
+    const fileType = await fileTypeFromBuffer(buffer);
+    response.setHeader('Content-Type', fileType?.mime ?? '');
     response.setHeader('Content-Disposition', 'inline');
     response.send(buffer);
   }
@@ -110,8 +111,8 @@ export class SongController {
   @UseGuards(AuthGuard('jwt'))
   public async getSongAudioById(@Param('id') id: string, @Res() response: Response): Promise<void> {
     const buffer = await this.songService.getSongAudioFile(+id);
-    const fileType = await fromBuffer(buffer);
-    response.setHeader('Content-Type', fileType.mime ?? '');
+    const fileType = await fileTypeFromBuffer(buffer);
+    response.setHeader('Content-Type', fileType?.mime ?? '');
     response.end(buffer);
   }
 
@@ -119,8 +120,8 @@ export class SongController {
   @UseGuards(AuthGuard('jwt'))
   public async getSongAudioStreamById(@Param('id') id: string, @Res() response: Response): Promise<void> {
     const buffer = await this.songService.getSongAudioFile(+id);
-    const fileType = await fromBuffer(buffer);
-    response.setHeader('Content-Type', fileType.mime ?? '');
+    const fileType = await fileTypeFromBuffer(buffer);
+    response.setHeader('Content-Type', fileType?.mime ?? '');
     response.setHeader('Content-Disposition', 'inline');
     response.send(buffer);
   }
@@ -135,23 +136,24 @@ export class SongController {
   ], {
     storage: memoryStorage()
   }))
-  @UseInterceptors(MapInterceptor(Song, SongDto))
-  public createSong(@UploadedFiles() files: {
+  public async createSong(@UploadedFiles() files: {
     txtFile: Express.Multer.File[],
     audioFile: Express.Multer.File[],
     videoFile: Express.Multer.File[],
     coverFile: Express.Multer.File[]
-  }, @Body() createSongDto: CreateSongDto): Promise<Nullable<Song>> {
+  }, @Body() createSongDto: CreateSongDto): Promise<Nullable<SongDto>> {
 
     if(files.txtFile?.length > 0 && files.audioFile?.length > 0 && files.videoFile?.length > 0 && files.coverFile?.length > 0) {
-      return this.songService.createSong(
+      const song = await this.songService.createSong(
         SongFile.fromMulterFile(files.txtFile[0]),
         SongFile.fromMulterFile(files.audioFile[0]),
         SongFile.fromMulterFile(files.videoFile[0]),
         SongFile.fromMulterFile(files.coverFile[0]),
         createSongDto.start, createSongDto.end);
+
+      return this.songMapper.mapToDto(song);
     } else if (files.txtFile[0]) {
-      this.songDownloadService.createSongFromYt(SongFile.fromMulterFile(files.txtFile[0]));
+      this.songDownloadService.createSongFromYt(SongFile.fromMulterFile(files.txtFile[0])).then();
       return null;
     } else {
       throw new BadRequestException();
@@ -173,9 +175,9 @@ export class SongController {
 
   @Delete(':id')
   @UseGuards(AdminGuard())
-  @UseInterceptors(MapInterceptor(Song, SongDto))
-  public deleteSong(@Param('id') id: string): Promise<Song> {
-    return this.songService.deleteSong(+id);
+  public async deleteSong(@Param('id') id: string): Promise<SongDto> {
+    const song = await this.songService.deleteSong(+id);
+    return this.songMapper.mapToDto(song);
   }
 
   @Post('index')

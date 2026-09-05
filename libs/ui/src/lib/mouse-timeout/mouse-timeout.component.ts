@@ -1,13 +1,14 @@
-import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 
 @Component({
-    selector: 'sui-mouse-timeout',
-    templateUrl: './mouse-timeout.component.html',
-    styleUrl: './mouse-timeout.component.scss',
-    standalone: false
+  selector: 'sui-mouse-timeout',
+  templateUrl: './mouse-timeout.component.html',
+  styleUrl: './mouse-timeout.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class MouseTimeoutComponent {
-  private mouseTimeout?: NodeJS.Timeout;
+  private mouseTimeout?: unknown;
 
   @Input() duration = 2000;
 
@@ -17,8 +18,8 @@ export class MouseTimeoutComponent {
   public onMouseMove(event: MouseEvent): void {
     this.timeoutElement?.nativeElement?.style?.setProperty('cursor', 'initial');
 
-    if(this.mouseTimeout) {
-      clearTimeout(this.mouseTimeout);
+    if (this.mouseTimeout) {
+      clearTimeout(this.mouseTimeout as any);
     }
 
     this.mouseTimeout = setTimeout(() => this.timeoutElement?.nativeElement?.style?.removeProperty('cursor'), this.duration);

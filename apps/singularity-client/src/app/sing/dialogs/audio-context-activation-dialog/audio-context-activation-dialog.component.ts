@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import * as Tone from 'tone';
 import { ModalContext } from '@singularity/ui';
 
 @Component({
-    selector: 'singularity-audio-context-activation-dialog',
-    templateUrl: './audio-context-activation-dialog.component.html',
-    styleUrls: ['./audio-context-activation-dialog.component.scss'],
-    standalone: false
+  selector: 'singularity-audio-context-activation-dialog',
+  templateUrl: './audio-context-activation-dialog.component.html',
+  styleUrls: ['./audio-context-activation-dialog.component.scss'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class AudioContextActivationDialogComponent {
   constructor(private readonly modalContext: ModalContext<boolean, null>) {

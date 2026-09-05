@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-    selector: 'sui-files',
-    templateUrl: './files.component.html',
-    styleUrl: './files.component.scss',
-    standalone: false
+  selector: 'sui-files',
+  templateUrl: './files.component.html',
+  styleUrl: './files.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class FilesComponent {
   @Input() files: File[] = [];

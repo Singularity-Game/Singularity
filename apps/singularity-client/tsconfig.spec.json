@@ -1,13 +1,14 @@
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "module": "preserve",
-    "types": ["jest", "node"],
-    "target": "es2016",
-    "moduleResolution": "bundler",
-    "isolatedModules": true
+    "types": [
+      "vitest/globals"
+    ]
   },
-  "files": ["src/test-setup.ts"],
-  "include": ["**/*.spec.ts", "**/*.test.ts", "**/*.d.ts", "jest.config.ts"]
+  "include": [
+    "src/**/*.d.ts",
+    "src/**/*.spec.ts"
+  ]
 }

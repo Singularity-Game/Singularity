@@ -1,10 +1,11 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 
 @Component({
-    selector: 'sui-blurry-background-blob',
-    templateUrl: './blurry-background-blob.component.html',
-    styleUrl: './blurry-background-blob.component.scss',
-    standalone: false
+  selector: 'sui-blurry-background-blob',
+  templateUrl: './blurry-background-blob.component.html',
+  styleUrl: './blurry-background-blob.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class BlurryBackgroundBlobComponent {
 
@@ -15,11 +16,11 @@ export class BlurryBackgroundBlobComponent {
 
   @HostListener('window:mousemove', ['$event'])
   public handleMouseMove(event: MouseEvent): void {
-    if(!this.blob || !this.container) {
+    if (!this.blob || !this.container) {
       return;
     }
 
-    const { left, top } = this.container.nativeElement.getBoundingClientRect();
+    const {left, top} = this.container.nativeElement.getBoundingClientRect();
 
     this.blob.nativeElement.style.left = `${event.clientX - left}px`;
     this.blob.nativeElement.style.top = `${event.clientY - top}px`;

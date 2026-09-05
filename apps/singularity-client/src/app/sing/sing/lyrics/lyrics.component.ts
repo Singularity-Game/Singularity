@@ -1,15 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { SongDto, SongNoteDto, SongNoteType } from '@singularity/api-interfaces';
 import { findLastIndex } from '../../../shared/helpers/find-last-index';
 
 @Component({
-    selector: 'singularity-lyrics',
-    templateUrl: './lyrics.component.html',
-    styleUrls: ['./lyrics.component.scss'],
-    standalone: false
+  selector: 'singularity-lyrics',
+  templateUrl: './lyrics.component.html',
+  styleUrls: ['./lyrics.component.scss'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class LyricsComponent implements OnInit {
-  @Input() public set song(song: SongDto | null) {
+  @Input()
+  public set song(song: SongDto | null) {
     if (song === null) {
       this.sortedNotes = [];
       this.bpm = null;
@@ -19,7 +21,8 @@ export class LyricsComponent implements OnInit {
     this.bpm = song.bpm;
   }
 
-  @Input() public set currentBeat(beat: number | null) {
+  @Input()
+  public set currentBeat(beat: number | null) {
     if (beat === null) {
       return;
     }

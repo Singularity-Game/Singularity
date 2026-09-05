@@ -1,17 +1,17 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
-    selector: 'sui-card3d',
-    templateUrl: './card3d.component.html',
-    styleUrls: ['./card3d.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'sui-card3d',
+  templateUrl: './card3d.component.html',
+  styleUrls: ['./card3d.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class Card3dComponent implements AfterViewInit {
   @ViewChild('card') card?: ElementRef<HTMLDivElement>;
 
   public ngAfterViewInit(): void {
-    if(!this.card) {
+    if (!this.card) {
       return;
     }
 
@@ -22,7 +22,7 @@ export class Card3dComponent implements AfterViewInit {
   }
 
   private handleMouseMove(event: MouseEvent, nativeElement: HTMLElement): void {
-    const { left, top, width, height } = nativeElement.getBoundingClientRect();
+    const {left, top, width, height} = nativeElement.getBoundingClientRect();
     const x = (event.clientX - left - width / 2) / 25;
     const y = (event.clientY - top - height / 2) / 25;
     nativeElement.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;

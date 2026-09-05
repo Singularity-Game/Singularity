@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { map, Observable, of, shareReplay, Subject, switchMap, takeUntil } from 'rxjs';
 import { SongOverviewDto } from '@singularity/api-interfaces';
 import { SongService } from '../shared/song.service';
@@ -8,16 +8,21 @@ import { SuiGlobalColorService } from '@singularity/ui';
 import { SongCarouselComponent } from './song-carousel/song-carousel.component';
 
 @Component({
-    selector: 'singularity-play',
-    templateUrl: './play.component.html',
-    styleUrls: ['./play.component.scss'],
-    standalone: false
+  selector: 'singularity-play',
+  templateUrl: './play.component.html',
+  styleUrls: ['./play.component.scss'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class PlayComponent implements OnInit, OnDestroy {
+  private readonly songService = inject(SongService);
+  private readonly settingsService = inject(SettingsService);
+  private readonly suiColorService = inject(SuiGlobalColorService);
+
   public songs$?: Observable<SongOverviewDto[]>;
   public isOfflineMode?: boolean;
   public searchTerm = '';
-  public orderBy: { key: keyof SongOverviewDto, ascending: boolean } = { key: 'name', ascending: true };
+  public orderBy: { key: keyof SongOverviewDto, ascending: boolean } = {key: 'name', ascending: true};
   public carouselIndex = 0;
   public paused = false;
   public volume = +(this.settingsService.getLocalSetting(LocalSettings.MenuVolume) || '0');
@@ -27,11 +32,6 @@ export class PlayComponent implements OnInit, OnDestroy {
   private destroySubject = new Subject<void>();
 
   @ViewChild(SongCarouselComponent) private carousel?: SongCarouselComponent;
-
-  constructor(private readonly songService: SongService,
-              private readonly settingsService: SettingsService,
-              private readonly suiColorService: SuiGlobalColorService) {
-  }
 
   public ngOnInit(): void {
     this.isOfflineMode = this.settingsService.getLocalSetting(LocalSettings.OfflineMode) === 'true';

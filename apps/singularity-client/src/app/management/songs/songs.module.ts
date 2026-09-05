@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SongManagementService } from './song-management.service';
 import { SongListItemComponent } from './song-list/song-list-item/song-list-item.component';
 import { SingModule } from '../../sing/sing.module';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoModule } from '@jsverse/transloco';
 import {
   CreateSongUplodadTxtFileComponentComponent
 } from './create-song/create-song-uplodad-txt-file-component/create-song-uplodad-txt-file-component.component';

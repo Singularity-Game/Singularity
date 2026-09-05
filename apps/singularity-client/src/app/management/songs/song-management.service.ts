@@ -4,12 +4,12 @@ import { Observable, switchMap } from 'rxjs';
 import { ApiService } from '../../shared/api.service';
 import { SongDownloadInfo, SongDto, SongUploadInfo } from '@singularity/api-interfaces';
 import { SongService } from '../../shared/song.service';
-import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { LoadProgress } from '../../shared/types/load-progress';
+import { IndexedDbService } from '../../shared/indexed-db.service';
 
 @Injectable()
 export class SongManagementService extends SongService {
-  constructor(api: ApiService, indexedDbService: NgxIndexedDBService) {
+  constructor(api: ApiService, indexedDbService: IndexedDbService) {
     super(api, indexedDbService);
   }
 

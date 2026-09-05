@@ -3,15 +3,15 @@ import { asyncScheduler, catchError, combineLatest, filter, last, map, Observabl
 import { SongDto, SongOverviewDto } from '@singularity/api-interfaces';
 import { fromPromise } from 'rxjs/internal/observable/innerFrom';
 import { ApiService } from './api.service';
-import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { LoadProgress } from './types/load-progress';
+import { IndexedDbService } from './indexed-db.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SongService {
   constructor(protected readonly api: ApiService,
-              private readonly indexedDbService: NgxIndexedDBService) {
+              private readonly indexedDbService: IndexedDbService) {
   }
 
   public getAllSongs$(): Observable<SongOverviewDto[]> {
@@ -36,7 +36,7 @@ export class SongService {
       .pipe(
         switchMap((downloaded: boolean) => {
           if (downloaded) {
-            return this.indexedDbService.getByID<SongDto>('songs', id)
+            return this.indexedDbService.getById<SongDto>('songs', id)
           } else {
             return this.getSongById$(id);
           }
@@ -67,7 +67,7 @@ export class SongService {
       .pipe(
         switchMap((downloaded: boolean) => {
           if (downloaded) {
-            return this.indexedDbService.getByID<{songId: number, image: string}>('songCovers', songId)
+            return this.indexedDbService.getById<{songId: number, image: string}>('songCovers', songId)
               .pipe(map((value) => new LoadProgress(100, value.image)))
           } else {
             return this.getSongCover$(songId);
@@ -92,7 +92,7 @@ export class SongService {
       .pipe(
         switchMap((downloaded: boolean) => {
           if (downloaded) {
-            return this.indexedDbService.getByID<{songId: number, video: Blob}>('songVideos', songId)
+            return this.indexedDbService.getById<{songId: number, video: Blob}>('songVideos', songId)
               .pipe(map((value) => new LoadProgress(100, value.video)))
           } else {
             return this.getSongVideo$(songId);
@@ -117,7 +117,7 @@ export class SongService {
       .pipe(
         switchMap((downloaded: boolean) => {
           if (downloaded) {
-            return this.indexedDbService.getByID<{songId: number, audio: Blob}>('songAudios', songId)
+            return this.indexedDbService.getById<{songId: number, audio: Blob}>('songAudios', songId)
               .pipe(map((value) => new LoadProgress(100, value.audio)))
           } else {
             return this.getSongAudio$(songId);
@@ -135,10 +135,10 @@ export class SongService {
 
   public isSongDownloaded$(songId: number): Observable<boolean> {
     return combineLatest([
-      this.indexedDbService.getByID<SongDto>('songs', songId),
-      this.indexedDbService.getByID<{songId: number, image: Blob}>('songCovers', songId),
-      this.indexedDbService.getByID<{songId: number, audio: Blob}>('songAudios', songId),
-      this.indexedDbService.getByID<{songId: number, video: Blob}>('songVideos', songId)
+      this.indexedDbService.getById<SongDto>('songs', songId),
+      this.indexedDbService.getById<{songId: number, image: Blob}>('songCovers', songId),
+      this.indexedDbService.getById<{songId: number, audio: Blob}>('songAudios', songId),
+      this.indexedDbService.getById<{songId: number, video: Blob}>('songVideos', songId)
     ]).pipe(
       map(([song, cover, audio, video]) => !!song && !!cover && !!audio && !!video )
     )
@@ -149,7 +149,7 @@ export class SongService {
       .pipe(
         switchMap((downloaded: boolean) => {
           if (downloaded) {
-            return this.indexedDbService.getByID<SongDto>('songs', songId)
+            return this.indexedDbService.getById<SongDto>('songs', songId)
           } else {
             return combineLatest([
               this.getSongById$(songId),
@@ -174,10 +174,10 @@ export class SongService {
 
   public removeDownload$(songId: number): Observable<boolean> {
     return combineLatest([
-      this.indexedDbService.deleteByKey('songs', songId),
-      this.indexedDbService.deleteByKey('songCovers', songId),
-      this.indexedDbService.deleteByKey('songAudios', songId),
-      this.indexedDbService.deleteByKey('songVideos', songId)
+      this.indexedDbService.delete('songs', songId),
+      this.indexedDbService.delete('songCovers', songId),
+      this.indexedDbService.delete('songAudios', songId),
+      this.indexedDbService.delete('songVideos', songId)
     ]).pipe(map(([song, cover, audio, video]) => song && cover && audio && video))
   }
 

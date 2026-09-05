@@ -1,11 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+// @ts-ignore
 import { Nullable } from '@singularity/api-interfaces';
 
 @Component({
-    selector: 'sui-fast-image',
-    templateUrl: './fast-image.component.html',
-    styleUrl: './fast-image.component.scss',
-    standalone: false
+  selector: 'sui-fast-image',
+  templateUrl: './fast-image.component.html',
+  styleUrl: './fast-image.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class FastImageComponent {
   @Input() src?: Nullable<string> = '';

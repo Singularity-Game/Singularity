@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Nullable } from '@singularity/api-interfaces';
 import { SettingsService } from '../../shared/settings/settings.service';
 import { LocalSettings } from '../../shared/settings/local-settings';
@@ -6,10 +6,11 @@ import { SongService } from '../../shared/song.service';
 import { take } from 'rxjs';
 
 @Component({
-    selector: 'singularity-settings',
-    templateUrl: './settings.component.html',
-    styleUrls: ['./settings.component.scss'],
-    standalone: false
+  selector: 'singularity-settings',
+  templateUrl: './settings.component.html',
+  styleUrls: ['./settings.component.scss'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SettingsComponent {
   private cachedMicrophoneLatency: Nullable<number> = null;
@@ -26,7 +27,7 @@ export class SettingsComponent {
   }
 
   public set menuVolume(volume: Nullable<number>) {
-    if(volume === null) {
+    if (volume === null) {
       volume = 0;
     }
 
@@ -43,7 +44,7 @@ export class SettingsComponent {
   }
 
   public set gameVolume(volume: Nullable<number>) {
-    if(volume === null) {
+    if (volume === null) {
       volume = 0;
     }
 
@@ -68,7 +69,6 @@ export class SettingsComponent {
     this.cachedMicrophoneLatency = latency;
     this.settingsService.setLocalSetting(LocalSettings.MicrophoneLatency, `${latency}`);
   }
-
 
 
   public get offlineMode(): boolean {

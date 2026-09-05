@@ -1,5 +1,5 @@
 import {
-  AfterViewInit,
+  AfterViewInit, ChangeDetectionStrategy,
   Component,
   ContentChildren,
   ElementRef,
@@ -13,17 +13,18 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SelectOptionComponent } from './select-option.component';
 
 @Component({
-    selector: 'sui-select',
-    templateUrl: './select.component.html',
-    styleUrl: './select.component.scss',
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => SelectComponent),
-            multi: true
-        }
-    ],
-    standalone: false
+  selector: 'sui-select',
+  templateUrl: './select.component.html',
+  styleUrl: './select.component.scss',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SelectComponent),
+      multi: true
+    }
+  ],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SelectComponent implements ControlValueAccessor, AfterViewInit {
 

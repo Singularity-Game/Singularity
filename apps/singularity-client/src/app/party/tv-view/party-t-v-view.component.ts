@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { PartyService } from '../party.service';
 import {
   combineLatest,
@@ -15,10 +15,11 @@ import {
 import { Nullable, Optional, PartyDto, PartyQueueItemDto } from '@singularity/api-interfaces';
 
 @Component({
-    selector: 'singularity-party-tv-view',
-    templateUrl: './party-t-v-view.component.html',
-    styleUrl: './party-t-v-view.component.scss',
-    standalone: false
+  selector: 'singularity-party-tv-view',
+  templateUrl: './party-t-v-view.component.html',
+  styleUrl: './party-t-v-view.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class PartyTVViewComponent implements OnInit, OnDestroy {
   public partySubject = new ReplaySubject<Optional<PartyDto>>(1);
@@ -55,7 +56,7 @@ export class PartyTVViewComponent implements OnInit, OnDestroy {
     this.currentSong$ = combineLatest([this.readySubject, this.partySubject]).pipe(
       withLatestFrom(this.upNextQueueItem$),
       switchMap(([[_, party], queueItem]: [[void, Optional<PartyDto>], Nullable<PartyQueueItemDto>]) => {
-        if(queueItem === null || !party.hasValue()) {
+        if (queueItem === null || !party.hasValue()) {
           return of(null);
         }
 

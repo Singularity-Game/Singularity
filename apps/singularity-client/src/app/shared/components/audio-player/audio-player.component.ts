@@ -1,27 +1,42 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { SongOverviewDto } from '@singularity/api-interfaces';
 import { SongService } from '../../song.service';
 import { combineLatest, map, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 @Component({
-    selector: 'singularity-audio-player',
-    templateUrl: './audio-player.component.html',
-    styleUrl: './audio-player.component.scss',
-    standalone: false
+  selector: 'singularity-audio-player',
+  templateUrl: './audio-player.component.html',
+  styleUrl: './audio-player.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
   @Input() public songs: SongOverviewDto[] = [];
-  @Input() public set index(index: number) {
+
+  @Input()
+  public set index(index: number) {
     this.songIndex = index;
     this.playSong();
   }
-  @Input() public set volume(volume: number) {
+
+  @Input()
+  public set volume(volume: number) {
     this.audio.volume = volume / 100;
   }
 
   @Input()
   public set paused(paused: boolean) {
-    if(paused) {
+    if (paused) {
       this.pauseSong();
     } else {
       this.resumeSong();
@@ -91,16 +106,16 @@ export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
         }),
         takeUntil(this.destroySubject)
       ).subscribe(([audio, video]) => {
-        this.audio.src = audio;
-        this.audio.play();
+      this.audio.src = audio;
+      this.audio.play();
 
-        if(!this.video) {
-          return;
-        }
+      if (!this.video) {
+        return;
+      }
 
-        this.video.nativeElement.src = video;
-        this.video.nativeElement.muted = true;
-        this.video.nativeElement.play();
+      this.video.nativeElement.src = video;
+      this.video.nativeElement.muted = true;
+      this.video.nativeElement.play();
     });
   }
 

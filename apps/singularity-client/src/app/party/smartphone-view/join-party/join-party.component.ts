@@ -1,14 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { PartyService } from '../../party.service';
 import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { Nullable, Optional, PartyDto } from '@singularity/api-interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-    selector: 'singularity-join-party',
-    templateUrl: './join-party.component.html',
-    styleUrl: './join-party.component.scss',
-    standalone: false
+  selector: 'singularity-join-party',
+  templateUrl: './join-party.component.html',
+  styleUrl: './join-party.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class JoinPartyComponent implements OnInit, OnDestroy {
   public party$?: Observable<Optional<PartyDto>>;
@@ -26,7 +27,7 @@ export class JoinPartyComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     const id = this.activatedRoute.snapshot.parent?.paramMap.get('id');
 
-    if(!id) {
+    if (!id) {
       return;
     }
 
@@ -48,7 +49,7 @@ export class JoinPartyComponent implements OnInit, OnDestroy {
   }
 
   public join(partyId: string): void {
-    if(!this.userName || this.profilePictureBase64 === null) {
+    if (!this.userName || this.profilePictureBase64 === null) {
       return;
     }
 

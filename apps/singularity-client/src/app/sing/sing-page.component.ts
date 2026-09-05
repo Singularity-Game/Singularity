@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-    selector: 'singularity-sing-page',
-    templateUrl: './sing-page.component.html',
-    styleUrls: ['./sing-page.component.scss'],
-    standalone: false
+  selector: 'singularity-sing-page',
+  templateUrl: './sing-page.component.html',
+  styleUrls: ['./sing-page.component.scss'],
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SingPageComponent implements OnInit {
   public songId: number | null = null;
@@ -13,13 +14,14 @@ export class SingPageComponent implements OnInit {
   private wasFullScreen = false;
 
   constructor(private readonly activatedRoute: ActivatedRoute,
-              private readonly router: Router) {}
+              private readonly router: Router) {
+  }
 
   public ngOnInit() {
     const songId = this.activatedRoute.snapshot.paramMap.get('id');
     this.songId = songId ? +songId : null;
 
-    if(this.checkFullScreen()) {
+    if (this.checkFullScreen()) {
       this.wasFullScreen = true;
     } else {
       document.documentElement.requestFullscreen();
@@ -31,7 +33,7 @@ export class SingPageComponent implements OnInit {
       document.exitFullscreen();
     }
 
-    const referer = decodeURI(this.activatedRoute.snapshot.queryParams.referer);
+    const referer = decodeURI(this.activatedRoute.snapshot.queryParams['referer']);
     const refererArray = referer.split('/');
     this.router.navigate(['/', ...refererArray]);
   }

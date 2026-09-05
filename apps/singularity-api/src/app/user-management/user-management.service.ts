@@ -1,10 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './models/user.entity';
-import { Connection, Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { Nullable } from '@singularity/api-interfaces';
 import * as bcrypt from 'bcryptjs';
-import { Md5 } from 'ts-md5';
+import { createHash } from 'crypto';
 import { MailService } from '../mail/mail.service';
 import { CreatePasswordTokenEntity } from './models/create-password-token.entity';
 
@@ -12,7 +12,7 @@ import { CreatePasswordTokenEntity } from './models/create-password-token.entity
 export class UserManagementService {
 
   constructor(@InjectRepository(User) private readonly userRepository: Repository<User>,
-              private readonly connection: Connection,
+              private readonly dataSource: DataSource,
               private readonly mailService: MailService) {
     this.createDefaultUser();
   }
@@ -30,7 +30,7 @@ export class UserManagementService {
   }
 
   public async resetPassword(email: string): Promise<Nullable<User>> {
-    return this.connection.transaction(async manager => {
+    return this.dataSource.transaction(async manager => {
       const userRepository = manager.getRepository<User>(User);
       const createPasswordTokenRepository = manager.getRepository<CreatePasswordTokenEntity>(CreatePasswordTokenEntity);
 
@@ -57,6 +57,11 @@ export class UserManagementService {
 
   public async update(id: number, user: User): Promise<User> {
     const existingUser = await this.getUserByID(id);
+
+    if (!existingUser) {
+      throw new Error('User not found');
+    }
+
     existingUser.username = user.username;
     existingUser.email = user.email;
     existingUser.active = user.active;
@@ -66,12 +71,17 @@ export class UserManagementService {
     return this.userRepository.save(existingUser);
   }
 
-  public async setUserInitialPassword(token: string, password: string): Promise<User | undefined> {
-    return this.connection.transaction(async manager => {
-      const userRepository = manager.getRepository<User>(User);
-      const createPasswordTokenRepository = manager.getRepository<CreatePasswordTokenEntity>(CreatePasswordTokenEntity);
+  public async setUserInitialPassword(token: string, password: string): Promise<User> {
+    return this.dataSource.transaction(async manager => {
+      const userRepository = manager.getRepository(User);
+      const createPasswordTokenRepository = manager.getRepository(CreatePasswordTokenEntity);
 
       const savedToken = await createPasswordTokenRepository.findOne({ where: { token: token } });
+
+      if (!savedToken) {
+        throw new Error('CreatePasswordToken not found')
+      }
+
       const user = savedToken.user;
 
       user.hashedPassword = bcrypt.hashSync(password, 10);
@@ -85,10 +95,10 @@ export class UserManagementService {
 
   }
 
-  public async createNewUserWithEmail(username: string, email: string, profilePictureBase64: string, isAdmin: boolean): Promise<User | undefined> {
-    return this.connection.transaction(async manager => {
-      const userRepository = manager.getRepository<User>(User);
-      const createPasswordTokenRepository = manager.getRepository<CreatePasswordTokenEntity>(CreatePasswordTokenEntity);
+  public async createNewUserWithEmail(username: string, email: string, profilePictureBase64: string, isAdmin: boolean): Promise<User> {
+    return this.dataSource.transaction(async manager => {
+      const userRepository = manager.getRepository(User);
+      const createPasswordTokenRepository = manager.getRepository(CreatePasswordTokenEntity);
 
       const user = userRepository.create();
       user.username = username;
@@ -114,8 +124,12 @@ export class UserManagementService {
 
   public async delete(id: number): Promise<User> {
     const existingUser = await this.getUserByID(id);
+
+    if (!existingUser) {
+      throw new Error('User not found')
+    }
+
     const result = await this.userRepository.delete(existingUser.id);
-    Logger.log(JSON.stringify(result));
     return existingUser;
   }
 
@@ -129,7 +143,7 @@ export class UserManagementService {
     user.email = 'admin@local.host';
     user.active = true;
     user.isAdmin = true;
-    user.hashedPassword = bcrypt.hashSync(Md5.hashStr('admin'), 10);
+    user.hashedPassword = bcrypt.hashSync(createHash('md5').update('admin').digest('hex'), 10);
 
     return this.userRepository.save(user);
   }

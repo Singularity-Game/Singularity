@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
 import { Nullable, PartyDto, PartyQueueItemDto, SongOverviewDto } from '@singularity/api-interfaces';
 import { SongService } from '../../../shared/song.service';
 import { Observable, shareReplay, Subject, takeUntil, tap } from 'rxjs';
@@ -7,12 +16,17 @@ import { SettingsService } from '../../../shared/settings/settings.service';
 import { PartyService } from '../../party.service';
 
 @Component({
-    selector: "singularity-party-lobby",
-    templateUrl: "./party-lobby.component.html",
-    styleUrl: "./party-lobby.component.scss",
-    standalone: false
+  selector: "singularity-party-lobby",
+  templateUrl: "./party-lobby.component.html",
+  styleUrl: "./party-lobby.component.scss",
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class PartyLobbyComponent implements OnInit, OnDestroy {
+  private readonly songService = inject(SongService);
+  private readonly settingsService = inject(SettingsService);
+  private readonly partyService = inject(PartyService);
+
   @Input() party?: PartyDto;
   @Input() upNextQueueItem: Nullable<PartyQueueItemDto> = null;
 
@@ -29,13 +43,8 @@ export class PartyLobbyComponent implements OnInit, OnDestroy {
 
   private destroySubject = new Subject<void>();
 
-  constructor(private readonly songService: SongService,
-              private readonly settingsService: SettingsService,
-              private readonly partyService: PartyService) {
-  }
-
   public ngOnInit(): void {
-    if(!this.party) {
+    if (!this.party) {
       return;
     }
 
@@ -57,7 +66,7 @@ export class PartyLobbyComponent implements OnInit, OnDestroy {
     this.ready.next();
 
     let currentIndex = this.index;
-    while(currentIndex === this.index && songs.length > 1) {
+    while (currentIndex === this.index && songs.length > 1) {
       currentIndex = Math.floor(Math.random() * songs.length);
     }
 

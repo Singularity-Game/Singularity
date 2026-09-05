@@ -1,11 +1,14 @@
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "types": ["node"],
-    "moduleResolution": "bundler"
+    "types": []
   },
-  "files": ["src/main.ts", "src/polyfills.ts", "../../node_modules/@types/audioworklet/index.d.ts"],
-  "include": ["src/**/*.d.ts"],
-  "exclude": ["jest.config.ts"]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/**/*.spec.ts"
+  ]
 }

@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Nullable, PartyDto } from '@singularity/api-interfaces';
 
 @Component({
-    selector: 'singularity-join-party-set-username',
-    templateUrl: './join-party-set-username.component.html',
-    styleUrl: './join-party-set-username.component.scss',
-    standalone: false
+  selector: 'singularity-join-party-set-username',
+  templateUrl: './join-party-set-username.component.html',
+  styleUrl: './join-party-set-username.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class JoinPartySetUsernameComponent {
   @Input() party?: Nullable<PartyDto>;
@@ -14,7 +15,7 @@ export class JoinPartySetUsernameComponent {
   public text = '';
 
   public next(): void {
-    if(!this.text) {
+    if (!this.text) {
       return;
     }
 

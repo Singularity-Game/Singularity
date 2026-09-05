@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { extractColors } from 'extract-colors';
-import { FinalColor } from 'extract-colors/lib/types/Color';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +13,7 @@ export class SuiGlobalColorService {
 
   public setColorsFromImage(base64: string): void {
     extractColors(base64)
-      .then((colors: FinalColor[]) => {
+      .then((colors) => {
         this.colorsSubject.next([colors[0].hex, colors[1].hex]);
       });
   }

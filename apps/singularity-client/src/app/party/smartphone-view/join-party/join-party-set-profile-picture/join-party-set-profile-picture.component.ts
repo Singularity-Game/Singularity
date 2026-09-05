@@ -1,11 +1,21 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnDestroy,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { Nullable } from '@singularity/api-interfaces';
 
 @Component({
-    selector: 'singularity-join-party-set-profile-picture',
-    templateUrl: './join-party-set-profile-picture.component.html',
-    styleUrl: './join-party-set-profile-picture.component.scss',
-    standalone: false
+  selector: 'singularity-join-party-set-profile-picture',
+  templateUrl: './join-party-set-profile-picture.component.html',
+  styleUrl: './join-party-set-profile-picture.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class JoinPartySetProfilePictureComponent implements AfterViewInit, OnDestroy {
   @ViewChild('video') videoElement?: ElementRef<HTMLVideoElement>;
@@ -48,7 +58,7 @@ export class JoinPartySetProfilePictureComponent implements AfterViewInit, OnDes
   public takePicture(): void {
     const videoElement = this.videoElement?.nativeElement;
 
-    if(!videoElement) {
+    if (!videoElement) {
       return;
     }
     this.drawImageToCanvas(videoElement);
@@ -71,7 +81,7 @@ export class JoinPartySetProfilePictureComponent implements AfterViewInit, OnDes
   private drawImageToCanvas(image: CanvasImageSource): void {
     const canvasElement = this.canvasElement?.nativeElement;
 
-    if(!canvasElement) {
+    if (!canvasElement) {
       return;
     }
 

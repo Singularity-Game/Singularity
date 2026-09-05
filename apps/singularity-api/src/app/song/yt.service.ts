@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { VideoInfo } from '@singularity/api-interfaces';
-import * as ytdl from '@distube/ytdl-core';
+import ytdl from '@distube/ytdl-core';
 import { SongFile } from './interfaces/song-file';
 import { ConfigService } from '@nestjs/config';
 import { Agent } from '@distube/ytdl-core';
@@ -39,7 +39,9 @@ export class YtService {
       }
     }).url;
 
-    videoInfo.authorThumbnailUrl = ytdlVideoInfo.videoDetails.author.thumbnails[0].url;
+    if (ytdlVideoInfo.videoDetails.author.thumbnails) {
+      videoInfo.authorThumbnailUrl = ytdlVideoInfo.videoDetails.author.thumbnails[0].url;
+    }
 
     return videoInfo;
   }

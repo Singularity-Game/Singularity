@@ -1,4 +1,12 @@
-import { ObjectStoreMeta } from "ngx-indexed-db"
+export interface ObjectStoreMeta {
+  store: string;
+  storeConfig: { keyPath: string; autoIncrement: boolean };
+  storeSchema: Array<{
+    name: string;
+    keypath: string;
+    options: { unique: boolean };
+  }>;
+}
 
 export const SONGS_INDEXED_DB_SCHEMA: ObjectStoreMeta = {
   store: 'songs',
@@ -39,3 +47,10 @@ export const SONG_AUDIOS_INDEXED_DB_SCHEMA: ObjectStoreMeta = {
     { name: 'audio', keypath: 'audio', options: { unique: false } },
   ]
 }
+
+export const APP_DB_SCHEMAS = [
+  SONGS_INDEXED_DB_SCHEMA,
+  SONG_COVERS_INDEXED_DB_SCHEMA,
+  SONG_VIDEOS_INDEXED_DB_SCHEMA,
+  SONG_AUDIOS_INDEXED_DB_SCHEMA
+];

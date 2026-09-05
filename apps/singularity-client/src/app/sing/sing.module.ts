@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 
 import { VocalGridComponent } from './sing/vocal-grid/vocal-grid.component';
 import { SingComponent } from './sing/sing.component';
@@ -18,8 +18,8 @@ import { SingerFactory } from './services/singer-factory.service';
 import { SharedModule } from '../shared/shared.module';
 import { SingScoreDialogComponent } from './dialogs/sing-score-dialog/sing-score-dialog.component';
 import { ScoreTitlePipe } from './pipes/score-title.pipe';
-import { TranslocoModule } from '@ngneat/transloco';
 import { SingularityUiModule } from '@singularity/ui';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @NgModule({
   declarations: [
@@ -37,8 +37,9 @@ import { SingularityUiModule } from '@singularity/ui';
     CommonModule,
     ReactiveFormsModule,
     SharedModule,
-    TranslocoModule,
-    SingularityUiModule
+    SingularityUiModule,
+    TranslocoPipe,
+    AsyncPipe
   ],
   providers: [
     AudioContextGuard,

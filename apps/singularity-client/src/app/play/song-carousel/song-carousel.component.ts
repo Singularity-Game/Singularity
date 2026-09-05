@@ -1,12 +1,13 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { CarouselComponent, OwlOptions } from 'ngx-owl-carousel-o';
 import { SongOverviewDto } from '@singularity/api-interfaces';
 
 @Component({
-    selector: 'singularity-song-carousel',
-    templateUrl: './song-carousel.component.html',
-    styleUrl: './song-carousel.component.scss',
-    standalone: false
+  selector: 'singularity-song-carousel',
+  templateUrl: './song-carousel.component.html',
+  styleUrl: './song-carousel.component.scss',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SongCarouselComponent {
   @Input() public songs: SongOverviewDto[] = [];
