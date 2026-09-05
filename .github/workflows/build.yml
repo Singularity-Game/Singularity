@@ -24,12 +24,12 @@ jobs:
 
     - name: Install Dependencies
       run: npm install
-        
+
     - name: Build Wasm
       run: npm run build-wasm
 
     - name: Build Frontend
-      run: npm run build-frontend
+      run: npm run build-client
 
     - name: Build Backend
-      run: npm run build-backend
+      run: npm run build-api
