@@ -62,37 +62,35 @@ export class UltrastarParser {
 	}
 
 	static parseNote(line: string): SongNote | null {
-		const lineArray = line.trim().split(" ");
+    const songNote = new SongNote();
 
-		if (lineArray.length < 2) return null;
+    const lineArray = line.split(' ');
 
-		const songNote = new SongNote();
+    switch (lineArray[0]) {
+      case ':':
+        songNote.type = SongNoteType.Regular;
+        break;
+      case '*':
+        songNote.type = SongNoteType.Golden;
+        break;
+      case 'F':
+        songNote.type = SongNoteType.Freestyle;
+        break;
+      case '-':
+        songNote.type = SongNoteType.LineBreak;
+        break;
+      case 'E':
+        return null;
+      default:
+        throw new Error('Reached unexpected SongNoteType: ' + lineArray[0]);
+    }
 
-		switch (lineArray[0]) {
-			case ":":
-				songNote.type = SongNoteType.Regular;
-				break;
-			case "*":
-				songNote.type = SongNoteType.Golden;
-				break;
-			case "F":
-				songNote.type = SongNoteType.Freestyle;
-				break;
-			case "-":
-				songNote.type = SongNoteType.LineBreak;
-				break;
-			case "E":
-				return null; // End marker
-			default:
-				return null; // Unknown type, skip gracefully for indexing
-		}
+    songNote.startBeat = +lineArray[1] || 0;
+    songNote.lengthInBeats = +lineArray[2] || 0;
+    songNote.pitch = +lineArray[3] || 0;
+    songNote.text = lineArray.slice(4).join(' ').replace('\r', '').replace('\n', '');
 
-		songNote.startBeat = +lineArray[1] || 0;
-		songNote.lengthInBeats = +lineArray[2] || 0;
-		songNote.pitch = +lineArray[3] || 0;
-		songNote.text = lineArray.slice(4).join(" ").replace(/\r?\n/g, "");
-
-		return songNote;
+    return songNote;
 	}
 
 	static calculatePointsPerBeat(songNotes: SongNote[]): number {
