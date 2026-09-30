@@ -14,7 +14,7 @@ export class PartyQueueItemMapper {
     partyQueueItemDto.id = partyQueueItem.id;
     partyQueueItemDto.ready = partyQueueItem.ready;
     partyQueueItemDto.participants = partyQueueItem.participants.map(participant => this.partyParticipantMapper.mapToDto(participant));
-    partyQueueItemDto.song = this.songMapper.mapToDto(partyQueueItem.song);
+    partyQueueItemDto.song = this.songMapper.mapToSongOverviewDto(partyQueueItem.song);
 
     return partyQueueItemDto;
   }

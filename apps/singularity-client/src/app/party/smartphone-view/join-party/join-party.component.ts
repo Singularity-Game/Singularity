@@ -49,11 +49,11 @@ export class JoinPartyComponent implements OnInit, OnDestroy {
   }
 
   public join(partyId: string): void {
-    if (!this.userName || this.profilePictureBase64 === null) {
+    if (!this.userName) {
       return;
     }
 
-    this.partyService.joinParty$(partyId, this.userName, this.profilePictureBase64)
+    this.partyService.joinParty$(partyId, this.userName, this.profilePictureBase64 ?? '')
       .pipe(takeUntil(this.destroySubject))
       .subscribe(() => this.router.navigate(['party', partyId]));
   }

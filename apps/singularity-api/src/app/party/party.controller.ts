@@ -17,7 +17,7 @@ import {
   CreatePartyDto,
   CurrentSongDto,
   JoinPartyDto,
-  JoinPartyQueueItemDto,
+  JoinPartyQueueItemDto, Nullable,
   PartyDto,
   PartyParticipantDto,
   PartyQueueItemDto,
@@ -57,17 +57,13 @@ export class PartyController {
     const party = new Party(createPartyDto.name, request.user as User);
 
     const createdParty = this.partyService.createParty(party);
-    return this.partyMapper.mapToDto(createdParty);
+    return this.partyMapper.mapToDto(createdParty)!;
   }
 
   @Get('my')
   @UseGuards(AuthGuard('jwt'))
-  public getMyParty(@Req() request: RequestWithUser): PartyDto {
+  public getMyParty(@Req() request: RequestWithUser): Nullable<PartyDto> {
     const party = this.partyService.getPartyByUser(request.user as User);
-
-    if (!party) {
-      throw new Error('Party not found')
-    }
 
     return this.partyMapper.mapToDto(party);
   }
@@ -91,13 +87,8 @@ export class PartyController {
   }
 
   @Get(':id')
-  public getPartyById(@Param('id') id: string): PartyDto {
+  public getPartyById(@Param('id') id: string): Nullable<PartyDto> {
     const party = this.partyService.getPartyById(id);
-
-    if (!party) {
-      throw new Error('Party not found')
-    }
-
     return this.partyMapper.mapToDto(party);
   }
 
@@ -210,7 +201,7 @@ export class PartyController {
   }
 
   @Post(':partyId/queue')
-  public async addQueueItem(@Param('partyId') partyId: string, partyQueueItem: PartyQueueItemDto): Promise<PartyQueueItemDto> {
+  public async addQueueItem(@Param('partyId') partyId: string, @Body() partyQueueItem: PartyQueueItemDto): Promise<PartyQueueItemDto> {
     const party = this.partyService.getPartyById(partyId);
     const song = await this.songService.getSongById(partyQueueItem.song.id);
 

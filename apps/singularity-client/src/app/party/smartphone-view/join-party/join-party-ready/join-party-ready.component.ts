@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Nullable } from '@singularity/api-interfaces';
 
 @Component({
   selector: 'singularity-join-party-ready',
@@ -9,8 +10,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 })
 export class JoinPartyReadyComponent {
 
-  @Input() userName?: string;
-  @Input() profilePictureBase64?: string;
+  @Input() userName?: Nullable<string>;
+  @Input() profilePictureBase64?: Nullable<string>;
 
   @Output() join = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();

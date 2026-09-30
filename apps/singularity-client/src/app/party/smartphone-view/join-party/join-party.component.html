@@ -3,8 +3,8 @@
     <h1 class="text-center">{{party.value.name}}</h1>
     @if (userName === null) {
       <singularity-join-party-set-username [party]="party.value" (username)="setUserName($event)"></singularity-join-party-set-username>
-    } @else if (profilePictureBase64 === null) {
-      <singularity-join-party-set-profile-picture (photoBase64)="setProfilePictureBase64($event)"></singularity-join-party-set-profile-picture>
+<!--    } @else if (profilePictureBase64 === null) {-->
+<!--      <singularity-join-party-set-profile-picture (photoBase64)="setProfilePictureBase64($event)"></singularity-join-party-set-profile-picture>-->
     } @else {
       <singularity-join-party-ready [userName]="userName" [profilePictureBase64]="profilePictureBase64" (cancel)="cancel()" (join)="join(party.value.id)"></singularity-join-party-ready>
     }
