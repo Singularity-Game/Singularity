@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { MicrophoneService } from './sing/services/microphone.service';
 
 @Component({
     selector: 'singularity-root',
@@ -7,4 +8,13 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     standalone: false,
     changeDetection: ChangeDetectionStrategy.Eager
 })
-export class AppComponent {}
+export class AppComponent implements OnInit {
+    constructor(private readonly microphoneService: MicrophoneService) {
+    }
+
+    public ngOnInit(): void {
+        this.microphoneService.requestPermission$().subscribe({
+            error: (error: unknown) => console.error('Unable to access the microphone', error)
+        });
+    }
+}
