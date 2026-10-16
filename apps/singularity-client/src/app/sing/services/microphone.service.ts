@@ -20,8 +20,9 @@ export class MicrophoneService {
   }
 
   public getDevices$(): Observable<MediaDeviceInfo[]> {
-    return from(navigator.mediaDevices.enumerateDevices())
+    return from(navigator.mediaDevices.getUserMedia({ audio: true }))
       .pipe(
+        switchMap(() => from(navigator.mediaDevices.enumerateDevices())),
         map((devices: MediaDeviceInfo[]) => devices.filter((device: MediaDeviceInfo) => device.kind === 'audioinput')),
         take(1)
       )
