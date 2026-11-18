@@ -40,3 +40,4 @@ COPY --from=build /usr/src/app/package.json /usr/src/app/package.json
 WORKDIR /usr/src/app
 RUN npm install --ignore-scripts
 CMD node main.js
+EXPOSE 3333
