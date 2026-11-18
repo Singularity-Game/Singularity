@@ -22,17 +22,16 @@
   },
   "homepage": "https://github.com/Singularity-Game/Singularity#readme",
   "dependencies": {
-    "@angular/animations": "^22.1.3",
-    "@angular/common": "^22.1.0",
-    "@angular/compiler": "^22.1.0",
-    "@angular/core": "^22.1.0",
-    "@angular/forms": "^22.1.0",
-    "@angular/platform-browser": "^22.1.3",
-    "@angular/platform-browser-dynamic": "^22.1.3",
-    "@angular/router": "^22.1.0",
-    "@angular/service-worker": "^22.1.3",
+    "@angular/animations": "^22.2.6",
+    "@angular/common": "^22.2.6",
+    "@angular/compiler": "^22.2.6",
+    "@angular/core": "^22.2.6",
+    "@angular/forms": "^22.2.6",
+    "@angular/platform-browser": "^22.2.6",
+    "@angular/platform-browser-dynamic": "^22.2.6",
+    "@angular/router": "^22.2.6",
+    "@angular/service-worker": "^22.2.6",
     "@distube/ytdl-core": "^4.16.12",
-    "@fastify/static": "^9.3.0",
     "@jsverse/transloco": "^8.4.0",
     "@nestjs/axios": "^4.0.1",
     "@nestjs/common": "^11.0.1",
@@ -55,7 +54,7 @@
     "multer": "^2.2.0",
     "mysql2": "^3.23.4",
     "ngx-owl-carousel-o": "^22.0.0",
-    "nodemailer": "^9.0.5",
+    "nodemailer": "^10.6.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.2.2",
@@ -70,7 +69,7 @@
   "devDependencies": {
     "@angular/build": "^22.1.5",
     "@angular/cli": "^22.1.5",
-    "@angular/compiler-cli": "^22.1.0",
+    "@angular/compiler-cli": "^22.2.6",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",
     "@nestjs/cli": "^11.0.0",
@@ -100,5 +99,9 @@
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.20.0",
     "vitest": "^4.0.8"
+  },
+  "overrides": {
+    "glob": "^14.0.3",
+    "minimatch": "^11.0.3"
   }
 }

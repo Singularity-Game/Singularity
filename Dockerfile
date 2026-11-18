@@ -1,4 +1,4 @@
-FROM node:26.7.0 as build
+FROM node:26.12.1 as build
 
 WORKDIR /usr/src/app
 
@@ -34,7 +34,7 @@ RUN npm install
 RUN npm run build-api && npm run build-client
 RUN cp -r dist/apps/singularity-client/browser dist/apps/singularity-api/static
 
-FROM node:26.7.0
+FROM node:26.12.1
 COPY --from=build /usr/src/app/dist/apps/singularity-api /usr/src/app
 COPY --from=build /usr/src/app/package.json /usr/src/app/package.json
 WORKDIR /usr/src/app

@@ -25,7 +25,8 @@ module.exports = {
     "@nestjs/websockets/socket-module",
     "@nestjs/microservices/microservices-module",
     "@nestjs/microservices",
-    "sharp"
+    "sharp",
+    "@fastify/static"
   ],
   externalsType: "commonjs",
   output: {
