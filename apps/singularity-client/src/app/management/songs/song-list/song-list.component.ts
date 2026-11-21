@@ -16,7 +16,8 @@ export class SongListComponent implements OnInit, OnDestroy {
   private readonly authenticationService = inject(AuthenticationService);
   private readonly songManagementService = inject(SongManagementService);
 
-  public isAdmin$ = this.authenticationService.isAdmin$();
+  public isAdmin = this.authenticationService.isAdmin;
+
   public downloadingSongs$?: Observable<SongListDownloadInfo[]>;
   public songs: SongOverviewDto[] = [];
   public isIndexing = false;

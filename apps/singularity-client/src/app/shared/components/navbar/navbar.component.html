@@ -15,7 +15,7 @@
   </div>
   <div class="navbar-right">
     <sui-dropdown>
-      <span sui-dropdown-button>{{ (user$ | async)?.username }}</span>
+      <span sui-dropdown-button>{{ user()?.username }}</span>
       <button suiButton routerLink="/management/settings"><img src="assets/icons/settings.svg" alt="settings" /> {{ 'management.settings.header' | transloco }}</button>
       <button suiButton (click)="logout()"><img src="assets/icons/lock.svg" alt="logout" /> {{ 'shared.navbar.logout' | transloco }}</button>
     </sui-dropdown>

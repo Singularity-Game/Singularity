@@ -1,5 +1,5 @@
 <h1>{{ 'management.songs.songList.header' | transloco }}
-  @if (isAdmin$ | async) {
+  @if (isAdmin()) {
     <button class="sui-right" suiButton size="s" routerLink="new">
       <img class="sui-space-right" src="assets/icons/plus-circle.svg" alt="add" />
       {{ 'management.songs.songList.newSong' | transloco }}
@@ -7,7 +7,7 @@
   }
 </h1>
 
-@if (isAdmin$ | async) {
+@if (isAdmin()) {
   <div class="indexing-section">
     <h2>{{ 'management.songs.songList.autoIndexing.header' | transloco }}</h2>
     <p>{{ 'management.songs.songList.autoIndexing.description' | transloco }}</p>
@@ -30,7 +30,7 @@
   </div>
 }
 
-@if (isAdmin$ | async) {
+@if (isAdmin()) {
   @if (downloadingSongs$ | async; as downloadingSongs) {
     @if (downloadingSongs.length > 0) {
       <p>{{ 'management.songs.songList.serverDownloadsSongs' | transloco }}</p>

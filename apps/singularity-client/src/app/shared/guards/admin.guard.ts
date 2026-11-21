@@ -8,7 +8,7 @@ export class AdminGuard implements CanActivate {
   constructor(private readonly authenticationService: AuthenticationService) {
   }
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.authenticationService.isAdmin$();
+    return this.authenticationService.isAdmin();
   }
 
 }

@@ -1,21 +1,14 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthenticationService } from '../shared/authentication.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'singularity-management',
   templateUrl: './management.component.html',
   styleUrls: ['./management.component.scss'],
   standalone: false,
-  changeDetection: ChangeDetectionStrategy.Eager
 })
-export class ManagementComponent implements OnInit {
-  public isAdmin$?: Observable<boolean>;
+export class ManagementComponent  {
+  private readonly authenticationService = inject(AuthenticationService);
 
-  constructor(private readonly authenticationService: AuthenticationService) {
-  }
-
-  ngOnInit(): void {
-    this.isAdmin$ = this.authenticationService.isAdmin$();
-  }
+  public readonly isAdmin = this.authenticationService.isAdmin;
 }

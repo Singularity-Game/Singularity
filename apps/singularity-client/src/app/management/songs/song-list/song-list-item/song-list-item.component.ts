@@ -36,7 +36,8 @@ export class SongListItemComponent implements OnInit, OnDestroy {
 
   @Output() public deleted = new EventEmitter<void>();
 
-  public isAdmin$: Observable<boolean> = this.authenticationService.isAdmin$();
+  public isAdmin = this.authenticationService.isAdmin;
+
   public cover$?: Observable<string>;
   public fastCover$?: Observable<string>;
   public isDownloaded$?: Observable<boolean>;

@@ -27,7 +27,7 @@ export class UserController {
       secure: false,
       sameSite: 'lax',
       expires: new Date(Date.now() + 7 * 24 * 60 * 1000)
-    }).send({status: 'ok'})
+    }).send(this.userMapper.mapToDto(request.user))
   }
 
   @Post('logout')

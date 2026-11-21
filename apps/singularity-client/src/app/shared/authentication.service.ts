@@ -1,16 +1,6 @@
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {
-  asyncScheduler,
-  BehaviorSubject,
-  catchError,
-  map,
-  Observable,
-  scheduled,
-  shareReplay,
-  tap,
-  throwError
-} from 'rxjs';
+import { asyncScheduler, catchError, map, Observable, of, scheduled, Subject, tap, throwError } from 'rxjs';
 import { Md5 } from 'ts-md5';
 import { Nullable, UserDto } from '@singularity/api-interfaces';
 
@@ -20,18 +10,26 @@ import { Nullable, UserDto } from '@singularity/api-interfaces';
 export class AuthenticationService {
   private readonly http = inject(HttpClient);
 
-  private user$ = this.http.get<UserDto>('/api/user/me').pipe(shareReplay(1));
-  private authenticated = true;
+  public readonly user = signal<Nullable<UserDto>>(null);
 
-  public login$(username: string, password: string): Observable<boolean> {
-    return this.http.post('/api/user/login', {
+  public readonly isAdmin = computed(() => {
+    const user = this.user();
+    return user?.isAdmin ?? false;
+  });
+
+  public readonly isAuthenticated = computed(() => {
+    const user = this.user();
+    return !!user;
+  })
+
+  public login$(username: string, password: string): Observable<Nullable<UserDto>> {
+    return this.http.post<UserDto>('/api/user/login', {
       username: username,
       password: Md5.hashStr(password)
     })
       .pipe(
-        map(() => true),
-        catchError(() => scheduled([false], asyncScheduler)),
-        tap((success: boolean) => this.authenticated = success)
+        catchError(() => of(null)),
+        tap((user: Nullable<UserDto>) => this.user.set(user))
       )
   }
 
@@ -55,30 +53,9 @@ export class AuthenticationService {
   public logout$(): Observable<boolean> {
     return this.http.post<void>('/api/user/logout', {})
       .pipe(
-        tap(() => this.authenticated = false),
+        tap(() => this.user.set(null)),
         map(() => true),
         catchError(() => throwError(() => false))
-      )
-  }
-
-  public isAuthenticated(): boolean {
-    return this.authenticated;
-  }
-
-  public getLocalUser$(): Observable<Nullable<UserDto>> {
-    return this.user$;
-  }
-
-  public isAdmin$(): Observable<boolean> {
-    return this.getLocalUser$()
-      .pipe(
-        map((user: Nullable<UserDto>) => {
-          if (user === null) {
-            return false;
-          }
-
-          return user.isAdmin;
-        })
       )
   }
 }

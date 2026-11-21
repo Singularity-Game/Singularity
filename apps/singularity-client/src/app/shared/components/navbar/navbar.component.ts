@@ -16,8 +16,8 @@ export class NavbarComponent {
   private readonly destroyRef = inject(DestroyRef)
 
   public readonly partyEnabled = environment.partyEnabled;
-  public readonly user$ = this.authenticationService.getLocalUser$();
 
+  public readonly user = this.authenticationService.user;
   public readonly transparent = input<boolean>(false);
 
   public logout(): void {
