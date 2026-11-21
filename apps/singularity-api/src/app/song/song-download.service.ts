@@ -18,7 +18,7 @@ export class SongDownloadService {
   }
 
   public async getUploadInfo(txtFile: SongFile): Promise<SongUploadInfo> {
-    if(this.configService.get('ENABLE_YOUTUBE') !== 'true') {
+    if (this.configService.get('ENABLE_YOUTUBE') !== 'true') {
       return new SongUploadInfo()
     }
 
@@ -37,28 +37,30 @@ export class SongDownloadService {
   }
 
   public async createSongFromYt(txtFile: SongFile): Promise<void> {
-    if(this.configService.get('ENABLE_YOUTUBE') !== 'true') {
+    if (this.configService.get('ENABLE_YOUTUBE') !== 'true') {
       return;
     }
 
     const songText = txtFile.buffer.toString('utf8');
-    const videoMetaData = this.getSongMetadata(songText, '#VIDEO');
-    const videoDownloadId = this.getVideoDownloadId(videoMetaData);
-    const fanartDownloadId = this.getFanartIdOrUrl(videoMetaData);
-
     const downloadInfo = new SongDownloadInfo(
       this.getSongMetadata(songText, '#TITLE'),
       this.getSongMetadata(songText, '#ARTIST')
     );
-    this.downloadingSongs.push(downloadInfo);
-
-    const [video, audio, cover]: [SongFile, SongFile, SongFile] = await Promise.all([
-      this.ytService.downloadVideo(videoDownloadId),
-      this.ytService.downloadAudo(videoDownloadId),
-      this.fanartService.getFanartImage(fanartDownloadId)
-    ]);
 
     try {
+      const videoMetaData = this.getSongMetadata(songText, '#VIDEO');
+      const videoDownloadId = this.getVideoDownloadId(videoMetaData);
+      const fanartDownloadId = this.getFanartIdOrUrl(videoMetaData);
+
+      this.downloadingSongs.push(downloadInfo);
+
+      const [video, audio, cover]: [SongFile, SongFile, SongFile] = await Promise.all([
+        this.ytService.downloadVideo(videoDownloadId),
+        this.ytService.downloadAudo(videoDownloadId),
+        this.fanartService.getFanartImage(fanartDownloadId)
+      ]);
+
+
       await this.songService.createSong(txtFile, audio, video, cover);
     } catch {
       // Do nothing, the user can try again downloading the song.
