@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { asyncScheduler, catchError, map, Observable, of, scheduled, Subject, tap, throwError } from 'rxjs';
+import { asyncScheduler, catchError, map, Observable, of, scheduled, tap, throwError } from 'rxjs';
 import { Md5 } from 'ts-md5';
 import { Nullable, UserDto } from '@singularity/api-interfaces';
 
@@ -20,7 +20,7 @@ export class AuthenticationService {
   public readonly isAuthenticated = computed(() => {
     const user = this.user();
     return !!user;
-  })
+  });
 
   public login$(username: string, password: string): Observable<Nullable<UserDto>> {
     return this.http.post<UserDto>('/api/user/login', {
@@ -56,6 +56,19 @@ export class AuthenticationService {
         tap(() => this.user.set(null)),
         map(() => true),
         catchError(() => throwError(() => false))
+      )
+  }
+
+  public setInitialUser$(): Observable<boolean> {
+    if (this.user()) {
+      return of();
+    }
+
+    return this.http.get<UserDto>('/api/user/me')
+      .pipe(
+        tap((user: UserDto) => this.user.set(user)),
+        map(() => true),
+        catchError(() => of(false))
       )
   }
 }

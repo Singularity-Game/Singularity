@@ -53,8 +53,6 @@ export class NormalizedLoudnessAudioPlayer {
 
     Tone.connect(this.sourceNode, this.gainNode);
 
-    console.log('play', this.volume, this.normalizationGain(lufs, peakDb));
-
     this.audioPlayer.onpause = this.onStopFn;
     this.audioPlayer.onended = this.onEndedFn;
 

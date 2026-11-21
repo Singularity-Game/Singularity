@@ -1,4 +1,4 @@
-import { isDevMode, NgModule } from '@angular/core';
+import { inject, isDevMode, NgModule, provideAppInitializer } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -8,6 +8,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { UnauthorizedInterceptor } from './interceptors/unauthorized.interceptor';
 import { TranslocoRootModule } from './transloco-root.module';
 import { SingularityUiModule } from '@singularity/ui';
+import { AuthenticationService } from './shared/authentication.service';
 
 
 const serviceWorkerScript =
@@ -37,6 +38,11 @@ const serviceWorkerScript =
             multi: true
         },
         provideHttpClient(withInterceptorsFromDi()),
+        provideAppInitializer(() => {
+          const authenticationService = inject(AuthenticationService);
+          console.log(authenticationService);
+          return authenticationService.setInitialUser$();
+        })
     ] })
 export class AppModule {
 }
