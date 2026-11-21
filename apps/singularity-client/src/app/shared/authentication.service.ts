@@ -1,6 +1,16 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { asyncScheduler, BehaviorSubject, catchError, map, Observable, scheduled, shareReplay, tap } from 'rxjs';
+import {
+  asyncScheduler,
+  BehaviorSubject,
+  catchError,
+  map,
+  Observable,
+  scheduled,
+  shareReplay,
+  tap,
+  throwError
+} from 'rxjs';
 import { Md5 } from 'ts-md5';
 import { Nullable, UserDto } from '@singularity/api-interfaces';
 
@@ -42,8 +52,13 @@ export class AuthenticationService {
     });
   }
 
-  public logout() {
-    this.authenticated = false;
+  public logout$(): Observable<boolean> {
+    return this.http.post<void>('/api/user/logout', {})
+      .pipe(
+        tap(() => this.authenticated = false),
+        map(() => true),
+        catchError(() => throwError(() => false))
+      )
   }
 
   public isAuthenticated(): boolean {

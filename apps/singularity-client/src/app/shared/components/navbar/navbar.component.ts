@@ -1,36 +1,31 @@
-import { ChangeDetectionStrategy, Component, Input, isDevMode, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, input } from '@angular/core';
 import { AuthenticationService } from '../../authentication.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { Nullable, UserDto } from '@singularity/api-interfaces';
 import { environment } from '../../../../environments/environment';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'singularity-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
-  standalone: false,
-  changeDetection: ChangeDetectionStrategy.Eager
+  standalone: false
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
+  private readonly authenticationService = inject(AuthenticationService);
+  private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef)
 
-  @Input() transparent = false;
+  public readonly partyEnabled = environment.partyEnabled;
+  public readonly user$ = this.authenticationService.getLocalUser$();
 
-  public user$?: Observable<Nullable<UserDto>>;
-
-  public partyEnabled = environment.partyEnabled;
-  public devMode = isDevMode();
-
-  constructor(private readonly authenticationService: AuthenticationService,
-              private readonly router: Router) {
-  }
-
-  public ngOnInit(): void {
-    this.user$ = this.authenticationService.getLocalUser$();
-  }
+  public readonly transparent = input<boolean>(false);
 
   public logout(): void {
-    this.authenticationService.logout();
-    this.router.navigate(['/', 'authentication', 'login'])
+    this.authenticationService.logout$()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.router.navigate(['/', 'authentication', 'login'])
+      })
+
   }
 }

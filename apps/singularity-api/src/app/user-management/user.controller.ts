@@ -30,6 +30,11 @@ export class UserController {
     }).send({status: 'ok'})
   }
 
+  @Post('logout')
+  public logout(@Req() request, @Res({passthrough: true}) response: express.Response): void {
+    response.clearCookie('access_token').send({status: 'ok'});
+  }
+
   @Post('setpassword')
   public async setPassword(@Body() createInitialPasswordDto: CreateInitialPasswordDto): Promise<UserDto> {
     const user = await this.userManagementService.setUserInitialPassword(createInitialPasswordDto.token, createInitialPasswordDto.password);
