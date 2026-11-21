@@ -11,12 +11,18 @@ import { SongFile } from './interfaces/song-file';
 import { UltrastarParser } from './utils/ultrastar-parser';
 import ErrnoException = NodeJS.ErrnoException;
 import { Nullable } from '@singularity/api-interfaces';
+import decode from '@audio/decode';
+import { LoudnessAnalyzerService } from './loudness-analysis/loudness-analyzer.service';
 
 @Injectable()
 export class SongService {
 
+  private readonly logger = new Logger(SongService.name);
+
   constructor(@InjectRepository(Song) private readonly songRepository: Repository<Song>,
-              private readonly configService: ConfigService) {
+              private readonly configService: ConfigService,
+              private readonly loudnessAnalyser: LoudnessAnalyzerService) {
+    this.analyseExistingSongLoudness();
   }
 
   public async getAllSongs(withNotes = false): Promise<Song[]> {
@@ -141,6 +147,8 @@ export class SongService {
       song.videoFileName = `${artist} - ${title}.${this.getFileType(videoFile)}`;
       song.coverFileName = `${artist} - ${title}.${this.getFileType(coverFile)}`;
 
+      await this.analyseSongLoudness(song, audioFile.buffer);
+
       return this.songRepository.save(song);
     } catch (e) {
       Logger.error(e);
@@ -201,4 +209,43 @@ export class SongService {
     const baseDirectory = this.configService.get('SONG_DIRECTORY', 'songs');
     return path.resolve(process.cwd(), baseDirectory, relativePath);
   }
+
+  private async analyseSongLoudness(song: Song, audioFile: Buffer): Promise<void> {
+    this.logger.log(`Analysing Loudness for Song ${song.artist} - ${song.name}...`);
+
+    const audioData = await decode(audioFile);
+    const loudness = this.loudnessAnalyser.measureLoudness(audioData.channelData, audioData.sampleRate);
+
+    song.lufs = loudness.lufs;
+    song.peakDb = loudness.peakDb;
+
+    this.logger.log(`Analysed Loudness for Song: ${song.artist} - ${song.name}: LUFS: ${loudness.lufs}, PeakDb: ${loudness.peakDb}`);
+  }
+
+  private async analyseExistingSongLoudness(): Promise<void> {
+    this.logger.log('Checking for songs without loudness analysis...');
+    const songsWithoutLoudness = await this.songRepository.find({
+      where: {
+        lufs: 0,
+        peakDb: 0
+      }
+    });
+
+    this.logger.log(`Found ${songsWithoutLoudness.length} Songs without loudness.`);
+
+    if (songsWithoutLoudness.length === 0) {
+      return;
+    }
+
+    for (let song of songsWithoutLoudness) {
+      const audioFile = await this.getSongAudioFile(song.id);
+      await this.analyseSongLoudness(song, audioFile);
+    }
+
+    this.logger.log(`Analysed Loudness for ${songsWithoutLoudness.length} Songs. Saving Songs...`);
+    await this.songRepository.save(songsWithoutLoudness);
+    this.logger.log(`Songs saved.`)
+  }
+
+
 }

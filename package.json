@@ -9,7 +9,10 @@
     "build-client": "ng build --configuration production",
     "start-api": "nest start",
     "build-api": "nest build",
-    "build-wasm": "cargo clean --manifest-path ./libs/wasm/Cargo.toml && wasm-pack build libs/wasm --target web"
+    "build-wasm": "cargo clean --manifest-path ./libs/wasm/Cargo.toml && wasm-pack build libs/wasm --target web",
+    "typeorm": "tsx --tsconfig apps/singularity-api/tsconfig.json ./node_modules/typeorm/cli.js",
+    "migration:generate": "npm run typeorm -- migration:generate -d apps/singularity-api/ormconfig.ts",
+    "migration:run": "npm run typeorm -- migration:run -d apps/singularity-api/ormconfig.ts"
   },
   "repository": {
     "type": "git",
@@ -31,7 +34,8 @@
     "@angular/platform-browser-dynamic": "^22.2.6",
     "@angular/router": "^22.2.6",
     "@angular/service-worker": "^22.2.6",
-    "@distube/ytdl-core": "^4.16.12",
+    "@audio/decode": "^4.3.1",
+    "@distube/ytdl-core": "^5.2.1",
     "@jsverse/transloco": "^8.4.0",
     "@nestjs/axios": "^4.0.1",
     "@nestjs/common": "^11.0.1",
@@ -79,9 +83,10 @@
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
     "@types/multer": "^2.2.0",
-    "@types/node": "^24.13.3",
+    "@types/node": "^24.19.2",
     "@types/nodemailer": "^8.0.1",
     "@types/supertest": "^7.0.0",
+    "cross-env": "^10.1.0",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.2",

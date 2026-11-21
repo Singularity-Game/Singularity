@@ -143,23 +143,23 @@ Once Uploaded the Song will be playable!
 
     AUTHENTICATION_JWT_SECRET=RANDOM_STRING_OF_CHARACTERS   
     ```
-5. Create the file `ormconfig.ts` in the root directory (next to `package.json`) with the following content:
+5. Create the file `ormconfig.ts` in the directory `apps/singularity-api`:
     ```ts
-    import { DataSource } from 'typeorm';
-    export const connectionSource = new DataSource({
-        migrationsTableName: 'migrations',
-        type: 'mariadb',
-        host: 'localhost',
-        port: 3306,
-        username: 'Singularity',
-        password: 'SECURE_PASSWORD',
-        database: 'Singularity',
-        logging: false,
-        synchronize: false,
-        name: 'default',
-        entities: ['**/*.entity.ts'],
-        migrations: ['apps/api/src/migrations'],
+    import { DataSource } from 'typeorm'; 
+    export default new DataSource({
+      migrationsTableName: 'migrations',
+      type: 'mariadb',
+      host: 'localhost',
+      port: 3306,
+      username: 'Singularity',
+      password: 'SECURE_PASSWORD',
+      database: 'Singularity',
+      logging: false,
+      synchronize: false,
+      entities: ['**/*.entity.ts'],
+      migrations: ['apps/singularity-api/src/migrations'],
     });
+
     ```
 6. Install Dependencies for Rust:
     ```sh
@@ -177,7 +177,7 @@ Once Uploaded the Song will be playable!
 ### Database Migrations
 When you add, remove, or modify Entity Models, you must create a database migration. Typeorm can automatically generate Database Migrations with the following command:
 ```
-npm run typeorm migration:generate -- -- ./apps/singularity-api/src/migrations/MIGRATION_NAME
+npm run migration:generate -- apps/singularity-api/migrations/MIGRATION_NAME
 ```
 
 ### Icons

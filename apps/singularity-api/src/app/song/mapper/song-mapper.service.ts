@@ -20,6 +20,8 @@ export class SongMapper {
     songDto.end = song.end;
     songDto.pointsPerBeat = song.pointsPerBeat;
     songDto.notes = song.notes.map(note => this.songNoteMapper.mapToDto(note));
+    songDto.lufs = song.lufs;
+    songDto.peakDb = song.peakDb;
 
     return songDto;
   }

@@ -21,6 +21,8 @@ import { SingScoreDialogComponent } from '../dialogs/sing-score-dialog/sing-scor
 import { SettingsService } from '../../shared/settings/settings.service';
 import { LocalSettings } from '../../shared/settings/local-settings';
 import { ModalService } from '@singularity/ui';
+import { NormalizedLoudnessAudioPlayer } from '../../shared/helpers/normalized-loudness-audio-player';
+import * as Tone from 'tone';
 
 @Component({
   selector: 'singularity-sing',
@@ -39,7 +41,7 @@ export class SingComponent implements AfterViewInit, OnDestroy {
   public loadingProgress = 0;
   public currentBeat$?: Observable<number>;
   public singerScores$?: Observable<number[]>;
-  private audioPlayer?: HTMLAudioElement;
+  private audioPlayer = new NormalizedLoudnessAudioPlayer(Tone.getContext());
   private destroySubject = new Subject<void>();
   private stopEmitted = false;
 
@@ -98,35 +100,32 @@ export class SingComponent implements AfterViewInit, OnDestroy {
           this.videoElement.nativeElement.muted = true;
         }
 
-        this.audioPlayer = new Audio(URL.createObjectURL(audio));
         this.song = song;
         this.setupSingers();
 
-        this.startSong();
+        this.startSong(audio);
       });
   }
 
-  private startSong(): void {
+  private startSong(audio: Blob): void {
     if (!this.audioPlayer) {
       return;
     }
 
-    this.audioPlayer.volume = +(this.settingsService.getLocalSetting(LocalSettings.GameVolume) || 0) / 100;
+    this.audioPlayer.setVolume(+(this.settingsService.getLocalSetting(LocalSettings.GameVolume) || 0) / 100);
 
-    this.audioPlayer.play()
+    this.audioPlayer.play(audio, this.song!.lufs, this.song!.peakDb)
       .then(() => {
         this.videoElement?.nativeElement.play();
         this.bpmService.start();
         this.setupEndScoreWindow();
       });
 
-    this.audioPlayer.onpause = () => this.stopSong(true);
+    this.audioPlayer.registerOnStop(() => this.stopSong(true));
   }
 
   private stopSong(abort = false): void {
-    this.audioPlayer?.pause();
-    // this.videoElement?.nativeElement.pause();
-    this.audioPlayer?.remove();
+    this.audioPlayer?.stop();
     this.bpmService.stop();
 
     if (abort && !this.stopEmitted) {
@@ -167,10 +166,10 @@ export class SingComponent implements AfterViewInit, OnDestroy {
         return;
       }
 
-      if (this.audioPlayer.paused) {
+      if (this.audioPlayer.isPaused()) {
         this.stopSong(true);
       } else {
-        this.audioPlayer.onended = () => this.stopSong(true);
+        this.audioPlayer.registerOnEnded(() => this.stopSong(true));
       }
     });
   }

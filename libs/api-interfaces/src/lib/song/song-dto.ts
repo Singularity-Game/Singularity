@@ -11,4 +11,6 @@ export class SongDto {
   public end!: number;
   public pointsPerBeat!: number;
   public notes!: SongNoteDto[];
+  public lufs!: number;
+  public peakDb!: number;
 }

@@ -26,7 +26,8 @@ module.exports = {
     "@nestjs/microservices/microservices-module",
     "@nestjs/microservices",
     "sharp",
-    "@fastify/static"
+    "@fastify/static",
+    "@distube/ytdl-core"
   ],
   externalsType: "commonjs",
   output: {

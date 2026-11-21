@@ -12,10 +12,11 @@ import { FanartService } from './fanart.service';
 import { HttpModule } from '@nestjs/axios';
 import { SongDownloadService } from './song-download.service';
 import { SongIndexingService } from './song-indexing.service';
+import { LoudnessAnalyzerService } from './loudness-analysis/loudness-analyzer.service';
 
 @Module({
   controllers: [SongController],
-  providers: [SongService, YtService, FanartService, SongDownloadService, SongIndexingService, SongMapper, SongNoteMapper],
+  providers: [SongService, YtService, FanartService, SongDownloadService, SongIndexingService, SongMapper, SongNoteMapper, LoudnessAnalyzerService],
   imports: [TypeOrmModule.forFeature([Song, SongNote]), ConfigModule, HttpModule],
   exports: [SongService, SongIndexingService, SongMapper]
 })

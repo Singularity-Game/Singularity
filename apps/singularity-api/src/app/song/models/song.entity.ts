@@ -38,6 +38,12 @@ export class Song {
   @Column('double')
   public pointsPerBeat!: number;
 
+  @Column('double')
+  public lufs!: number;
+
+  @Column('double')
+  public peakDb!: number;
+
   @Column({
     type: 'varchar',
     charset: 'utf8mb4',

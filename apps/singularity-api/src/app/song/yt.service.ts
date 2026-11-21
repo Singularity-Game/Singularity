@@ -1,36 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { VideoInfo } from '@singularity/api-interfaces';
-import ytdl from '@distube/ytdl-core';
+import { chooseFormat, Thumbnail, VideoFormat, Ytdl, VideoInfo as YtdlVideoInfo } from '@distube/ytdl-core';
 import { SongFile } from './interfaces/song-file';
-import { ConfigService } from '@nestjs/config';
-import { Agent } from '@distube/ytdl-core';
 
 @Injectable()
 export class YtService {
 
-  private readonly agent: Agent;
-
-  constructor(configService: ConfigService) {
-    const cookie = configService.get('YOUTUBE_COOKIE');
-
-    if(cookie) {
-     this.agent = ytdl.createAgent(JSON.parse(cookie));
-    } else {
-      this.agent = ytdl.createAgent();
-    }
-  }
+  private readonly ytdl = new Ytdl();
 
   public async getInfo(id: string): Promise<VideoInfo> {
-    const ytdlVideoInfo = await ytdl.getBasicInfo(id, { agent: this.agent });
+    const ytdlVideoInfo = await this.ytdl.getInfo(id);
     const videoInfo = new VideoInfo();
 
     videoInfo.id = id;
-    videoInfo.url = ytdlVideoInfo.videoDetails.video_url;
+    videoInfo.url = ytdlVideoInfo.videoDetails.url;
     videoInfo.title = ytdlVideoInfo.videoDetails.title;
     videoInfo.author = ytdlVideoInfo.videoDetails.author.name;
-    videoInfo.thumbnailUrl = ytdlVideoInfo.videoDetails.thumbnails.reduce((largestThumbnail: ytdl.thumbnail, currentThumbnail: ytdl.thumbnail) => {
-      const largestThumbnailSize = largestThumbnail.width * largestThumbnail.height;
-      const currentThumbnailSize = currentThumbnail.width * currentThumbnail.height;
+    videoInfo.thumbnailUrl = ytdlVideoInfo.videoDetails.thumbnails.reduce((largestThumbnail: Thumbnail, currentThumbnail: Thumbnail) => {
+      const largestThumbnailSize = (largestThumbnail.width ?? 0) * (largestThumbnail.height ?? 0);
+      const currentThumbnailSize = (currentThumbnail.width ?? 0) * (currentThumbnail.height ?? 0);
 
       if (largestThumbnailSize > currentThumbnailSize) {
         return largestThumbnail;
@@ -47,8 +35,8 @@ export class YtService {
   }
 
   public async downloadVideo(id: string): Promise<SongFile> {
-    const info = await ytdl.getInfo(id, { agent: this.agent });
-    const format = ytdl.chooseFormat(info.formats, { quality: 'highestvideo', filter: 'videoonly' });
+    const info = await this.ytdl.getInfo(id);
+    const format = chooseFormat(info.formats, { quality: 'highestvideo' });
 
     const buffer = await this.download(info, format);
 
@@ -56,17 +44,17 @@ export class YtService {
   }
 
   public async downloadAudo(id: string): Promise<SongFile> {
-    const info = await ytdl.getInfo(id, { agent: this.agent });
-    const format = ytdl.chooseFormat(info.formats, { quality: 'highestaudio', filter: 'audioonly' });
+    const info = await this.ytdl.getInfo(id);
+    const format = chooseFormat(info.formats, { quality: 'highestaudio' });
 
     const buffer = await this.download(info, format);
 
     return new SongFile(buffer, info.videoDetails.title + '.mp3');
   }
 
-  private async download(info: ytdl.videoInfo, format: ytdl.videoFormat): Promise<Buffer> {
+  private async download(info: YtdlVideoInfo, format: VideoFormat): Promise<Buffer> {
     return new Promise((resolve, reject) => {
-      const stream = ytdl(info.videoDetails.video_url, { format: format, agent: this.agent })
+      const stream = this.ytdl.download(info.videoDetails.url, { format: format })
       const chunks: Uint8Array[] = [];
       stream.on('data', (chunk: Uint8Array) => chunks.push(chunk));
       stream.on('end', () => resolve(Buffer.concat(chunks)));

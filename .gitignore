@@ -1,6 +1,6 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 /apps/singularity-api/src/config/appsettings.development.env
-ormconfig.ts
+apps/singularity-api/ormconfig.ts
 /songs
 
 # compiled output
