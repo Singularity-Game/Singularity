@@ -11,7 +11,7 @@ const routes: Routes = [
     path: '', component: AuthenticationComponent, children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent, canActivate: [NotAuthenticatedGuard] },
-      { path: 'set-password', component: SetPasswordComponent, canActivate: [NotAuthenticatedGuard] },
+      { path: 'set-password', component: SetPasswordComponent },
       { path: 'reset-password', component: ResetPasswordComponent, canActivate: [NotAuthenticatedGuard] }
     ],
   }
